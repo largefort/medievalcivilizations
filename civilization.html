@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Medieval Civilization Selection</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: 'MedievalFont', serif;
+            background-color: #251c12;
+            color: #f7dfc4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: rgba(0, 0, 0, 0.6);
+            border: 5px solid #8A5C2E;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+            text-align: center;
+            max-width: 90%; /* Adjust the maximum width as needed */
+        }
+
+        h1, h2, h3 {
+            color: #FFD700;
+        }
+
+        .civilization-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .civilization-container a {
+            border: 5px solid #532c08;
+            display: inline-block;
+            padding: 20px;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 10px;
+            width: 100%; /* Occupy full container width */
+            max-width: 400px; /* Adjust the maximum width as needed */
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .civilization-container a:hover {
+            transform: scale(1.05);
+        }
+
+        .civilization-container img {
+            max-width: 100%;
+            height: auto;
+            border: 2px solid #8A5C2E;
+            border-radius: 10px;
+        }
+
+        .civilization-container h3 {
+            margin-top: 10px;
+        }
+
+        @font-face {
+            font-family: 'MedievalFont';
+            src: url('your-medieval-font.woff') format('woff');
+        }
+
+        @media (max-width: 768px) {
+            /* Adjust styles for screens smaller than 768px (e.g., mobile devices) */
+            .container {
+                padding: 10px;
+            }
+            
+            .civilization-container a {
+                padding: 10px;
+                max-width: 300px; /* Adjust the maximum width as needed */
+            }
+
+            .civilization-container h3 {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Welcome to Medieval Clicker</h1>
+    <h2>Choose Your Civilization</h2>
+    <div class="civilization-container">
+        <!-- Civilization 1: Knight -->
+        <a href="javascript:void(0);" onclick="selectCivilization('knight')">
+            <img src="knight.png" alt="Knight Civilization">
+            <h3>Knight</h3>
+        </a>
+
+        <!-- Civilization 2: Lord -->
+        <a href="javascript:void(0);" onclick="selectCivilization('lord')">
+            <img src="lord.png" alt="Lord Civilization">
+            <h3>Lord</h3>
+        </a>
+
+        <!-- Civilization 3: Wizard -->
+        <a href="javascript:void(0);" onclick="selectCivilization('wizard')">
+            <img src="wizard.png" alt="Wizard Civilization">
+            <h3>Wizard</h3>
+        </a>
+    </div>
+</div>
+
+<script>
+    // Function to select a civilization and save it to local storage
+    function selectCivilization(civilization) {
+        localStorage.setItem("chosenCivilization", civilization);
+        window.location.href = `game_${civilization}.html`;
+    }
+</script>
+</body>
+</html>
