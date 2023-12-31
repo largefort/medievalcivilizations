@@ -114,9 +114,9 @@
 </div>
 
 <script>
-    // Function to select a civilization and save it to local storage
+     // Function to select a civilization and save it to local storage with custom name "civtek"
     function selectCivilization(civilization) {
-        localStorage.setItem("chosenCivilization", civilization);
+        localStorage.setItem("civtek", civilization); // Changed the key to "civtek"
         window.location.href = `game_${civilization}.html`;
     }
 </script>
