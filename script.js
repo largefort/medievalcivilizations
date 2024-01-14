@@ -35,6 +35,7 @@ function disableFingerZooming() {
         if (event.scale !== 1) { event.preventDefault(); }
     }, { passive: false });
 }
+
 disableFingerZooming();
 
 function initializeDB() {
