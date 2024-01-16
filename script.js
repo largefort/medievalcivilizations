@@ -20,16 +20,6 @@ document.write(`
 // Preload the click sound
 const clickSound = new Audio("click-sound.mp3");
 
-// Add the CrazyGames SDK.banner variable
-window.CrazyGames = window.CrazyGames || {};
-window.CrazyGames.SDK = window.CrazyGames.SDK || {};
-window.CrazyGames.SDK.banner;
-
-// Add the CrazyGames SDK v2 request banner ad module script
-window.CrazyGames.SDK.banner.requestBanner({
-    id: "banner-container",
-    width: 300,
-    height: 250,
 function disableFingerZooming() {
     document.addEventListener('touchmove', function (event) {
         if (event.scale !== 1) { event.preventDefault(); }
