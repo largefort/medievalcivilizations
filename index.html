@@ -78,6 +78,57 @@
                 height: auto;
             }
         }
+
+        /* Confirmation Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0,0,0);
+            background-color: rgba(0,0,0,0.4);
+            padding-top: 60px;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            border-radius: 10px;
+        }
+
+        .close {
+            color: #aaaaaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
     </style>
 </head>
 <body>
@@ -86,27 +137,62 @@
         <h2>Choose Your Civilization</h2>
         <div class="civilization-container">
             <!-- Civilization 1: Knight -->
-            <a href="javascript:void(0);" onclick="selectCivilization('knight')" title="Select Knight Civilization">
+            <a href="#" onclick="showConfirmationModal('knight')" title="Select Knight Civilization">
                 <img src="knight.png" alt="Knight Civilization">
                 <h3>Knight</h3>
             </a>
 
             <!-- Civilization 2: Lord -->
-            <a href="javascript:void(0);" onclick="selectCivilization('lord')" title="Select Lord Civilization">
+            <a href="#" onclick="showConfirmationModal('lord')" title="Select Lord Civilization">
                 <img src="lord.png" alt="Lord Civilization">
                 <h3>Lord</h3>
             </a>
 
             <!-- Civilization 3: Wizard -->
-            <a href="javascript:void(0);" onclick="selectCivilization('wizard')" title="Select Wizard Civilization">
+            <a href="#" onclick="showConfirmationModal('wizard')" title="Select Wizard Civilization">
                 <img src="wizard.png" alt="Wizard Civilization">
                 <h3>Wizard</h3>
             </a>
         </div>
     </div>
 
+    <!-- Confirmation Modal -->
+    <div id="confirmationModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="hideConfirmationModal()">&times;</span>
+            <h2>Confirm Civilization Selection</h2>
+            <p>Are you sure you want to choose this civilization?</p>
+            <p>This action cannot be undone.</p>
+            <button onclick="confirmCivilizationSelection()">Yes, I'm sure</button>
+        </div>
+    </div>
+
     <script>
-        // Function to select a civilization and save it to local storage
+        function showConfirmationModal(civilization) {
+            // Display the confirmation modal
+            document.getElementById("confirmationModal").style.display = "block";
+
+            // Set the selected civilization in a data attribute for later use
+            document.getElementById("confirmationModal").setAttribute("data-civilization", civilization);
+        }
+
+        function hideConfirmationModal() {
+            // Hide the confirmation modal
+            document.getElementById("confirmationModal").style.display = "none";
+        }
+
+        function confirmCivilizationSelection() {
+            // Get the selected civilization from the data attribute
+            const civilization = document.getElementById("confirmationModal").getAttribute("data-civilization");
+
+            // Save the selected civilization to local storage and redirect
+            localStorage.setItem("chosenCivilization", civilization);
+            window.location.href = `game_${civilization}.html`;
+
+            // Close the confirmation modal
+            hideConfirmationModal();
+        }
+         // Function to select a civilization and save it to local storage
         function selectCivilization(civilization) {
             localStorage.setItem("chosenCivilization", civilization);
             window.location.href = `game_${civilization}.html`;
@@ -125,3 +211,4 @@
     </script>
 </body>
 </html>
+
