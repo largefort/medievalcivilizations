@@ -31,10 +31,10 @@
     .nav-pills .nav-link {
       font-size: 18px;
       padding: 10px 10px;
-      background-color: rgba(112, 67, 38, 0.8);
+      background-color: #6a428c; /* Purple background for navigation */
       border-radius: 10px;
       border: none;
-      color: #FFD700;
+      color: #FFD700; /* Golden text color */
       margin: 5px;
     }
 
@@ -102,28 +102,6 @@
     @font-face {
       font-family: 'MedievalFont';
       src: url('https://raw.githubusercontent.com/largefort/medievalclicker/main/medievalfont.woff') format('woff');
-    }
-
-    /* Updated styles for the bottom navigation */
-    .nav-pills {
-      background-color: #4b254e; /* Darker purple background color for the navigation */
-      border-radius: 10px; /* Rounded corners for the navigation */
-    }
-
-    .nav-pills .nav-link {
-      font-size: 18px;
-      padding: 10px 20px;
-      margin: 5px;
-      border-radius: 10px;
-      border: none;
-      color: #FFD700;
-      transition: background-color 0.3s, color 0.3s;
-    }
-
-    .nav-pills .nav-link.active {
-      background-color: #6a428c; /* Lighter purple for active tab */
-      color: #FFD700;
-      font-weight: bold;
     }
   </style>
   <meta name="google-adsense-account" content="your-google-adsense-account">
@@ -203,13 +181,13 @@
         </div>
       </div>
     </div>
+  </div>
 
-    <div class="nav nav-pills nav-fill fixed-bottom">
-      <a class="nav-link active" data-toggle="pill" href="#castle-tab">Castle</a>
-      <a class="nav-link" data-toggle="pill" href="#skilling-tab">Skilling</a>
-      <a class="nav-link" data-toggle="pill" href="#shop-tab">Shop</a>
-      <a class="nav-link" data-toggle="pill" href="#settings-tab">Settings</a>
-    </div>
+  <div class="nav nav-pills nav-fill fixed-bottom">
+    <a class="nav-link active" data-toggle="pill" href="#castle-tab">Castle</a>
+    <a class="nav-link" data-toggle="pill" href="#skilling-tab">Skilling</a>
+    <a class="nav-link" data-toggle="pill" href="#shop-tab">Shop</a>
+    <a class="nav-link" data-toggle="pill" href="#settings-tab">Settings</a>
   </div>
 
   <button id="fullscreen-button" style="display: none;" onclick="autoEnterFullscreen()">Enter Fullscreen</button>
