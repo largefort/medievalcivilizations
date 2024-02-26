@@ -1,4 +1,4 @@
-let coins = 0;
+let deniers = 0; // Renamed from coins to deniers
 let knightCount = 0;
 let archerCount = 0;
 let wizardCount = 0;
@@ -50,7 +50,7 @@ function initializeDB() {
 
 function saveGameData() {
     const gameState = {
-        coins,
+        deniers, // Updated from coins to deniers
         knightCount,
         archerCount,
         wizardCount,
@@ -73,7 +73,7 @@ function loadGameData() {
         if (request.result) {
             const savedState = request.result;
 
-            coins = savedState.coins;
+            deniers = savedState.deniers; // Updated from coins to deniers
             knightCount = savedState.knightCount;
             archerCount = savedState.archerCount;
             wizardCount = savedState.wizardCount;
@@ -121,21 +121,8 @@ function toggleSoundEffects() {
 document.getElementById("toggle-music").addEventListener("change", toggleMusic);
 document.getElementById("toggle-sfx").addEventListener("change", toggleSoundEffects);
 
-// Function to request fullscreen
-function requestFullscreen(element) {
-    if (element.requestFullscreen) {
-        element.requestFullscreen();
-    } else if (element.mozRequestFullScreen) { // Firefox
-        element.mozRequestFullScreen();
-    } else if (element.webkitRequestFullscreen) { // Chrome and Safari
-        element.webkitRequestFullscreen();
-    } else if (element.msRequestFullscreen) { // Internet Explorer
-        element.msRequestFullscreen();
-    }
-}
-
 function updateUI() {
-    document.getElementById("counter").textContent = `Gold coins: ${compactNumberFormat(coins)}`;
+    document.getElementById("counter").textContent = `Deniers: ${compactNumberFormat(deniers)}`; // Updated text
     document.getElementById("knight-count").textContent = knightCount;
     document.getElementById("archer-count").textContent = archerCount;
     document.getElementById("wizard-count").textContent = wizardCount;
@@ -147,7 +134,7 @@ function updateUI() {
 }
 
 function clickCastle() {
-    coins++;
+    deniers++; // Updated from coins to deniers
     saveGameData();
     updateUI();
 
@@ -163,32 +150,32 @@ function buyUpgrade(type) {
         case "knight":
             cost = 10;
             upgradeCount = knightCount;
-            if (coins >= cost) {
-                coins -= cost;
+            if (deniers >= cost) { // Updated from coins to deniers
+                deniers -= cost; // Updated from coins to deniers
                 knightCount++;
             }
             break;
         case "archer":
             cost = 25;
             upgradeCount = archerCount;
-            if (coins >= cost) {
-                coins -= cost;
+            if (deniers >= cost) { // Updated from coins to deniers
+                deniers -= cost; // Updated from coins to deniers
                 archerCount++;
             }
             break;
         case "wizard":
             cost = 50;
             upgradeCount = wizardCount;
-            if (coins >= cost) {
-                coins -= cost;
+            if (deniers >= cost) { // Updated from coins to deniers
+                deniers -= cost; // Updated from coins to deniers
                 wizardCount++;
             }
             break;
         case "paladin":
             cost = 100;
             upgradeCount = paladinCount;
-            if (coins >= cost) {
-                coins -= cost;
+            if (deniers >= cost) { // Updated from coins to deniers
+                deniers -= cost; // Updated from coins to deniers
                 paladinCount++;
             }
             break;
@@ -241,7 +228,7 @@ function earnPassiveIncome() {
     const timeDifference = currentTime - lastSaveTime;
     const offlinePassiveIncome = Math.floor(passiveIncome * (timeDifference / 1000));
 
-    coins += offlinePassiveIncome;
+    deniers += offlinePassiveIncome; // Updated from coins to deniers
     lastSaveTime = currentTime; // Update the last save time
 
     saveGameData();
@@ -249,3 +236,4 @@ function earnPassiveIncome() {
 }
 
 setInterval(earnPassiveIncome, 1000);
+
