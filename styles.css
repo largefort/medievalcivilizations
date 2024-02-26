@@ -33,28 +33,3 @@
     border-radius: 10px; /* Slightly rounded corners */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Drop shadow for a 3D effect */
     font-family: 'MedievalFont', serif; /* Updated font family with MedievalFont */
-}
-
-/* Floating text for castle clicks */
-#floating-text {
-    position: absolute;
-    font-size: 20px;
-    color: white;
-    z-index: 999;
-    animation-duration: 1s;
-}
-
-.animate__fadeOutUp {
-    animation-name: fadeOutUp;
-}
-
-@keyframes fadeOutUp {
-    from {
-        opacity: 1;
-        transform: translate3d(0, 0, 0);
-    }
-    to {
-        opacity: 0;
-        transform: translate3d(0, -50px, 0);
-    }
-}
