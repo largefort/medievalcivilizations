@@ -99,6 +99,13 @@
       height: auto;
     }
 
+    #floating-text {
+      position: absolute;
+      font-size: 20px;
+      color: white;
+      z-index: 999;
+    }
+
     @font-face {
       font-family: 'MedievalFont';
       src: url('https://raw.githubusercontent.com/largefort/medievalclicker/main/medievalfont.woff') format('woff');
@@ -207,7 +214,6 @@
     Your browser does not support the audio element.
   </audio>
   <audio id="click-sound" src="click-sound.mp3" type="audio/mp3"></audio>
-</body>
   <script>
     // Example usage of Raphaël
     window.onload = function() {
@@ -216,6 +222,23 @@
       circle.attr("fill", "#f00"); // Red fill
       circle.attr("stroke", "#000"); // Black stroke
     };
-  </script>
-</html>
 
+    function clickCastle() {
+      var castle = document.getElementById('castle');
+      var rect = castle.getBoundingClientRect();
+      var x = rect.left + rect.width / 2;
+      var y = rect.top + rect.height / 2;
+      var floatingText = document.createElement('div');
+      floatingText.classList.add('animate__animated', 'animate__fadeOutUp');
+      floatingText.style.position = 'absolute';
+      floatingText.style.left = x + 'px';
+      floatingText.style.top = y + 'px';
+      floatingText.textContent = '+1';
+      document.body.appendChild(floatingText);
+      setTimeout(function() {
+        floatingText.remove();
+      }, 1000);
+    }
+  </script>
+</body>
+</html>
