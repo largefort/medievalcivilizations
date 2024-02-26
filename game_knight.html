@@ -242,7 +242,7 @@
   document.body.appendChild(floatingText);
   setTimeout(function() {
     floatingText.remove();
-  }, 4000); // Adjusted timeout to 4 seconds
+  }, 8000); // Adjusted timeout to 4 seconds
 
   // Increment deniers count when clicking the castle
   var counterElement = document.getElementById('counter');
@@ -251,7 +251,7 @@
   counterElement.textContent = 'Deniers: ' + deniers;
 
   // Add a variable to control the frequency of floating text appearance
-  var fastClicks = ∞; // Number of fast clicks to show the floating text
+  var fastClicks = 999999999; // Number of fast clicks to show the floating text
   var clickCount = 0;
   var interval = setInterval(function() {
     clickCount++;
@@ -268,7 +268,7 @@
     document.body.appendChild(floatingText);
     setTimeout(function() {
       floatingText.remove();
-    }, 4000); // Adjusted timeout to 4 seconds
+    }, 8000); // Adjusted timeout to 4 seconds
   }, 100); // Adjusted interval to 100 milliseconds for faster appearance
 }
 </body>
