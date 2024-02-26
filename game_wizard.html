@@ -105,17 +105,14 @@
     }
   </style>
 </head>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5816082932921993"
-     crossorigin="anonymous"></script>
 <body>
   <div class="container">
     <div class="tab-content">
       <div class="tab-pane fade show active" id="castle-tab">
         <div class="text-center">
-          <!-- Wizard Civilization Castle Image -->
           <img id="castle" src="castle_wizard.jpg" alt="Castle" class="castle-image" onclick="clickCastle()">
           <div id="counter" class="mt-3">
-            Gold coins: 0
+            Deniers: 0
           </div>
           <div id="owned-upgrades" class="mt-3">
             <div>Knight: <span id="knight-count">0</span></div>
@@ -141,22 +138,22 @@
       <div class="tab-pane fade" id="shop-tab">
         <div class="text-center">
           <h2>Shop</h2>
-          <div class="upgrade" onclick="buyUpgrade('knight')">Knight (<span id="knight-cost">10</span> coins)</div>
+          <div class="upgrade" onclick="buyUpgrade('knight')">Knight (<span id="knight-cost">10</span> Deniers)</div>
           <audio id="knight-upgrade-sound">
             <source src="upgradesound.mp3" type="audio/mp3">
             Your browser does not support the audio element.
           </audio>
-          <div class="upgrade" onclick="buyUpgrade('archer')">Archer (<span id="archer-cost">25</span> coins)</div>
+          <div class="upgrade" onclick="buyUpgrade('archer')">Archer (<span id="archer-cost">25</span> Deniers)</div>
           <audio id="archer-upgrade-sound">
             <source src="upgradesound.mp3" type="audio/mp3">
             Your browser does not support the audio element.
           </audio>
-          <div class="upgrade" onclick="buyUpgrade('wizard')">Wizard (<span id="wizard-cost">50</span> coins)</div>
+          <div class="upgrade" onclick="buyUpgrade('wizard')">Wizard (<span id="wizard-cost">50</span> Deniers)</div>
           <audio id="wizard-upgrade-sound">
             <source src="upgradesound.mp3" type="audio/mp3">
             Your browser does not support the audio element.
           </audio>
-          <div class="upgrade" onclick="buyUpgrade('paladin')">Paladin (<span id="paladin-cost">100</span> coins)</div>
+          <div class="upgrade" onclick="buyUpgrade('paladin')">Paladin (<span id="paladin-cost">100</span> Deniers)</div>
           <audio id="paladin-upgrade-sound">
             <source src="upgradesound.mp3" type="audio/mp3">
             Your browser does not support the audio element.
@@ -168,36 +165,34 @@
         <div class="text-center">
           <h2>Settings</h2>
           <div class="form-check">
-            <input type="checkbox" id="toggle-music"> <label class="form-check-label">Toggle Music</label>
+            <input type="checkbox" id="toggle-music"> <label for="toggle-music" class="form-check-label">Toggle Music</label>
           </div>
           <div class="form-check">
-            <input type="checkbox" id="toggle-sfx"> <label class="form-check-label">Toggle Sound Effects</label>
+            <input type="checkbox" id="toggle-sfx"> <label for="toggle-sfx" class="form-check-label">Toggle Sound Effects</label>
           </div>
-          <!-- Add the PNG image from Crazy Games with clickable URL -->
           <a href="https://idev.games/game/medieval-civilizations" target="_blank">
             <img src="idev.png" alt="idev.games image" width="100">
           </a>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="nav nav-pills nav-fill fixed-bottom">
-    <a class="nav-link active" data-toggle="pill" href="#castle-tab">Castle</a>
-    <a class="nav-link" data-toggle="pill" href="#skilling-tab">Skilling</a>
-    <a class="nav-link" data-toggle="pill" href="#shop-tab">Shop</a>
-    <a class="nav-link" data-toggle="pill" href="#settings-tab">Settings</a>
+    <div class="nav nav-pills nav-fill fixed-bottom">
+      <a class="nav-link active" data-toggle="pill" href="#castle-tab">Castle</a>
+      <a class="nav-link" data-toggle="pill" href="#skilling-tab">Skilling</a>
+      <a class="nav-link" data-toggle="pill" href="#shop-tab">Shop</a>
+      <a class="nav-link" data-toggle="pill" href="#settings-tab">Settings</a>
+    </div>
   </div>
 
   <button id="fullscreen-button" style="display: none;" onclick="autoEnterFullscreen()">Enter Fullscreen</button>
-  <!-- Easter Egg Modal -->
+
   <div id="easteregg-modal" class="modal">
     <div class="modal-content">
-      <span class="close" onclick="closeEasterEggModal">&times;</span>
+      <span class="close" onclick="closeEasterEggModal()">&times;</span>
       <h2>Thank You for Playing My Game!</h2>
       <p>Watch the special video message:</p>
-      <!-- Add your video embed code or link here -->
-    <iframe width="850" height="528" src="https://www.youtube.com/embed/4-2HxIjtJso" title="video message from the dev of Medieval Civilizations" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      <iframe width="850" height="528" src="https://www.youtube.com/embed/4-2HxIjtJso" title="video message from the dev of Medieval Civilizations" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
     </div>
   </div>
 
@@ -212,5 +207,4 @@
   </audio>
   <audio id="click-sound" src="click-sound.mp3" type="audio/mp3"></audio>
 </body>
-  
 </html>
