@@ -133,7 +133,28 @@ function updateUI() {
     updatePassiveIncome();
 }
 
-function clickCastle() {
+function clickCastle(event) {
+    var castle = document.getElementById('castle');
+    var rect = castle.getBoundingClientRect();
+    var centerX = rect.left + rect.width / 2;
+    var centerY = rect.top + rect.height / 2;
+    var mouseX = event.clientX;
+    var mouseY = event.clientY;
+    var angle = Math.atan2(mouseY - centerY, mouseX - centerX);
+    var offsetX = Math.cos(angle) * 50; // Adjust the distance of the floating text from the center
+    var offsetY = Math.sin(angle) * 50; // Adjust the distance of the floating text from the center
+
+    var floatingText = document.createElement('div');
+    floatingText.classList.add('animate__animated', 'animate__fadeOutUp');
+    floatingText.id = 'floating-text';
+    floatingText.style.left = mouseX + 'px';
+    floatingText.style.top = mouseY + 'px';
+    floatingText.textContent = '+1';
+    document.body.appendChild(floatingText);
+    setTimeout(function () {
+        floatingText.remove();
+    }, 1000);
+
     deniers++; // Updated from coins to deniers
     saveGameData();
     updateUI();
@@ -236,4 +257,3 @@ function earnPassiveIncome() {
 }
 
 setInterval(earnPassiveIncome, 1000);
-
