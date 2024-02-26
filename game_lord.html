@@ -207,5 +207,14 @@
   </audio>
   <audio id="click-sound" src="click-sound.mp3" type="audio/mp3"></audio>
 </body>
+  <script>
+    // Example usage of Raphaël
+    window.onload = function() {
+      var paper = Raphael("castle", 200, 200); // "castle" is the ID of the element where you want to draw
+      var circle = paper.circle(100, 100, 50);
+      circle.attr("fill", "#f00"); // Red fill
+      circle.attr("stroke", "#000"); // Black stroke
+    };
+  </script>
 </html>
 
