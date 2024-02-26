@@ -223,54 +223,56 @@
       circle.attr("fill", "#f00"); // Red fill
       circle.attr("stroke", "#000"); // Black stroke
     };
+function clickCastle(event) {
+  var castle = document.getElementById('castle');
+  var rect = castle.getBoundingClientRect();
+  var centerX = rect.left + rect.width / 2;
+  var centerY = rect.top + rect.height / 2;
+  var mouseX = event.clientX;
+  var mouseY = event.clientY;
+  var angle = Math.atan2(mouseY - centerY, mouseX - centerX);
+  var offsetX = Math.cos(angle) * 50; // Adjust the distance of the floating text from the center
+  var offsetY = Math.sin(angle) * 50; // Adjust the distance of the floating text from the center
 
-  function clickCastle(event) {
-      var castle = document.getElementById('castle');
-      var rect = castle.getBoundingClientRect();
-      var centerX = rect.left + rect.width / 2;
-      var centerY = rect.top + rect.height / 2;
-      var mouseX = event.clientX;
-      var mouseY = event.clientY;
-      var angle = Math.atan2(mouseY - centerY, mouseX - centerX);
-      var offsetX = Math.cos(angle) * 50; // Adjust the distance of the floating text from the center
-      var offsetY = Math.sin(angle) * 50; // Adjust the distance of the floating text from the center
+  var floatingText = document.createElement('div');
+  floatingText.classList.add('animate__animated', 'animate__fadeOutUp');
+  floatingText.id = 'floating-text';
+  floatingText.style.left = mouseX + 'px';
+  floatingText.style.top = mouseY + 'px';
+  floatingText.textContent = '+1';
+  document.body.appendChild(floatingText);
+  setTimeout(function() {
+    floatingText.remove();
+  }, 4000); // Adjusted timeout to 4 seconds
 
-      var floatingText = document.createElement('div');
-      floatingText.classList.add('animate__animated', 'animate__fadeOutUp');
-      floatingText.id = 'floating-text';
-      floatingText.style.left = mouseX + 'px';
-      floatingText.style.top = mouseY + 'px';
-      floatingText.textContent = '+1';
-      document.body.appendChild(floatingText);
-      setTimeout(function() {
-        floatingText.remove();
-      }, 1000);
+  // Increment deniers count when clicking the castle
+  var counterElement = document.getElementById('counter');
+  var deniers = parseInt(counterElement.textContent.split(':')[1].trim());
+  deniers++;
+  counterElement.textContent = 'Deniers: ' + deniers;
+
+  // Add a variable to control the frequency of floating text appearance
+  var fastClicks = 3; // Number of fast clicks to show the floating text
+  var clickCount = 0;
+  var interval = setInterval(function() {
+    clickCount++;
+    if (clickCount >= fastClicks) {
+      clearInterval(interval);
     }
+    // Generate a new floating text for each fast click
+    var floatingText = document.createElement('div');
+    floatingText.classList.add('animate__animated', 'animate__fadeOutUp');
+    floatingText.id = 'floating-text';
+    floatingText.style.left = mouseX + 'px';
+    floatingText.style.top = mouseY + 'px';
+    floatingText.textContent = '+1';
+    document.body.appendChild(floatingText);
+    setTimeout(function() {
+      floatingText.remove();
+    }, 4000); // Adjusted timeout to 4 seconds
+  }, 200); // Adjusted interval to 200 milliseconds for faster appearance
+}
 
-    function buyUpgrade(unit) {
-      var countElement = document.getElementById(unit + '-count');
-      var count = parseInt(countElement.textContent);
-      count++;
-      countElement.textContent = count;
-
-      // Create floating text for +1 when purchasing an upgrade
-      var castle = document.getElementById('castle');
-      var rect = castle.getBoundingClientRect();
-      var centerX = rect.left + rect.width / 2;
-      var centerY = rect.top + rect.height / 2;
-
-      var floatingText = document.createElement('div');
-      floatingText.classList.add('animate__animated', 'animate__fadeOutUp');
-      floatingText.id = 'floating-text';
-      floatingText.style.left = centerX + 'px';
-      floatingText.style.top = centerY + 'px';
-      floatingText.textContent = '+1';
-      document.body.appendChild(floatingText);
-      setTimeout(function() {
-        floatingText.remove();
-      }, 1000);
-    }
-  </script>
 </body>
 </html>
 
