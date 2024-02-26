@@ -222,7 +222,7 @@
       circle.attr("fill", "#f00"); // Red fill
       circle.attr("stroke", "#000"); // Black stroke
     };
-
+<script>
     function clickCastle(event) {
       var castle = document.getElementById('castle');
       var rect = castle.getBoundingClientRect();
@@ -244,30 +244,12 @@
       setTimeout(function() {
         floatingText.remove();
       }, 1000);
-    }
 
-    function buyUpgrade(unit) {
-      var countElement = document.getElementById(unit + '-count');
-      var count = parseInt(countElement.textContent);
-      count++;
-      countElement.textContent = count;
-
-      // Create floating text for +1 when purchasing an upgrade
-      var castle = document.getElementById('castle');
-      var rect = castle.getBoundingClientRect();
-      var centerX = rect.left + rect.width / 2;
-      var centerY = rect.top + rect.height / 2;
-
-      var floatingText = document.createElement('div');
-      floatingText.classList.add('animate__animated', 'animate__fadeOutUp');
-      floatingText.id = 'floating-text';
-      floatingText.style.left = centerX + 'px';
-      floatingText.style.top = centerY + 'px';
-      floatingText.textContent = '+1';
-      document.body.appendChild(floatingText);
-      setTimeout(function() {
-        floatingText.remove();
-      }, 1000);
+      // Increment deniers count when clicking the castle
+      var counterElement = document.getElementById('counter');
+      var deniers = parseInt(counterElement.textContent.split(':')[1].trim());
+      deniers++;
+      counterElement.textContent = 'Deniers: ' + deniers;
     }
   </script>
 </body>
