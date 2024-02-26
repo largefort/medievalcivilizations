@@ -105,6 +105,7 @@
     }
   </style>
 </head>
+
 <body>
   <div class="container">
     <div class="tab-content">
@@ -208,13 +209,53 @@
   </audio>
   <audio id="click-sound" src="click-sound.mp3" type="audio/mp3"></audio>
 </body>
-   <script>
-    // Example usage of Raphaël
-    window.onload = function() {
-      var paper = Raphael("castle", 200, 200); // "castle" is the ID of the element where you want to draw
-      var circle = paper.circle(100, 100, 50);
-      circle.attr("fill", "#f00"); // Red fill
-      circle.attr("stroke", "#000"); // Black stroke
-    };
+  <script>
+   function clickCastle(event) {
+      var castle = document.getElementById('castle');
+      var rect = castle.getBoundingClientRect();
+      var centerX = rect.left + rect.width / 2;
+      var centerY = rect.top + rect.height / 2;
+      var mouseX = event.clientX;
+      var mouseY = event.clientY;
+      var angle = Math.atan2(mouseY - centerY, mouseX - centerX);
+      var offsetX = Math.cos(angle) * 50; // Adjust the distance of the floating text from the center
+      var offsetY = Math.sin(angle) * 50; // Adjust the distance of the floating text from the center
+
+      var floatingText = document.createElement('div');
+      floatingText.classList.add('animate__animated', 'animate__fadeOutUp');
+      floatingText.id = 'floating-text';
+      floatingText.style.left = mouseX + 'px';
+      floatingText.style.top = mouseY + 'px';
+      floatingText.textContent = '+1';
+      document.body.appendChild(floatingText);
+      setTimeout(function() {
+        floatingText.remove();
+      }, 1000);
+    }
+
+    function buyUpgrade(unit) {
+      var countElement = document.getElementById(unit + '-count');
+      var count = parseInt(countElement.textContent);
+      count++;
+      countElement.textContent = count;
+
+      // Create floating text for +1 when purchasing an upgrade
+      var castle = document.getElementById('castle');
+      var rect = castle.getBoundingClientRect();
+      var centerX = rect.left + rect.width / 2;
+      var centerY = rect.top + rect.height / 2;
+
+      var floatingText = document.createElement('div');
+      floatingText.classList.add('animate__animated', 'animate__fadeOutUp');
+      floatingText.id = 'floating-text';
+      floatingText.style.left = centerX + 'px';
+      floatingText.style.top = centerY + 'px';
+      floatingText.textContent = '+1';
+      document.body.appendChild(floatingText);
+      setTimeout(function() {
+        floatingText.remove();
+      }, 1000);
+    }
   </script>
 </html>
+
