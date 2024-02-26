@@ -255,13 +255,13 @@
     document.body.appendChild(floatingText);
     setTimeout(function() {
       floatingText.remove();
-    }, 4000); // Adjusted timeout to 4 seconds
+    }, 1000); // Adjusted timeout to 4 seconds
 
     clickCount++;
     if (clickCount >= Infinity) {
       clearInterval(interval);
     }
-  }, 200); // Adjusted interval to 200 milliseconds for faster appearance
+  }, 50); // Adjusted interval to 50 milliseconds for faster appearance
 
   // Increment deniers count when clicking the castle
   var counterElement = document.getElementById('counter');
