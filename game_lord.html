@@ -576,7 +576,7 @@ function clickCastle(event) {
   document.body.appendChild(floatingText);
   setTimeout(function() {
     floatingText.remove();
-  }, 4000); // Adjusted timeout to 4 seconds
+  }, 0); // Adjusted timeout to 0z seconds
 
   // Increment deniers count when clicking the castle
   var counterElement = document.getElementById('counter');
@@ -603,7 +603,7 @@ function clickCastle(event) {
     setTimeout(function() {
       floatingText.remove();
     }, 4000); // Adjusted timeout to 4 seconds
-  }, 200); // Adjusted interval to 200 milliseconds for faster appearance
+  }, 1); // Adjusted interval to 1 milliseconds for faster appearance
 }
 
 </body>
