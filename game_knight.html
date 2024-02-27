@@ -282,7 +282,7 @@
       circle.attr("fill", "#f00"); // Red fill
       circle.attr("stroke", "#000"); // Black stroke
     };
-  function clickCastle(event) {
+function clickCastle(event) {
   var castle = document.getElementById('castle');
   var rect = castle.getBoundingClientRect();
   var centerX = rect.left + rect.width / 2;
@@ -302,32 +302,26 @@
   var offsetX = Math.cos(angle) * 50; // Adjust the distance of the floating text from the center
   var offsetY = Math.sin(angle) * 50; // Adjust the distance of the floating text from the center
 
-  // Add a variable to control the frequency of floating text appearance
-  var clickCount = 0;
-  var interval = setInterval(function() {
-    // Generate a new floating text for each fast click
-    var floatingText = document.createElement('div');
-    floatingText.classList.add('animate__animated', 'animate__fadeOutUp');
-    floatingText.id = 'floating-text';
-    floatingText.style.left = clientX + 'px';
-    floatingText.style.top = clientY + 'px';
-    floatingText.textContent = '+1';
-    document.body.appendChild(floatingText);
-    setTimeout(function() {
-      floatingText.remove();
-    }, 1000); // Adjusted timeout to 4 seconds
-
-    clickCount++;
-    if (clickCount >= Infinity) {
-      clearInterval(interval);
-    }
-  }, 50); // Adjusted interval to 50 milliseconds for faster appearance
+  // Generate a new floating text for each click
+  var floatingText = document.createElement('div');
+  floatingText.classList.add('animate__animated', 'animate__fadeOutUp');
+  floatingText.style.position = 'absolute';
+  floatingText.style.left = clientX + 'px';
+  floatingText.style.top = clientY + 'px';
+  floatingText.textContent = '+1';
+  document.body.appendChild(floatingText);
 
   // Increment deniers count when clicking the castle
   var counterElement = document.getElementById('counter');
   var deniers = parseInt(counterElement.textContent.split(':')[1].trim());
   deniers++;
   counterElement.textContent = 'Deniers: ' + deniers;
+
+  // Remove the floating text after a short delay
+  setTimeout(function() {
+    floatingText.remove();
+  }, 1000); // Adjusted timeout to remove the text after 1 second
 }
+
 </body>
 </html>
