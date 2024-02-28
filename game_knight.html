@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -7,7 +8,6 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-  <link href="https://fonts.cdnfonts.com/css/the-rum-is-gone" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
   <style>
@@ -100,26 +100,23 @@
       height: auto;
     }
 
-    #floating-text {
-      position: absolute;
-      font-size: 20px;
-      color: white;
-      z-index: 999;
-    }
     @font-face {
       font-family: 'MedievalFont';
-      src: url('https://github.com/largefort/medievalcivilizations/raw/main/TheRumIsGone-Wy1nG.ttf') format('ttf');
+      src: url('https://raw.githubusercontent.com/largefort/medievalclicker/main/medievalfont.woff') format('woff');
     }
   </style>
 </head>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5816082932921993"
+     crossorigin="anonymous"></script>
 <body>
   <div class="container">
     <div class="tab-content">
       <div class="tab-pane fade show active" id="castle-tab">
         <div class="text-center">
-        <img id="castle" src="castle_knight.jpg" alt="Castle" class="castle-image" onclick="clickCastle(event)">
+          <!-- Knight Civilization Castle Image -->
+          <img id="castle" src="castle_knight.jpg" alt="Castle" class="castle-image" onclick="clickCastle()">
           <div id="counter" class="mt-3">
-            Deniers: 0
+            Gold coins: 0
           </div>
           <div id="owned-upgrades" class="mt-3">
             <div>Knight: <span id="knight-count">0</span></div>
@@ -145,22 +142,22 @@
       <div class="tab-pane fade" id="shop-tab">
         <div class="text-center">
           <h2>Shop</h2>
-          <div class="upgrade" onclick="buyUpgrade('knight')">Knight (<span id="knight-cost">10</span> Deniers)</div>
+          <div class="upgrade" onclick="buyUpgrade('knight')">Knight (<span id="knight-cost">10</span> coins)</div>
           <audio id="knight-upgrade-sound">
             <source src="upgradesound.mp3" type="audio/mp3">
             Your browser does not support the audio element.
           </audio>
-          <div class="upgrade" onclick="buyUpgrade('archer')">Archer (<span id="archer-cost">25</span> Deniers)</div>
+          <div class="upgrade" onclick="buyUpgrade('archer')">Archer (<span id="archer-cost">25</span> coins)</div>
           <audio id="archer-upgrade-sound">
             <source src="upgradesound.mp3" type="audio/mp3">
             Your browser does not support the audio element.
           </audio>
-          <div class="upgrade" onclick="buyUpgrade('wizard')">Wizard (<span id="wizard-cost">50</span> Deniers)</div>
+          <div class="upgrade" onclick="buyUpgrade('wizard')">Wizard (<span id="wizard-cost">50</span> coins)</div>
           <audio id="wizard-upgrade-sound">
             <source src="upgradesound.mp3" type="audio/mp3">
             Your browser does not support the audio element.
           </audio>
-          <div class="upgrade" onclick="buyUpgrade('paladin')">Paladin (<span id="paladin-cost">100</span> Deniers)</div>
+          <div class="upgrade" onclick="buyUpgrade('paladin')">Paladin (<span id="paladin-cost">100</span> coins)</div>
           <audio id="paladin-upgrade-sound">
             <source src="upgradesound.mp3" type="audio/mp3">
             Your browser does not support the audio element.
@@ -172,11 +169,12 @@
         <div class="text-center">
           <h2>Settings</h2>
           <div class="form-check">
-            <input type="checkbox" id="toggle-music"> <label for="toggle-music" class="form-check-label">Toggle Music</label>
+            <input type="checkbox" id="toggle-music"> <label class="form-check-label">Toggle Music</label>
           </div>
           <div class="form-check">
-            <input type="checkbox" id="toggle-sfx"> <label for="toggle-sfx" class="form-check-label">Toggle Sound Effects</label>
+            <input type="checkbox" id="toggle-sfx"> <label class="form-check-label">Toggle Sound Effects</label>
           </div>
+          <!-- Add the PNG image from Crazy Games with clickable URL -->
           <a href="https://idev.games/game/medieval-civilizations" target="_blank">
             <img src="idev.png" alt="idev.games image" width="100">
           </a>
@@ -194,19 +192,20 @@
 
   <button id="fullscreen-button" style="display: none;" onclick="autoEnterFullscreen()">Enter Fullscreen</button>
 
+  <!-- Easter Egg Modal -->
   <div id="easteregg-modal" class="modal">
     <div class="modal-content">
       <span class="close" onclick="closeEasterEggModal">&times;</span>
       <h2>Thank You for Playing My Game!</h2>
       <p>Watch the special video message:</p>
-      <iframe width="850" height="528" src="https://www.youtube.com/embed/4-2HxIjtJso" title="video message from the dev of Medieval Civilizations" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      <!-- Add your video embed code or link here -->
+    <iframe width="850" height="528" src="https://www.youtube.com/embed/4-2HxIjtJso" title="video message from the dev of Medieval Civilizations" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
     </div>
   </div>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.3.0/raphael.min.js"></script>
   <script src="script.js"></script>
   <script src="easteregg.js"></script>
   <audio id="medievaltheme" loop autoplay>
@@ -214,54 +213,6 @@
     Your browser does not support the audio element.
   </audio>
   <audio id="click-sound" src="click-sound.mp3" type="audio/mp3"></audio>
-  <script>
-    // Example usage of Raphaël
-    window.onload = function() {
-      var paper = Raphael("castle", 200, 200); // "castle" is the ID of the element where you want to draw
-      var circle = paper.circle(100, 100, 50);
-      circle.attr("fill", "#f00"); // Red fill
-      circle.attr("stroke", "#000"); // Black stroke
-    };
-function clickCastle(event) {
-  var castle = document.getElementById('castle');
-  var rect = castle.getBoundingClientRect();
-  var centerX = rect.left + rect.width / 2;
-  var centerY = rect.top + rect.height / 2;
-  var clientX, clientY;
-
-  // Check if the event is a touch event
-  if (event.touches && event.touches.length) {
-    clientX = event.touches[0].clientX;
-    clientY = event.touches[0].clientY;
-  } else {
-    clientX = event.clientX;
-    clientY = event.clientY;
-  }
-
-  var angle = Math.atan2(clientY - centerY, clientX - centerX);
-  var offsetX = Math.cos(angle) * 50; // Adjust the distance of the floating text from the center
-  var offsetY = Math.sin(angle) * 50; // Adjust the distance of the floating text from the center
-
-  // Generate a new floating text for each click
-  var floatingText = document.createElement('div');
-  floatingText.classList.add('animate__animated', 'animate__fadeOutUp');
-  floatingText.style.position = 'absolute';
-  floatingText.style.left = clientX + 'px';
-  floatingText.style.top = clientY + 'px';
-  floatingText.textContent = '+1';
-  document.body.appendChild(floatingText);
-
-  // Increment deniers count when clicking the castle
-  var counterElement = document.getElementById('counter');
-  var deniers = parseInt(counterElement.textContent.split(':')[1].trim());
-  deniers++;
-  counterElement.textContent = 'Deniers: ' + deniers;
-
-  // Remove the floating text after a short delay
-  setTimeout(function() {
-    floatingText.remove();
-  }, 1000); // Adjusted timeout to remove the text after 1 second
-}
-
 </body>
+
 </html>
