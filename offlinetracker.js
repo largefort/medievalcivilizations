@@ -1,55 +1,54 @@
 class OfflineTracker {
     constructor() {
-        // Adjust this based on how much you want players to earn per second while offline
-        this.earningsPerSecond = 0.1;
+        this.earningsPerSecond = 0.1; // Adjust based on your game's economy
     }
 
     init() {
-        // Initialize the tracker by updating offline progress and setting up the last active time
         this.updateOfflineProgress();
-        this.updateLastActiveTime();
+        this.setupEventListeners();
     }
 
     updateLastActiveTime() {
-        // Store the last active time in localStorage when the user leaves the page
-        window.addEventListener('beforeunload', () => {
-            localStorage.setItem('lastActiveTime', Date.now());
-        });
+        localStorage.setItem('lastActiveTime', Date.now());
+    }
+
+    setupEventListeners() {
+        window.addEventListener('beforeunload', () => this.updateLastActiveTime());
+        document.addEventListener('DOMContentLoaded', () => this.updateOfflineProgress());
     }
 
     updateOfflineProgress() {
-        // Calculate and show offline earnings if there's a stored last active time
         const lastActiveTime = localStorage.getItem('lastActiveTime');
         if (lastActiveTime) {
             const currentTime = Date.now();
             const timePassed = currentTime - lastActiveTime; // Time passed in milliseconds
             const offlineEarnings = this.calculateOfflineEarnings(timePassed);
             this.showOfflineProgress(offlineEarnings);
-        } else {
-            // First time playing or localStorage is cleared, no offline earnings to show
-            console.log("Welcome to the game!");
         }
+        // Update last active time for the next session
+        this.updateLastActiveTime();
     }
 
     calculateOfflineEarnings(timePassed) {
-        // Calculate offline earnings based on the time passed and the set earnings rate
+        // Calculate earnings based on time passed
         const earnings = Math.floor((timePassed / 1000) * this.earningsPerSecond);
         return earnings;
     }
 
     showOfflineProgress(earnings) {
         // Update the modal content and display it
-        document.getElementById('offlineProgressText').innerText = `You earned ${earnings} coins while you were away!`;
-        $('#offlineProgressModal').modal('show');
-        
-        // If you're not using Bootstrap, replace the above line with your modal display logic
-        // Example for a simple custom modal:
-        // document.getElementById('offlineProgressModal').style.display = 'block';
+        const offlineEarningsElement = document.getElementById('offlineEarnings');
+        if (offlineEarningsElement) {
+            offlineEarningsElement.textContent = earnings.toString();
+            $('#offlineProgressModal').modal('show');
+        } else {
+            console.error('Offline earnings element not found.');
+        }
     }
 }
 
-// When the document is fully loaded, initialize and run the offline tracker
-document.addEventListener('DOMContentLoaded', () => {
-    const tracker = new OfflineTracker();
-    tracker.init();
+// Create and initialize the OfflineTracker instance when the page is fully loaded
+window.addEventListener('load', () => {
+    const offlineTracker = new OfflineTracker();
+    offlineTracker.init();
 });
