@@ -190,7 +190,21 @@
       <a class="nav-link" data-toggle="pill" href="#settings-tab">Settings</a>
     </div>
   </div>
-  <!-- Offline Progress Modal -->
+  
+  <button id="fullscreen-button" style="display: none;" onclick="autoEnterFullscreen()">Enter Fullscreen</button>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="script.js"></script>
+  <script src="offlinetracker.js"></script>
+  <audio id="medievaltheme" loop autoplay>
+    <source src="medievallord.mp3" type="audio/mp3">
+    Your browser does not support the audio element.
+  </audio>
+  <audio id="click-sound" src="click-sound.mp3" type="audio/mp3"></audio>
+</body>
+ <!-- Offline Progress Modal -->
 <div id="offlineProgressModal" class="modal">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -207,20 +221,5 @@
     </div>
   </div>
 </div>
-
-  <button id="fullscreen-button" style="display: none;" onclick="autoEnterFullscreen()">Enter Fullscreen</button>
-
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  <script src="script.js"></script>
-  <script src="offlinetracker.js"></script>
-  <audio id="medievaltheme" loop autoplay>
-    <source src="medievallord.mp3" type="audio/mp3">
-    Your browser does not support the audio element.
-  </audio>
-  <audio id="click-sound" src="click-sound.mp3" type="audio/mp3"></audio>
-</body>
-
 </html>
 
