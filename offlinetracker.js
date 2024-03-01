@@ -36,13 +36,13 @@ class OfflineTracker {
     }
 
     showOfflineProgress(earnings) {
-        // Update the modal content and display it
-        const offlineEarningsElement = document.getElementById('offlineEarnings');
-        if (offlineEarningsElement) {
-            offlineEarningsElement.textContent = earnings.toString();
+        // Ensure jQuery is loaded
+        if (window.jQuery) {
+            // Update the modal content and display it
+            $('#offlineEarnings').text(earnings);
             $('#offlineProgressModal').modal('show');
         } else {
-            console.error('Offline earnings element not found.');
+            console.error('jQuery is not loaded, modal cannot be displayed.');
         }
     }
 }
