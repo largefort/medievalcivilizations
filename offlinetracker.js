@@ -41,6 +41,7 @@ class OfflineTracker {
             // Update the modal content and display it
             $('#offlineEarnings').text(earnings);
             $('#offlineProgressModal').modal('show');
+            $('#offlineProgressModal').modal('hide');
         } else {
             console.error('jQuery is not loaded, modal cannot be displayed.');
         }
