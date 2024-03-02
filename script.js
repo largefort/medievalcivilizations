@@ -1,4 +1,4 @@
-let deniers = 0; // Renamed from coins to deniers
+let coins = 0;
 let knightCount = 0;
 let archerCount = 0;
 let wizardCount = 0;
@@ -50,7 +50,7 @@ function initializeDB() {
 
 function saveGameData() {
     const gameState = {
-        deniers, // Updated from coins to deniers
+        coins,
         knightCount,
         archerCount,
         wizardCount,
@@ -73,7 +73,7 @@ function loadGameData() {
         if (request.result) {
             const savedState = request.result;
 
-            deniers = savedState.deniers; // Updated from coins to deniers
+            coins = savedState.coins;
             knightCount = savedState.knightCount;
             archerCount = savedState.archerCount;
             wizardCount = savedState.wizardCount;
@@ -121,8 +121,21 @@ function toggleSoundEffects() {
 document.getElementById("toggle-music").addEventListener("change", toggleMusic);
 document.getElementById("toggle-sfx").addEventListener("change", toggleSoundEffects);
 
+// Function to request fullscreen
+function requestFullscreen(element) {
+    if (element.requestFullscreen) {
+        element.requestFullscreen();
+    } else if (element.mozRequestFullScreen) { // Firefox
+        element.mozRequestFullScreen();
+    } else if (element.webkitRequestFullscreen) { // Chrome and Safari
+        element.webkitRequestFullscreen();
+    } else if (element.msRequestFullscreen) { // Internet Explorer
+        element.msRequestFullscreen();
+    }
+}
+
 function updateUI() {
-    document.getElementById("counter").textContent = `Deniers: ${compactNumberFormat(deniers)}`; // Updated text
+    document.getElementById("counter").textContent = `Gold coins: ${compactNumberFormat(coins)}`;
     document.getElementById("knight-count").textContent = knightCount;
     document.getElementById("archer-count").textContent = archerCount;
     document.getElementById("wizard-count").textContent = wizardCount;
@@ -133,29 +146,8 @@ function updateUI() {
     updatePassiveIncome();
 }
 
-function clickCastle(event) {
-    var castle = document.getElementById('castle');
-    var rect = castle.getBoundingClientRect();
-    var centerX = rect.left + rect.width / 2;
-    var centerY = rect.top + rect.height / 2;
-    var mouseX = event.clientX;
-    var mouseY = event.clientY;
-    var angle = Math.atan2(mouseY - centerY, mouseX - centerX);
-    var offsetX = Math.cos(angle) * 50; // Adjust the distance of the floating text from the center
-    var offsetY = Math.sin(angle) * 50; // Adjust the distance of the floating text from the center
-
-    var floatingText = document.createElement('div');
-    floatingText.classList.add('animate__animated', 'animate__fadeOutUp');
-    floatingText.id = 'floating-text';
-    floatingText.style.left = mouseX + 'px';
-    floatingText.style.top = mouseY + 'px';
-    floatingText.textContent = '+1';
-    document.body.appendChild(floatingText);
-    setTimeout(function () {
-        floatingText.remove();
-    }, 1000);
-
-    deniers++; // Updated from coins to deniers
+function clickCastle() {
+    coins++;
     saveGameData();
     updateUI();
 
@@ -171,32 +163,32 @@ function buyUpgrade(type) {
         case "knight":
             cost = 10;
             upgradeCount = knightCount;
-            if (deniers >= cost) { // Updated from coins to deniers
-                deniers -= cost; // Updated from coins to deniers
+            if (coins >= cost) {
+                coins -= cost;
                 knightCount++;
             }
             break;
         case "archer":
             cost = 25;
             upgradeCount = archerCount;
-            if (deniers >= cost) { // Updated from coins to deniers
-                deniers -= cost; // Updated from coins to deniers
+            if (coins >= cost) {
+                coins -= cost;
                 archerCount++;
             }
             break;
         case "wizard":
             cost = 50;
             upgradeCount = wizardCount;
-            if (deniers >= cost) { // Updated from coins to deniers
-                deniers -= cost; // Updated from coins to deniers
+            if (coins >= cost) {
+                coins -= cost;
                 wizardCount++;
             }
             break;
         case "paladin":
             cost = 100;
             upgradeCount = paladinCount;
-            if (deniers >= cost) { // Updated from coins to deniers
-                deniers -= cost; // Updated from coins to deniers
+            if (coins >= cost) {
+                coins -= cost;
                 paladinCount++;
             }
             break;
@@ -249,7 +241,7 @@ function earnPassiveIncome() {
     const timeDifference = currentTime - lastSaveTime;
     const offlinePassiveIncome = Math.floor(passiveIncome * (timeDifference / 1000));
 
-    deniers += offlinePassiveIncome; // Updated from coins to deniers
+    coins += offlinePassiveIncome;
     lastSaveTime = currentTime; // Update the last save time
 
     saveGameData();
