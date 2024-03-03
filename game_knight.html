@@ -28,14 +28,14 @@
       margin-top: 50px;
     }
 
-      .nav-pills .nav-link {
-      font-size: 20px;
-      padding: 12px 24px;
-      background-color: #523b2b;
+    .nav-pills .nav-link {
+      font-size: 18px;
+      padding: 10px 20px;
+      background-color: #523b2b; /* Updated background color */
       border-radius: 10px;
       border: none;
       color: #FFD700;
-      margin: 0 5px;
+      margin: 5px;
       transition: background-color 0.3s, color 0.3s;
     }
 
@@ -57,11 +57,10 @@
       border-radius: 10px;
     }
 
-.upgrade:hover, .nav-link:hover, .nav-link.active, .upgrade:focus {
-  background-color: #3a2724; /* Darker shade for hover/active state */
-  color: #f8e7c9; /* Lighter color for text */
-  outline: none; /* Remove focus outline and replace with other visual feedback */
-}
+    .upgrade:hover {
+      background-color: #2d1e18; /* Updated hover background color */
+      color: #ffcc00;
+    }
 
     .modal {
       display: none;
@@ -99,17 +98,8 @@
       border-radius: 10px;
       max-width: 100%;
       height: auto;
-      
-      @media (max-width: 768px) {
-  .container {
-    margin-top: 20px;
-    padding: 10px;
-  }
+    }
 
-  .nav-pills .nav-link {
-    padding: 10px 15px; /* Adjust for smaller screens */
-  }
-}     
     @font-face {
       font-family: 'MedievalFont';
       src: url('https://raw.githubusercontent.com/largefort/medievalclicker/main/medievalfont.woff') format('woff');
@@ -118,6 +108,7 @@
   <meta name="google-adsense-account" content="your-google-adsense-account">
   <script async src="https://pagead2.googlesyndication.com/pagead/js?client=your-google-adsense-account" crossorigin="anonymous"></script>
 </head>
+
 <body>
   <div class="container">
     <div class="tab-content">
@@ -212,4 +203,5 @@
   </audio>
   <audio id="click-sound" src="click-sound.mp3" type="audio/mp3"></audio>
 </body>
+
 </html>
