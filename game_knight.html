@@ -28,14 +28,14 @@
       margin-top: 50px;
     }
 
-    .nav-pills .nav-link {
-      font-size: 18px;
-      padding: 10px 20px;
-      background-color: #523b2b; /* Updated background color */
+      .nav-pills .nav-link {
+      font-size: 20px;
+      padding: 12px 24px;
+      background-color: #523b2b;
       border-radius: 10px;
       border: none;
       color: #FFD700;
-      margin: 5px;
+      margin: 0 5px;
       transition: background-color 0.3s, color 0.3s;
     }
 
@@ -57,22 +57,10 @@
       border-radius: 10px;
     }
 
-    .upgrade:hover {
-      background-color: #2d1e18; /* Updated hover background color */
-      color: #ffcc00;
-    }
-    .notification {
-    background-color: #523b2b; /* Adjust to match your game's theme */
-    color: #f7dfc4;
-    padding: 10px;
-    margin: 10px;
-    border-radius: 10px;
-    position: fixed;
-    top: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1000;
-    text-align: center;
+.upgrade:hover, .nav-link:hover, .nav-link.active, .upgrade:focus {
+  background-color: #3a2724; /* Darker shade for hover/active state */
+  color: #f8e7c9; /* Lighter color for text */
+  outline: none; /* Remove focus outline and replace with other visual feedback */
 }
 
     .modal {
@@ -111,22 +99,17 @@
       border-radius: 10px;
       max-width: 100%;
       height: auto;
-    }
-      }
-    .notification {
-      background-color: #523b2b;
-      color: #f7dfc4;
-      padding: 10px;
-      margin: 10px;
-      border-radius: 10px;
-      position: fixed;
-      top: 10px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 1000;
-      text-align: center;
-      display: none;
+      
+      @media (max-width: 768px) {
+  .container {
+    margin-top: 20px;
+    padding: 10px;
+  }
 
+  .nav-pills .nav-link {
+    padding: 10px 15px; /* Adjust for smaller screens */
+  }
+}     
     @font-face {
       font-family: 'MedievalFont';
       src: url('https://raw.githubusercontent.com/largefort/medievalclicker/main/medievalfont.woff') format('woff');
@@ -135,9 +118,6 @@
   <meta name="google-adsense-account" content="your-google-adsense-account">
   <script async src="https://pagead2.googlesyndication.com/pagead/js?client=your-google-adsense-account" crossorigin="anonymous"></script>
 </head>
-  <div id="offlineNotification" class="notification" style="display: none;">
-    <p id="offlineNotificationText"></p>
-</div>
 <body>
   <div class="container">
     <div class="tab-content">
@@ -225,34 +205,11 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  <script src="https://cdn.socket.io/4.7.4/socket.io.min.js"></script>
   <script src="script.js"></script>
-  <script src="chatserver.js"></script>
-  <script src="offlinenotification.js"></script>
   <audio id="medievaltheme" loop autoplay>
     <source src="medievalknight.mp3" type="audio/mp3">
     Your browser does not support the audio element.
   </audio>
   <audio id="click-sound" src="click-sound.mp3" type="audio/mp3"></audio>
 </body>
-<div id="chat-container" style="position: fixed; bottom: 0; right: 0; width: 300px; background-color: rgba(0, 0, 0, 0.6); color: white; padding: 10px;">
-  <div id="messages" style="height: 200px; overflow-y: auto;"></div>
-  <input id="chat-input" type="text" placeholder="Type a message..." style="width: 70%;"/><button id="send-message">Send</button>
-</div>
-<script>
-  var socket = io(); // Connect to the server where you host your Socket.IO
-
-  // Emitting a message to the server
-  $('#send-message').click(function(){
-    socket.emit('chat message', $('#chat-input').val());
-    $('#chat-input').val('');
-    return false;
-  });
-
-  // Listening for messages from the server
-  socket.on('chat message', function(msg){
-    $('#messages').append($('<li>').text(msg));
-    $('#messages').scrollTop($('#messages')[0].scrollHeight);
-  });
-</script>
 </html>
