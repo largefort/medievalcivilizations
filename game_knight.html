@@ -234,5 +234,24 @@
   </audio>
   <audio id="click-sound" src="click-sound.mp3" type="audio/mp3"></audio>
 </body>
-</html>
+<div id="chat-container" style="position: fixed; bottom: 0; right: 0; width: 300px; background-color: rgba(0, 0, 0, 0.6); color: white; padding: 10px;">
+  <div id="messages" style="height: 200px; overflow-y: auto;"></div>
+  <input id="chat-input" type="text" placeholder="Type a message..." style="width: 70%;"/><button id="send-message">Send</button>
+</div>
+<script>
+  var socket = io(); // Connect to the server where you host your Socket.IO
 
+  // Emitting a message to the server
+  $('#send-message').click(function(){
+    socket.emit('chat message', $('#chat-input').val());
+    $('#chat-input').val('');
+    return false;
+  });
+
+  // Listening for messages from the server
+  socket.on('chat message', function(msg){
+    $('#messages').append($('<li>').text(msg));
+    $('#messages').scrollTop($('#messages')[0].scrollHeight);
+  });
+</script>
+</html>
