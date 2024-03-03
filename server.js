@@ -1,3 +1,4 @@
+// server.js
 const express = require('express');
 const http = require('http');
 const socketIo = require('socket.io');
@@ -13,10 +14,8 @@ io.on('connection', (socket) => {
     console.log('User disconnected');
   });
 
-  // Example: Handling a custom event
-  socket.on('send-message', (message) => {
-    // This will emit the message to all connected clients
-    io.emit('new-message', message);
+  socket.on('chat message', (msg) => {
+    io.emit('chat message', msg);
   });
 });
 
