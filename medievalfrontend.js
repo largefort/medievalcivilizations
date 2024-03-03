@@ -1,22 +1,11 @@
-let gameState = {
-    coins: 0 // Initialize game state with coins
-};
+// Function to handle castle click
+function clickCastle() {
+    // Assuming each castle click generates 1 coin for simplicity
+    socket.emit('click-castle', { coins: 1 });
+}
 
-io.on('connection', (socket) => {
-    console.log('A user connected');
-    
-    // Send current game state to just the connected client
-    socket.emit('update-state', gameState);
-
-    socket.on('click-castle', (data) => {
-        // Update game state based on the action
-        gameState.coins += data.coins; // Increment coins
-
-        // Broadcast updated game state to all clients
-        io.emit('update-state', gameState);
-    });
-
-    socket.on('disconnect', () => {
-        console.log('User disconnected');
-    });
+// Listen for state updates from the server
+socket.on('update-state', (data) => {
+    // Update the UI with the new game state
+    document.getElementById('counter').innerText = `Gold coins: ${data.coins}`;
 });
