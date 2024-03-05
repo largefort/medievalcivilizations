@@ -42,7 +42,7 @@ function initializeDB() {
     };
 
     request.onerror = function (event) {
-        console.log("Error opening DB", event);
+        console.error("Error opening DB", event);
     };
 }
 
@@ -89,43 +89,8 @@ function loadGameData() {
 
 initializeDB();
 
-function toggleMusic() {
-    const medievalThemeAudio = document.getElementById("medievaltheme");
-    if (medievalThemeAudio.paused) {
-        medievalThemeAudio.play();
-    } else {
-        medievalThemeAudio.pause();
-    }
-}
-
-function toggleSoundEffects() {
-    const clickSoundAudio = document.getElementById("click-sound");
-    const upgradeSoundAudio = document.getElementById("upgradeSound");
-    const toggleSfxCheckbox = document.getElementById("toggle-sfx");
-
-    if (toggleSfxCheckbox.checked) {
-        clickSoundAudio.muted = true;
-        upgradeSoundAudio.muted = true;
-    } else {
-        clickSoundAudio.muted = false;
-        upgradeSoundAudio.muted = false;
-    }
-}
-
 document.getElementById("toggle-music").addEventListener("change", toggleMusic);
 document.getElementById("toggle-sfx").addEventListener("change", toggleSoundEffects);
-
-function requestFullscreen(element) {
-    if (element.requestFullscreen) {
-        element.requestFullscreen();
-    } else if (element.mozRequestFullScreen) {
-        element.mozRequestFullScreen();
-    } else if (element.webkitRequestFullscreen) {
-        element.webkitRequestFullscreen();
-    } else if (element.msRequestFullscreen) {
-        element.msRequestFullscreen();
-    }
-}
 
 function updateUI() {
     document.getElementById("counter").textContent = `Gold coins: ${compactNumberFormat(coins)}`;
@@ -137,98 +102,16 @@ function updateUI() {
     document.getElementById("paladin-count").textContent = paladinCount;
 
     // Display the passive income as gold coins per second
-    document.getElementById("gcps").textContent = `Gold coins per second: ${passiveIncome}`;
-}
-
-function clickCastle() {
-    coins++;
-    saveGameData();
-    updateUI();
-    clickSound.play();
-}
-
-function buyUpgrade(type) {
-    let cost = 0;
-    let incomeRate = 0;
-
-    switch (type) {
-        case "knight":
-            cost = 10 * Math.pow(1.1, knightCount);
-            incomeRate = 1;
-            if (coins >= cost) {
-                coins -= cost;
-                knightCount++;
-                passiveIncome += incomeRate;
-            }
-            break;
-        case "archer":
-            cost = 25 * Math.pow(1.1, archerCount);
-            incomeRate = 2;
-            if (coins >= cost) {
-                coins -= cost;
-                archerCount++;
-                passiveIncome += incomeRate;
-            }
-            break;
-        case "wizard":
-            cost = 50 * Math.pow(1.1, wizardCount);
-            incomeRate = 4;
-            if (coins >= cost) {
-                coins -= cost;
-                wizardCount++;
-                passiveIncome += incomeRate;
-            }
-            break;
-        case "paladin":
-            cost = 100 * Math.pow(1.1, paladinCount);
-            incomeRate = 8;
-            if (coins >= cost) {
-                coins -= cost;
-                paladinCount++;
-                passiveIncome += incomeRate;
-            }
-            break;
-    }
-
-    if (coins >= cost) {
-        document.getElementById("upgradeSound").play();
-        saveGameData();
-        updateUI();
-    }
+    document.getElementById("gcps").textContent = `Gold coins per second: ${passiveIncome.toFixed(2)}`;
 }
 
 function compactNumberFormat(num) {
-    if (num < 1e3) return num;
+    if (num < 1e3) return num.toFixed(2); // Changed to add two decimal places
     if (num >= 1e3 && num < 1e6) return +(num / 1e3).toFixed(1) + "K";
     if (num >= 1e6 && num < 1e9) return +(num / 1e6).toFixed(1) + "M";
     if (num >= 1e9 && num < 1e12) return +(num / 1e9).toFixed(1) + "B";
     return +(num / 1e12).toFixed(1) + "T";
 }
-
-function handleSkillingClick(skill) {
-    switch (skill) {
-        case "woodcutting":
-            woodcuttingLevel++;
-            break;
-        case "mining":
-            miningLevel++;
-            break;
-    }
-    saveGameData();
-    updateUI();
-}
-
-function updatePassiveIncome() {
-    // Calculate passive income based on knights, archers, wizards, and paladins
-    const knightIncomeRate = 1;   // Adjust the income rate for knights
-    const archerIncomeRate = 2;   // Adjust the income rate for archers
-    const wizardIncomeRate = 4;   // Adjust the income rate for wizards
-    const paladinIncomeRate = 8;  // Adjust the income rate for paladins
-
-    const totalPassiveIncome = (knightCount * knightIncomeRate + archerCount * archerIncomeRate + wizardCount * wizardIncomeRate + paladinCount * paladinIncomeRate);
-    passiveIncome = totalPassiveIncome;
-}
-
 
 // Calculate passive income every second and update UI
 setInterval(() => {
