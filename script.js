@@ -5,11 +5,10 @@ let wizardCount = 0;
 let woodcuttingLevel = 1;
 let miningLevel = 1;
 let paladinCount = 0;
-let passiveIncome = 0;
+let passiveIncome = 0; // Gold coins per second
 let db;
 let lastSaveTime = Date.now(); // Initialize lastSaveTime with the current time
 
-// Add an HTML audio element for the upgrade sound
 document.write(`
 <audio id="upgradeSound">
     <source src="upgradesound.mp3" type="audio/mpeg">
@@ -17,7 +16,6 @@ document.write(`
 </audio>
 `);
 
-// Preload the click sound
 const clickSound = new Audio("click-sound.mp3");
 
 function disableFingerZooming() {
@@ -57,7 +55,8 @@ function saveGameData() {
         woodcuttingLevel,
         miningLevel,
         paladinCount,
-        lastSaveTime: Date.now(), // Update the last save time
+        passiveIncome,
+        lastSaveTime: Date.now(), // Save the last save time
     };
 
     const transaction = db.transaction(["gameState"], "readwrite");
@@ -80,6 +79,7 @@ function loadGameData() {
             woodcuttingLevel = savedState.woodcuttingLevel;
             miningLevel = savedState.miningLevel;
             paladinCount = savedState.paladinCount;
+            passiveIncome = savedState.passiveIncome; // Load passive income
             lastSaveTime = savedState.lastSaveTime; // Update the last save time
 
             updateUI();
@@ -89,7 +89,6 @@ function loadGameData() {
 
 initializeDB();
 
-// Function to toggle music
 function toggleMusic() {
     const medievalThemeAudio = document.getElementById("medievaltheme");
     if (medievalThemeAudio.paused) {
@@ -99,37 +98,31 @@ function toggleMusic() {
     }
 }
 
-// Function to toggle sound effects
 function toggleSoundEffects() {
     const clickSoundAudio = document.getElementById("click-sound");
     const upgradeSoundAudio = document.getElementById("upgradeSound");
     const toggleSfxCheckbox = document.getElementById("toggle-sfx");
 
-    // Check the state of the toggle-sfx checkbox
     if (toggleSfxCheckbox.checked) {
-        // If the checkbox is checked, mute the sound effects
         clickSoundAudio.muted = true;
         upgradeSoundAudio.muted = true;
     } else {
-        // If the checkbox is not checked, unmute the sound effects
         clickSoundAudio.muted = false;
         upgradeSoundAudio.muted = false;
     }
 }
 
-// Add event listeners to the checkboxes
 document.getElementById("toggle-music").addEventListener("change", toggleMusic);
 document.getElementById("toggle-sfx").addEventListener("change", toggleSoundEffects);
 
-// Function to request fullscreen
 function requestFullscreen(element) {
     if (element.requestFullscreen) {
         element.requestFullscreen();
-    } else if (element.mozRequestFullScreen) { // Firefox
+    } else if (element.mozRequestFullScreen) {
         element.mozRequestFullScreen();
-    } else if (element.webkitRequestFullscreen) { // Chrome and Safari
+    } else if (element.webkitRequestFullscreen) {
         element.webkitRequestFullscreen();
-    } else if (element.msRequestFullscreen) { // Internet Explorer
+    } else if (element.msRequestFullscreen) {
         element.msRequestFullscreen();
     }
 }
@@ -143,65 +136,65 @@ function updateUI() {
     document.getElementById("mining-level").textContent = miningLevel;
     document.getElementById("paladin-count").textContent = paladinCount;
 
-    updatePassiveIncome();
+    // Display the passive income as gold coins per second
+    document.getElementById("gcps").textContent = `Gold coins per second: ${passiveIncome}`;
 }
 
 function clickCastle() {
     coins++;
     saveGameData();
     updateUI();
-
-    // Play the preloaded click sound
     clickSound.play();
 }
 
 function buyUpgrade(type) {
     let cost = 0;
-    let upgradeCount;
+    let incomeRate = 0;
 
     switch (type) {
         case "knight":
-            cost = 10;
-            upgradeCount = knightCount;
+            cost = 10 * Math.pow(1.1, knightCount);
+            incomeRate = 1;
             if (coins >= cost) {
                 coins -= cost;
                 knightCount++;
+                passiveIncome += incomeRate;
             }
             break;
         case "archer":
-            cost = 25;
-            upgradeCount = archerCount;
+            cost = 25 * Math.pow(1.1, archerCount);
+            incomeRate = 2;
             if (coins >= cost) {
                 coins -= cost;
                 archerCount++;
+                passiveIncome += incomeRate;
             }
             break;
         case "wizard":
-            cost = 50;
-            upgradeCount = wizardCount;
+            cost = 50 * Math.pow(1.1, wizardCount);
+            incomeRate = 4;
             if (coins >= cost) {
                 coins -= cost;
                 wizardCount++;
+                passiveIncome += incomeRate;
             }
             break;
         case "paladin":
-            cost = 100;
-            upgradeCount = paladinCount;
+            cost = 100 * Math.pow(1.1, paladinCount);
+            incomeRate = 8;
             if (coins >= cost) {
                 coins -= cost;
                 paladinCount++;
+                passiveIncome += incomeRate;
             }
             break;
     }
 
-    if (cost > 0) {
-        // Play the upgrade sound
-        const upgradeSound = document.getElementById("upgradeSound");
-        upgradeSound.play();
+    if (coins >= cost) {
+        document.getElementById("upgradeSound").play();
+        saveGameData();
+        updateUI();
     }
-
-    saveGameData();
-    updateUI();
 }
 
 function compactNumberFormat(num) {
@@ -236,16 +229,12 @@ function updatePassiveIncome() {
     passiveIncome = totalPassiveIncome;
 }
 
-function earnPassiveIncome() {
-    const currentTime = Date.now();
-    const timeDifference = currentTime - lastSaveTime;
-    const offlinePassiveIncome = Math.floor(passiveIncome * (timeDifference / 1000));
 
-    coins += offlinePassiveIncome;
-    lastSaveTime = currentTime; // Update the last save time
-
+// Calculate passive income every second and update UI
+setInterval(() => {
+    const elapsedTimeInSeconds = (Date.now() - lastSaveTime) / 1000;
+    coins += passiveIncome * elapsedTimeInSeconds;
+    lastSaveTime = Date.now(); // Reset lastSaveTime to the current time
     saveGameData();
     updateUI();
-}
-
-setInterval(earnPassiveIncome, 1000);
+}, 1000);
