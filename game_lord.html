@@ -30,21 +30,25 @@
     }
 
     .nav-pills .nav-link {
-      font-size: 18px;
-      padding: 10px 20px;
-      background-color: #9b7838; /* Updated background color */
-      border-radius: 10px;
-      border: none;
-      color: #FFD700;
-      margin: 5px;
-      transition: background-color 0.3s, color 0.3s;
-    }
+  font-size: 18px;
+  padding: 10px 20px;
+  background-image: url('https://raw.githubusercontent.com/largefort/medievalcivilizations/main/vecror-illustration-vintage-brown-barrel-600nw-1536522002.jpg.webp'); /* Add your texture image URL */
+  background-size: cover; /* Ensure the background covers the tab */
+  border-radius: 10px;
+  border: none;
+  color: #FFD700; /* Gold color for text */
+  margin: 5px;
+  transition: background-color 0.3s, color 0.3s;
+  /* Added for better readability over the texture */
+  text-shadow: 1px 1px 2px #000;
+}
 
-    .nav-pills .nav-link.active {
-      background-color: #5a3921;
-      color: #FFD700;
-      font-weight: bold;
-    }
+.nav-pills .nav-link.active {
+  background-color: rgba(45, 30, 24, 0.85); /* Updated for a see-through effect */
+  background-blend-mode: darken; /* Blends the background color with the texture */
+  color: #FFD700;
+  font-weight: bold;
+}
 
     .upgrade {
       font-size: 18px;
