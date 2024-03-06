@@ -27,9 +27,24 @@
 
 /* Style a medieval-themed container */
 .container {
+    position: relative;
     background-color: #D2B48C; /* Light brown background for a parchment look */
     border: 2px solid #8B4513; /* Brown border for parchment frame */
     padding: 20px; /* Padding inside the container */
     border-radius: 10px; /* Slightly rounded corners */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Drop shadow for a 3D effect */
     font-family: 'MedievalFont', serif; /* Updated font family with MedievalFont */
+    filter: contrast(110%) saturate(110%); /* Enhanced visual quality through shader-like effect */
+}
+
+.container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border-radius: 10px; /* Match your container's border-radius */
+    background: radial-gradient(circle, transparent 50%, rgba(0, 0, 0, 0.75) 100%);
+    pointer-events: none; /* Ensures clicks pass through to elements underneath */
+}
