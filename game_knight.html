@@ -50,17 +50,33 @@
 }
 
 
-    .upgrade {
-      font-size: 18px;
-      color: #f7dfc4;
-      background-color: #523b2b; /* Updated background color */
-      border: 2px solid #2d1e18; /* Updated border color */
-      padding: 15px;
-      margin-bottom: 10px;
-      cursor: pointer;
-      transition: background-color 0.3s, color 0.3s;
-      border-radius: 10px;
-    }
+   .upgrade {
+  width: 200px; /* Adjust width as needed */
+  height: 100px; /* Adjust height as needed */
+  color: white; /* Text color */
+  line-height: 100px; /* Center text vertically */
+  text-align: center; /* Center text horizontally */
+  margin-bottom: 10px; /* Space between buttons */
+  background-size: cover; /* Cover the entire area of the button */
+  background-position: center; /* Center the background image */
+  cursor: pointer; /* Change mouse cursor to indicate clickable */
+}
+
+.knight {
+  background-image: url('knight-upgrade-button.png'); /* Update with your knight image path */
+}
+
+.archer {
+  background-image: url('archer-upgrade-button.png'); /* Update with your archer image path */
+}
+
+.wizard {
+  background-image: url('wizard-upgrade-button.png'); /* Update with your wizard image path */
+}
+
+.paladin {
+  background-image: url('paladin-upgradebutton.png'); /* Update with your paladin image path */
+}
 
     .upgrade:hover {
       background-color: #2d1e18; /* Updated hover background color */
@@ -147,35 +163,32 @@
           </div>
         </div>
       </div>
+      
       <div class="tab-pane fade" id="shop-tab">
     <div class="text-center">
       <h2>Shop</h2>
-      <div class="upgrade" onclick="buyUpgrade('knight')">
-        <img src="knight-upgrade-button.png" alt="Knight" style="width: 100px; height: auto;"> <!-- Update this src with your knight image -->
+      <div class="upgrade knight" onclick="buyUpgrade('knight')">
         Knight (<span id="knight-cost">10</span> coins)
       </div>
       <audio id="knight-upgrade-sound">
         <source src="upgradesound.mp3" type="audio/mp3">
         Your browser does not support the audio element.
       </audio>
-      <div class="upgrade" onclick="buyUpgrade('archer')">
-        <img src="archer-upgrade-button.png" alt="Archer" style="width: 100px; height: auto;"> <!-- Update this src with your archer image -->
+      <div class="upgrade archer" onclick="buyUpgrade('archer')">
         Archer (<span id="archer-cost">25</span> coins)
       </div>
       <audio id="archer-upgrade-sound">
         <source src="upgradesound.mp3" type="audio/mp3">
         Your browser does not support the audio element.
       </audio>
-      <div class="upgrade" onclick="buyUpgrade('wizard')">
-        <img src="wizard-upgrade-button.png" alt="Wizard" style="width: 100px; height: auto;"> <!-- Update this src with your wizard image -->
+      <div class="upgrade wizard" onclick="buyUpgrade('wizard')">
         Wizard (<span id="wizard-cost">50</span> coins)
       </div>
       <audio id="wizard-upgrade-sound">
         <source src="upgradesound.mp3" type="audio/mp3">
         Your browser does not support the audio element.
       </audio>
-      <div class="upgrade" onclick="buyUpgrade('paladin')">
-        <img src="paladin-upgradebutton.png" alt="Paladin" style="width: 100px; height: auto;"> <!-- Update this src with your paladin image -->
+      <div class="upgrade paladin" onclick="buyUpgrade('paladin')">
         Paladin (<span id="paladin-cost">100</span> coins)
       </div>
       <audio id="paladin-upgrade-sound">
@@ -184,7 +197,7 @@
       </audio>
     </div>
 </div>
-
+      
       <div class="tab-pane fade" id="settings-tab">
         <div class="text-center">
           <h2>Settings</h2>
