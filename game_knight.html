@@ -104,6 +104,23 @@
       font-family: 'MedievalFont';
       src: url('https://raw.githubusercontent.com/largefort/medievalclicker/main/medievalfont.woff') format('woff');
     }
+    .floating-text {
+      position: absolute;
+      animation: floatUp 2s forwards;
+      color: gold;
+      font-size: 16px;
+      user-select: none;
+    }
+    @keyframes floatUp {
+      0% {
+        opacity: 1;
+        transform: translateY(0px);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-50px);
+      }
+    }
   </style>
   <meta name="google-adsense-account" content="your-google-adsense-account">
   <script async src="https://pagead2.googlesyndication.com/pagead/js?client=your-google-adsense-account" crossorigin="anonymous"></script>
@@ -203,5 +220,27 @@
   </audio>
   <audio id="click-sound" src="click-sound.mp3" type="audio/mp3"></audio>
 </body>
+    <script>
+    function clickCastle() {
+      var goldEarned = 10;
+      var counter = document.getElementById('counter');
+      var currentGold = parseInt(counter.textContent.replace('Gold coins: ', '')) || 0;
+      counter.textContent = 'Gold coins: ' + (currentGold + goldEarned);
+
+      var floatingText = document.createElement('div');
+      floatingText.textContent = '+' + goldEarned + ' Gold';
+      floatingText.className = 'floating-text';
+      document.body.appendChild(floatingText);
+
+      var castleImg = document.getElementById('castle');
+      var rect = castleImg.getBoundingClientRect();
+      floatingText.style.left = (rect.left + window.scrollX + castleImg.offsetWidth / 2 - 10) + 'px';
+      floatingText.style.top = (rect.top + window.scrollY - 10) + 'px';
+
+      setTimeout(function() {
+        document.body.removeChild(floatingText);
+      }, 2000);
+    }
+  </script>
 
 </html>
