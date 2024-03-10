@@ -47,10 +47,7 @@
             </ul>
         </div>
     </div>
-  
-      <script>
-    // Replace with your repository's commits API URL
-    // Example: 'https://api.github.com/repos/largefort/medievalcivilizations/commits'
+    <script>
     const updatesUrl = 'https://api.github.com/repos/largefort/medievalcivilizations/commits';
 
     function fetchUpdates() {
@@ -61,29 +58,55 @@
             })
             .catch(error => {
                 console.error('Error fetching updates:', error);
-                // Optionally, handle the error (e.g., show an error message)
             });
     }
 
     function populateUpdates(commits) {
         const updatesList = document.getElementById('updateList');
         const updatesCount = document.getElementById('updatesCount');
+        let updateMessages = commits.map(commit => generateUpdateMessage(commit.commit.message, commit.commit.author.date));
 
-        commits.forEach((commit, index) => {
+        // Filter out null messages (in case the commit doesn't follow the expected format)
+        updateMessages = updateMessages.filter(message => message !== null);
+
+        updateMessages.forEach((message, index) => {
             const item = document.createElement('li');
             item.className = 'update-item';
-            item.innerHTML = `
-                <div class="update-version">Update ${index + 1}</div>
-                <div class="update-date">Date: ${new Date(commit.commit.author.date).toLocaleDateString()} at ${new Date(commit.commit.author.date).toLocaleTimeString()}</div>
-                <div>Commit message: ${commit.commit.message}</div>
-            `;
+            item.innerHTML = message;
             updatesList.appendChild(item);
         });
 
-        updatesCount.textContent = commits.length;
+        updatesCount.textContent = updateMessages.length;
     }
 
-    // Call fetchUpdates on page load
+    function generateUpdateMessage(commitMessage, date) {
+        const messagePrefix = commitMessage.split(']')[0] + ']'; // Extracts the prefix
+        const formattedDate = new Date(date).toLocaleDateString("en-US");
+        const formattedTime = new Date(date).toLocaleTimeString("en-US", {hour: '2-digit', minute:'2-digit'});
+        
+        let userFriendlyMessage;
+
+        switch(messagePrefix) {
+            case '[Feature]':
+                userFriendlyMessage = `New Feature Added - ${commitMessage.split(']')[1].trim()}`;
+                break;
+            case '[Bugfix]':
+                userFriendlyMessage = `Bug Fixed - ${commitMessage.split(']')[1].trim()}`;
+                break;
+            case '[Update]':
+                userFriendlyMessage = `Update - ${commitMessage.split(']')[1].trim()}`;
+                break;
+            default:
+                // Ignore commits that do not follow the expected prefix format
+                return null;
+        }
+
+        return `
+            <div class="update-version">Update on ${formattedDate} at ${formattedTime}</div>
+            <div>${userFriendlyMessage}</div>
+        `;
+    }
+
     window.onload = fetchUpdates;
 </script>
 </body>
