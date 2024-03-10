@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Changelog - Medieval Clicker</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #261c1a;
+            color: #f7dfc4;
+            font-family: 'Arial', sans-serif;
+        }
+        .container {
+            margin-top: 20px;
+        }
+        .update-item {
+            background-color: #523b2b;
+            color: #FFD700;
+            margin-bottom: 15px;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .update-header {
+            margin-bottom: 30px;
+            color: #f7dfc4;
+        }
+        .update-version, .update-date {
+            color: #FFD700;
+        }
+        h1 {
+            color: #f7dfc4;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Medieval Clicker Changelog</h1>
+        <div class="update-header">
+            <h2>Updates Published: <span id="updatesCount">0</span></h2>
+        </div>
+        <div class="updates">
+            <ul id="updateList" class="list-unstyled">
+                <!-- JavaScript will dynamically insert update items here -->
+            </ul>
+        </div>
+    </div>
+  
+      <script>
+    // Replace with your repository's commits API URL
+    // Example: 'https://api.github.com/repos/largefort/medievalcivilizations/commits'
+    const updatesUrl = 'https://api.github.com/repos/largefort/medievalcivilizations/commits';
+
+    function fetchUpdates() {
+        fetch(updatesUrl)
+            .then(response => response.json())
+            .then(commits => {
+                populateUpdates(commits);
+            })
+            .catch(error => {
+                console.error('Error fetching updates:', error);
+                // Optionally, handle the error (e.g., show an error message)
+            });
+    }
+
+    function populateUpdates(commits) {
+        const updatesList = document.getElementById('updateList');
+        const updatesCount = document.getElementById('updatesCount');
+
+        commits.forEach((commit, index) => {
+            const item = document.createElement('li');
+            item.className = 'update-item';
+            item.innerHTML = `
+                <div class="update-version">Update ${index + 1}</div>
+                <div class="update-date">Date: ${new Date(commit.commit.author.date).toLocaleDateString()} at ${new Date(commit.commit.author.date).toLocaleTimeString()}</div>
+                <div>Commit message: ${commit.commit.message}</div>
+            `;
+            updatesList.appendChild(item);
+        });
+
+        updatesCount.textContent = commits.length;
+    }
+
+    // Call fetchUpdates on page load
+    window.onload = fetchUpdates;
+</script>
+</body>
+</html>
