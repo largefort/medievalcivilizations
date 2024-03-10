@@ -26,7 +26,6 @@ document.addEventListener('DOMContentLoaded', function() {
         reader.readAsText(file);
     });
 });
-
 function applyMod(mod) {
     // Apply unit costs from the mod
     if (mod.unitCosts) {
@@ -60,3 +59,7 @@ function applyMod(mod) {
         document.body.style.backgroundImage = `url('${mod.backgroundImage}')`;
     }
 }
+window.uploadMod = function() {
+        // Programmatically trigger the file input click event
+        document.getElementById('modUpload').click();
+    };
