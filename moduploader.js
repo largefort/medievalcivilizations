@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         if (file.name !== 'ModConfiguration.json') {
-            alert('The file must be named "ModConfiguration.json". Please select the correct file.');
+            alert('The file must be named "modconfiguration.json". Please select the correct file.');
             return;
         }
 
