@@ -108,7 +108,8 @@
   <meta name="google-adsense-account" content="your-google-adsense-account">
   <script async src="https://pagead2.googlesyndication.com/pagead/js?client=your-google-adsense-account" crossorigin="anonymous"></script>
 </head>
-  <body>
+
+<body>
   <div class="container">
     <div class="tab-content">
       <div class="tab-pane fade show active" id="castle-tab">
@@ -119,12 +120,14 @@
             Gold coins: 0
           </div>
           <div id="owned-upgrades" class="mt-3">
-            <div><i class="fas fa-chess-knight"></i> Knight: <span id="knight-count">0</span></div>
-            <div><i class="fas fa-bullseye"></i> Archer: <span id="archer-count">0</span></div>
-            <div><i class="fas fa-hat-wizard"></i> Wizard: <span id="wizard-count">0</span></div>
-            <div><i class="fas fa-shield-alt"></i> Paladin: <span id="paladin-count">0</span></div>
+            <div>Knight: <span id="knight-count">0</span></div>
+            <div>Archer: <span id="archer-count">0</span></div>
+            <div>Wizard: <span id="wizard-count">0</span></div>
+            <div>Paladin: <span id="paladin-count">0</span></div>
           </div>
-          
+        </div>
+      </div>
+
       <div class="tab-pane fade" id="skilling-tab">
         <div class="text-center">
           <h2>Skilling</h2>
@@ -179,12 +182,14 @@
         </div>
       </div>
     </div>
-  <div class="nav nav-pills nav-fill fixed-bottom">
-  <a class="nav-link active" data-toggle="pill" href="#castle-tab"><i class="fas fa-fort-awesome"></i> Castle</a>
-  <a class="nav-link" data-toggle="pill" href="#skilling-tab"><i class="fas fa-hammer"></i> Skilling</a>
-  <a class="nav-link" data-toggle="pill" href="#shop-tab"><i class="fas fa-shopping-basket"></i> Shop</a>
-  <a class="nav-link" data-toggle="pill" href="#settings-tab"><i class="fas fa-cogs"></i> Settings</a>
-</div>
+
+    <div class="nav nav-pills nav-fill fixed-bottom">
+      <a class="nav-link active" data-toggle="pill" href="#castle-tab">Castle</a>
+      <a class="nav-link" data-toggle="pill" href="#skilling-tab">Skilling</a>
+      <a class="nav-link" data-toggle="pill" href="#shop-tab">Shop</a>
+      <a class="nav-link" data-toggle="pill" href="#settings-tab">Settings</a>
+    </div>
+  </div>
 
   <button id="fullscreen-button" style="display: none;" onclick="autoEnterFullscreen()">Enter Fullscreen</button>
 
