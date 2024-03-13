@@ -145,7 +145,6 @@ function updateUI() {
 
     updatePassiveIncome();
 }
-
 function clickCastle(event) {
     coins++;
     saveGameData();
@@ -161,20 +160,26 @@ function clickCastle(event) {
     
     // Calculate position relative to the castle image
     const castleRect = event.target.getBoundingClientRect();
-    const clickX = event.clientX - castleRect.left; // Click X relative to the castle
-    const clickY = event.clientY - castleRect.top; // Click Y relative to the castle
+    const clickX = event.clientX - castleRect.left + castleRect.left; // Click X position on the viewport
+    const clickY = event.clientY - castleRect.top + castleRect.top; // Click Y position on the viewport
 
     // Adjust the floating text position
-    floatingText.style.left = `${castleRect.left + clickX}px`;
-    floatingText.style.top = `${castleRect.top + clickY - 10}px`; // Adjust Y to appear slightly above the click
+    floatingText.style.left = `${clickX}px`;
+    floatingText.style.top = `${clickY}px`; // Start at click Y
     floatingText.style.position = 'fixed'; // Use fixed to position relative to the viewport
 
     document.body.appendChild(floatingText);
 
-    // Remove the floating text after the animation completes
+    // Start the fade-out effect just before removing the text
+    setTimeout(() => {
+        floatingText.classList.add('fade-out');
+    }, 1500); // Start fade-out 500ms before removing the text
+
+    // Remove the floating text after the fade-out completes
     setTimeout(() => floatingText.remove(), 2000);
 }
-document.addEventListener('DOMContentLoaded', (event) => {
+
+document.addEventListener('DOMContentLoaded', () => {
   const castleImage = document.getElementById('castle');
   if (castleImage) {
     castleImage.addEventListener('click', clickCastle);
