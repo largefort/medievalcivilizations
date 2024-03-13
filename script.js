@@ -153,8 +153,22 @@ function clickCastle() {
 
     // Play the preloaded click sound
     clickSound.play();
-}
 
+    // Create the floating text element
+    const floatingText = document.createElement('div');
+    floatingText.textContent = "+1 Gold";
+    floatingText.className = 'floating-text';
+    // Position the floating text over the castle image. Adjust as needed.
+    const castleImage = document.getElementById('castle'); // Ensure your castle image has this id
+    const rect = castleImage.getBoundingClientRect();
+    floatingText.style.left = `${rect.left + (rect.width / 2)}px`; // Center horizontally over the castle
+    floatingText.style.top = `${rect.top}px`; // Position at the top of the castle image
+    
+    document.body.appendChild(floatingText);
+    
+    // Remove the floating text after the animation completes
+    setTimeout(() => floatingText.remove(), 2000);
+}
 function buyUpgrade(type) {
     let cost = 0;
     let upgradeCount;
