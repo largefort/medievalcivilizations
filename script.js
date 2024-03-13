@@ -146,7 +146,7 @@ function updateUI() {
     updatePassiveIncome();
 }
 
-function clickCastle() {
+function clickCastle(event) {
     coins++;
     saveGameData();
     updateUI();
@@ -158,14 +158,19 @@ function clickCastle() {
     const floatingText = document.createElement('div');
     floatingText.textContent = "+1 Gold";
     floatingText.className = 'floating-text';
-    // Position the floating text over the castle image. Adjust as needed.
-    const castleImage = document.getElementById('castle'); // Ensure your castle image has this id
-    const rect = castleImage.getBoundingClientRect();
-    floatingText.style.left = `${rect.left + (rect.width / 2)}px`; // Center horizontally over the castle
-    floatingText.style.top = `${rect.top}px`; // Position at the top of the castle image
     
+    // Calculate position relative to the castle image
+    const castleRect = event.target.getBoundingClientRect();
+    const clickX = event.clientX - castleRect.left; // Click X relative to the castle
+    const clickY = event.clientY - castleRect.top; // Click Y relative to the castle
+
+    // Adjust the floating text position
+    floatingText.style.left = `${castleRect.left + clickX}px`;
+    floatingText.style.top = `${castleRect.top + clickY - 10}px`; // Adjust Y to appear slightly above the click
+    floatingText.style.position = 'fixed'; // Use fixed to position relative to the viewport
+
     document.body.appendChild(floatingText);
-    
+
     // Remove the floating text after the animation completes
     setTimeout(() => floatingText.remove(), 2000);
 }
