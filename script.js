@@ -174,9 +174,11 @@ function clickCastle(event) {
     // Remove the floating text after the animation completes
     setTimeout(() => floatingText.remove(), 2000);
 }
-// Ensure DOM is fully loaded before attaching event listeners
 document.addEventListener('DOMContentLoaded', (event) => {
-    document.getElementById('castle').addEventListener('click', clickCastle);
+  const castleImage = document.getElementById('castle');
+  if (castleImage) {
+    castleImage.addEventListener('click', clickCastle);
+  }
 });
 
 function buyUpgrade(type) {
