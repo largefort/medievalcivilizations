@@ -86,7 +86,7 @@
         body.medieval {
             background-color: darkolivegreen;
         }
-    @keyframes float {
+    @keyframes floataway {
   0% {
     opacity: 1;
     transform: translate(0, 0);
