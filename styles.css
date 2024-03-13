@@ -86,20 +86,22 @@
         body.medieval {
             background-color: darkolivegreen;
         }
-    @keyframes floataway {
+  @keyframes floatAway {
   0% {
     opacity: 1;
-    transform: translate(0, 0);
+    transform: translate(-50%, 0);
   }
   100% {
     opacity: 0;
-    transform: translate(0, -50px);
+    transform: translate(-50%, -20px);
   }
 }
 .floating-text {
-  position: center;
+  position: absolute;
   animation: floatAway 2s forwards;
   color: gold;
-  pointer-events: none;
   font-size: 16px; /* Adjust size as needed */
+  pointer-events: none; /* Ensures the animation doesn't interfere with other interactions */
+  white-space: nowrap; /* Keeps the text on a single line */
+  text-align: center; /* Centers the text */
 }
