@@ -86,3 +86,20 @@
         body.medieval {
             background-color: darkolivegreen;
         }
+    @keyframes floatAway {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(0, -50px);
+  }
+}
+.floating-text {
+  position: absolute;
+  animation: floatAway 2s forwards;
+  color: gold;
+  pointer-events: none;
+  font-size: 16px; /* Adjust size as needed */
+}
