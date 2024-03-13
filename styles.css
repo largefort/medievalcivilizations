@@ -87,22 +87,26 @@
             background-color: darkolivegreen;
         }
     
-  @keyframes floatUp {
+@keyframes floatUpAndFade {
   0% {
     opacity: 1;
-    transform: translate(-50%, 0);
+    transform: translateY(0);
+  }
+  75% {
+    opacity: 1;
+    transform: translateY(-20px);
   }
   100% {
     opacity: 0;
-    transform: translate(-50%, -20px);
+    transform: translateY(-50px);
   }
 }
 .floating-text {
   position: absolute;
-  animation: floatUp 2s forwards;
-  color: brown;
+  animation: floatUpAndFade 2s forwards;
+  color: gold;
   font-size: 16px; /* Adjust size as needed */
   pointer-events: none; /* Ensures the animation doesn't interfere with other interactions */
-  white-space: nowrap; /* Keeps the text on a single line */
-  text-align: center; /* Centers the text */
+  text-align: center; /* Centers the text content */
+  transform: translateX(-50%); /* Centers the element based on its width */
 }
