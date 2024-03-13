@@ -174,6 +174,11 @@ function clickCastle(event) {
     // Remove the floating text after the animation completes
     setTimeout(() => floatingText.remove(), 2000);
 }
+// Ensure DOM is fully loaded before attaching event listeners
+document.addEventListener('DOMContentLoaded', (event) => {
+    document.getElementById('castle').addEventListener('click', clickCastle);
+});
+
 function buyUpgrade(type) {
     let cost = 0;
     let upgradeCount;
