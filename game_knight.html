@@ -104,6 +104,25 @@
       font-family: 'MedievalFont';
       src: url('https://raw.githubusercontent.com/largefort/medievalclicker/main/medievalfont.woff') format('woff');
     }
+    #remove-ads-btn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000; /* Ensure it stays on top */
+  padding: 10px 20px;
+  background-color: #6d4c41; /* Adjust to match your theme */
+  color: #f7dfc4;
+  border: none;
+  border-radius: 5px;
+  font-family: 'MedievalFont', serif;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+#remove-ads-btn:hover {
+  background-color: #5a392b; /* Darker shade for hover effect */
+}
   </style>
   <meta name="google-adsense-account" content="your-google-adsense-account">
   <script async src="https://pagead2.googlesyndication.com/pagead/js?client=your-google-adsense-account" crossorigin="anonymous"></script>
@@ -175,6 +194,7 @@
           <div class="form-check">
             <input type="checkbox" id="toggle-sfx"> <label class="form-check-label">Toggle Sound Effects</label>
           </div>
+          <button id="restorePurchasesButton" class="btn btn-primary mt-4">Restore Purchases</button>
           <!-- Add the PNG image from Crazy Games with clickable URL -->
           <a href="https://idev.games/game/medieval-civilizations" target="_blank">
             <img src="idev.png" alt="idev.games image" width="100">
@@ -192,11 +212,15 @@
   </div>
 
   <button id="fullscreen-button" style="display: none;" onclick="autoEnterFullscreen()">Enter Fullscreen</button>
+  <button id="remove-ads-btn" onclick="removeAds()">Remove Ads</button>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <script src="script.js"></script>
+  <script src="cordova.js"></script>
+  <script src="js/index.js"></script>
+  <script src="js/purchases.js"></script>
   <audio id="medievaltheme" loop autoplay>
     <source src="medievalknight.mp3" type="audio/mp3">
     Your browser does not support the audio element.
