@@ -103,25 +103,6 @@
       font-family: 'MedievalFont';
       src: url('https://raw.githubusercontent.com/largefort/medievalclicker/main/medievalfont.woff') format('woff');
     }
-    #remove-ads-btn {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  z-index: 1000; /* Ensure it stays on top */
-  padding: 10px 20px;
-  background-color: #6d4c41; /* Adjust to match your theme */
-  color: #f7dfc4;
-  border: none;
-  border-radius: 5px;
-  font-family: 'MedievalFont', serif;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s, color 0.3s;
-}
-
-#remove-ads-btn:hover {
-  background-color: #5a392b; /* Darker shade for hover effect */
-}
   </style>
   <meta name="google-adsense-account" content="your-google-adsense-account">
   <script async src="https://pagead2.googlesyndication.com/pagead/js?client=your-google-adsense-account" crossorigin="anonymous"></script>
@@ -161,22 +142,22 @@
       <div class="tab-pane fade" id="shop-tab">
         <div class="text-center">
           <h2>Shop</h2>
-          <div class="upgrade" onclick="buyUpgrade('knight')"><span id="knight-count">0</span> - Knight (<span id="knight-cost">10</span> coins)</div>
+          <div class="upgrade" onclick="buyUpgrade('knight')">Knight (<span id="knight-cost">10</span> coins)</div>
           <audio id="knight-upgrade-sound">
             <source src="upgradesound.mp3" type="audio/mp3">
             Your browser does not support the audio element.
           </audio>
-          <div class="upgrade" onclick="buyUpgrade('archer')"><span id="archer-count">0</span> - Archer (<span id="archer-cost">25</span> coins)</div>
+          <div class="upgrade" onclick="buyUpgrade('archer')">Archer (<span id="archer-cost">25</span> coins)</div>
           <audio id="archer-upgrade-sound">
             <source src="upgradesound.mp3" type="audio/mp3">
             Your browser does not support the audio element.
           </audio>
-          <div class="upgrade" onclick="buyUpgrade('wizard')"><span id="wizard-count">0</span> - Wizard (<span id="wizard-cost">50</span> coins)</div>
+          <div class="upgrade" onclick="buyUpgrade('wizard')">Wizard (<span id="wizard-cost">50</span> coins)</div>
           <audio id="wizard-upgrade-sound">
             <source src="upgradesound.mp3" type="audio/mp3">
             Your browser does not support the audio element.
           </audio>
-          <div class="upgrade" onclick="buyUpgrade('paladin')"><span id="paladin-count">0</span> - Paladin (<span id="paladin-cost">100</span> coins)</div>
+          <div class="upgrade" onclick="buyUpgrade('paladin')">Paladin (<span id="paladin-cost">100</span> coins)</div>
           <audio id="paladin-upgrade-sound">
             <source src="upgradesound.mp3" type="audio/mp3">
             Your browser does not support the audio element.
@@ -193,8 +174,6 @@
           <div class="form-check">
             <input type="checkbox" id="toggle-sfx"> <label class="form-check-label">Toggle Sound Effects</label>
           </div>
-          <button id="restorePurchasesButton" class="btn btn-primary mt-4">Restore Purchases</button>
-          <button id="remove-ads-btn" onclick="removeAds()">Remove Ads</button>
           <!-- Add the PNG image from Crazy Games with clickable URL -->
           <a href="https://idev.games/game/medieval-civilizations" target="_blank">
             <img src="idev.png" alt="idev.games image" width="100">
@@ -217,9 +196,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <script src="script.js"></script>
-  <script src="cordova.js"></script>
-  <script src="js/index.js"></script>
-  <script src="js/purchases.js"></script>
   <audio id="medievaltheme" loop autoplay>
     <source src="medievalwizard.mp3" type="audio/mp3">
     Your browser does not support the audio element.
