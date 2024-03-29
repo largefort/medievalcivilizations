@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedievalCivilizations Launcher</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'MedievalFont', serif;
+            background-color: #261c1a; /* Updated background color */
+            color: #f7dfc4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            background-color: rgba(0, 0, 0, 0.6);
+            border: 5px solid #523b2b; /* Updated border color */
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+            margin-top: 50px;
+        }
+        .btn-primary {
+            background-color: #523b2b; /* Updated button background color */
+            border-color: #523b2b; /* Updated button border color */
+            color: #FFD700;
+        }
+        .btn-primary:hover {
+            background-color: #2d1e18; /* Updated hover background color */
+            border-color: #2d1e18; /* Updated hover border color */
+            color: #ffcc00;
+        }
+        /* Loading overlay styles */
+        .overlay {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+        .spinner {
+            border: 8px solid #f3f3f3; /* Light grey */
+            border-top: 8px solid #FFD700; /* Yellow */
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="overlay" id="loadingOverlay">
+        <div class="spinner"></div>
+    </div>
+
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">MedievalCivilizations Launcher</h1>
+        <div class="row justify-content-center">
+            <div class="col-md-4">
+                <button class="btn btn-primary btn-block" onclick="startGame('knight')">Start as Knight</button>
+            </div>
+        </div>
+        <div class="row justify-content-center mt-3">
+            <div class="col-md-4">
+                <button class="btn btn-primary btn-block" onclick="startGame('lord')">Start as Lord</button>
+            </div>
+        </div>
+        <div class="row justify-content-center mt-3">
+            <div class="col-md-4">
+                <button class="btn btn-primary btn-block" onclick="startGame('wizard')">Start as Wizard</button>
+            </div>
+        </div>
+        <div class="row justify-content-center mt-3">
+            <div class="col-md-4">
+                <button class="btn btn-primary btn-block" onclick="startGame('paladin')">Start as Paladin</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Function to start the game with the chosen character
+        function startGame(character) {
+            // Show the loading overlay
+            document.getElementById('loadingOverlay').style.display = 'flex';
+            // Store the chosen character in localStorage
+            localStorage.setItem('selectedCharacter', character);
+            // Redirect to the respective game HTML file based on the chosen character
+            switch (character) {
+                case 'knight':
+                    window.location.href = "game_knight.html";
+                    break;
+                case 'lord':
+                    window.location.href = "game_lord.html";
+                    break;
+                case 'wizard':
+                    window.location.href = "game_wizard.html";
+                    break;
+                case 'paladin':
+                    window.location.href = "game_paladin.html";
+                    break;
+                default:
+                    console.error("Invalid character choice");
+            }
+        }
+
+        // Check if a character choice was previously saved in localStorage
+        document.addEventListener('DOMContentLoaded', function() {
+            const selectedCharacter = localStorage.getItem('selectedCharacter');
+            if (selectedCharacter) {
+                // If a character choice exists, redirect to the respective game HTML file
+                startGame(selectedCharacter);
+            }
+        });
+    </script>
+</body>
+</html>
