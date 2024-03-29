@@ -14,21 +14,25 @@
             padding: 0;
         }
         .container {
-            background-color: rgba(0, 0, 0, 0.6);
-            border: 5px solid #523b2b; /* Updated border color */
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
-            margin-top: 50px;
+            text-align: center;
+            margin-top: 100px;
+        }
+        h1 {
+            font-size: 36px;
+            margin-bottom: 40px;
         }
         .btn-primary {
-            background-color: #523b2b; /* Updated button background color */
-            border-color: #523b2b; /* Updated button border color */
+            background-color: #523b2b;
+            border-color: #523b2b;
             color: #FFD700;
+            padding: 14px 24px;
+            font-size: 18px;
+            border-radius: 10px;
+            width: 250px;
         }
         .btn-primary:hover {
-            background-color: #2d1e18; /* Updated hover background color */
-            border-color: #2d1e18; /* Updated hover border color */
+            background-color: #312214;
+            border-color: #312214;
             color: #ffcc00;
         }
         /* Loading overlay styles */
@@ -56,35 +60,26 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+        @font-face {
+            font-family: 'MedievalFont';
+            src: url('https://raw.githubusercontent.com/largefort/medievalclicker/main/medievalfont.woff') format('woff');
+        }
     </style>
 </head>
 <body>
-    <div class="overlay" id="loadingOverlay">
-        <div class="spinner"></div>
+    <div class="container">
+        <h1>MedievalCivilizations Launcher</h1>
+        <button class="btn btn-primary" onclick="startGame('knight')">Start as Knight</button>
+        <br><br>
+        <button class="btn btn-primary" onclick="startGame('lord')">Start as Lord</button>
+        <br><br>
+        <button class="btn btn-primary" onclick="startGame('wizard')">Start as Wizard</button>
+        <br><br>
+        <button class="btn btn-primary" onclick="startGame('paladin')">Start as Paladin</button>
     </div>
 
-    <div class="container mt-5">
-        <h1 class="text-center mb-4">MedievalCivilizations Launcher</h1>
-        <div class="row justify-content-center">
-            <div class="col-md-4">
-                <button class="btn btn-primary btn-block" onclick="startGame('knight')">Start as Knight</button>
-            </div>
-        </div>
-        <div class="row justify-content-center mt-3">
-            <div class="col-md-4">
-                <button class="btn btn-primary btn-block" onclick="startGame('lord')">Start as Lord</button>
-            </div>
-        </div>
-        <div class="row justify-content-center mt-3">
-            <div class="col-md-4">
-                <button class="btn btn-primary btn-block" onclick="startGame('wizard')">Start as Wizard</button>
-            </div>
-        </div>
-        <div class="row justify-content-center mt-3">
-            <div class="col-md-4">
-                <button class="btn btn-primary btn-block" onclick="startGame('paladin')">Start as Paladin</button>
-            </div>
-        </div>
+    <div class="overlay" id="loadingOverlay">
+        <div class="spinner"></div>
     </div>
 
     <script>
