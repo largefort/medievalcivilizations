@@ -9,6 +9,23 @@ let passiveIncome = 0;
 let db;
 let lastSaveTime = Date.now(); // Initialize lastSaveTime with the current time
 
+// Achievement tracking variables
+let achievements = {
+  "goldHoarder": { name: "Gold Hoarder", goal: 1000, achieved: false },
+  "resourceMaster": { name: "Resource Master", goal: 1000, achieved: false },
+  "castleBuilder": { name: "Castle Builder", goal: 1, achieved: false },
+  "clickerNovice": { name: "Clicker Novice", goal: 100, achieved: false },
+  "clickerPro": { name: "Clicker Pro", goal: 1000, achieved: false },
+  "woodcutter": { name: "Woodcutter", goal: 10, achieved: false },
+  "miner": { name: "Miner", goal: 10, achieved: false },
+  "knightRecruiter": { name: "Knight Recruiter", goal: 5, achieved: false },
+  "archerRecruiter": { name: "Archer Recruiter", goal: 5, achieved: false },
+  "wizardRecruiter": { name: "Wizard Recruiter", goal: 5, achieved: false },
+  "paladinRecruiter": { name: "Paladin Recruiter", goal: 5, achieved: false },
+  "clickerMaster": { name: "Clicker Master", goal: 10000, achieved: false },
+  "ultimateRuler": { name: "Ultimate Ruler", goal: 1000000, achieved: false },
+};
+
 // Add an HTML audio element for the upgrade sound
 document.write(`
 <audio id="upgradeSound">
@@ -144,10 +161,12 @@ function updateUI() {
     document.getElementById("paladin-count").textContent = paladinCount;
 
     updatePassiveIncome();
+    updateAchievements(); // Update achievements on UI
 }
 
 function clickCastle() {
     coins++;
+    checkAchievements(); // Check for achievements
     saveGameData();
     updateUI();
 
@@ -166,6 +185,7 @@ function buyUpgrade(type) {
             if (coins >= cost) {
                 coins -= cost;
                 knightCount++;
+                checkAchievements(); // Check for achievements
             }
             break;
         case "archer":
@@ -174,6 +194,7 @@ function buyUpgrade(type) {
             if (coins >= cost) {
                 coins -= cost;
                 archerCount++;
+                checkAchievements(); // Check for achievements
             }
             break;
         case "wizard":
@@ -182,6 +203,7 @@ function buyUpgrade(type) {
             if (coins >= cost) {
                 coins -= cost;
                 wizardCount++;
+                checkAchievements(); // Check for achievements
             }
             break;
         case "paladin":
@@ -190,6 +212,7 @@ function buyUpgrade(type) {
             if (coins >= cost) {
                 coins -= cost;
                 paladinCount++;
+                checkAchievements(); // Check for achievements
             }
             break;
     }
@@ -216,9 +239,11 @@ function handleSkillingClick(skill) {
     switch (skill) {
         case "woodcutting":
             woodcuttingLevel++;
+            checkAchievements(); // Check for achievements
             break;
         case "mining":
             miningLevel++;
+            checkAchievements(); // Check for achievements
             break;
     }
     saveGameData();
@@ -244,8 +269,44 @@ function earnPassiveIncome() {
     coins += offlinePassiveIncome;
     lastSaveTime = currentTime; // Update the last save time
 
+    checkAchievements(); // Check for achievements
     saveGameData();
     updateUI();
 }
+
+function checkAchievements() {
+    for (let key in achievements) {
+        if (!achievements[key].achieved && coins >= achievements[key].goal) {
+            achievements[key].achieved = true;
+            displayAchievement(achievements[key].name);
+        }
+    }
+}
+
+function displayAchievement(name) {
+    // Display achievement notification to the user
+    const achievementsList = document.getElementById("achievements-list");
+    const achievementDiv = document.createElement("div");
+    achievementDiv.classList.add("achievement-notification");
+    achievementDiv.textContent = `Achievement Unlocked: ${name}`;
+    achievementsList.appendChild(achievementDiv);
+    setTimeout(() => {
+        achievementsList.removeChild(achievementDiv);
+    }, 3000); // Remove notification after 3 seconds
+}
+
+function updateAchievements() {
+    // Update UI to reflect achievement status
+    for (let key in achievements) {
+        const achievementDiv = document.getElementById(key);
+        if (achievements[key].achieved) {
+            achievementDiv.classList.remove("locked");
+            achievementDiv.classList.add("achieved");
+        }
+    }
+}
+
+// Check achievements on page load
+checkAchievements();
 
 setInterval(earnPassiveIncome, 1000);
