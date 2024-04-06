@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -100,28 +99,33 @@
       height: auto;
     }
 
-    .achievement {
-      font-size: 18px;
-      margin-bottom: 10px;
-    }
-
-    .achievement.achieved {
-      color: #FFD700;
-    }
-
-    .achievement.locked {
-      color: #888888;
-    }
-
     @font-face {
       font-family: 'MedievalFont';
       src: url('https://raw.githubusercontent.com/largefort/medievalclicker/main/medievalfont.woff') format('woff');
+    }
+
+    /* Achievement Popup Styles */
+    .achievement-popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: rgba(0, 0, 0, 0.8);
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      z-index: 9999;
+    }
+
+    .achievement-message {
+      font-size: 18px;
+      text-align: center;
     }
   </style>
   <meta name="google-adsense-account" content="your-google-adsense-account">
   <script async src="https://pagead2.googlesyndication.com/pagead/js?client=your-google-adsense-account" crossorigin="anonymous"></script>
 </head>
-
 <body>
   <div class="container">
     <div class="tab-content">
@@ -195,89 +199,74 @@
         </div>
       </div>
 
-<!-- New Achievements Tab -->
 <div class="tab-pane fade" id="achievements-tab">
   <div class="text-center">
     <h2>Achievements</h2>
     <div id="achievements-list">
-      <!-- Achievement 1: Gold Hoarder -->
-      <div class="achievement achieved">
-        <i class="fas fa-trophy"></i> Gold Hoarder: Collect 1000 gold coins
-      </div>
-      <!-- Achievement 2: Resource Master -->
-      <div class="achievement locked">
-        <i class="fas fa-lock"></i> Resource Master: Mine 1000 resources
-      </div>
-      <!-- Achievement 3: Castle Builder -->
-      <div class="achievement locked">
-        <i class="fas fa-lock"></i> Castle Builder: Purchase all castle upgrades
-      </div>
-      <!-- Achievement 4: Legendary Warrior -->
-      <div class="achievement locked">
-        <i class="fas fa-lock"></i> Legendary Warrior: Recruit 100 knights
-      </div>
-      <!-- Achievement 5: Archery Champion -->
-      <div class="achievement locked">
-        <i class="fas fa-lock"></i> Archery Champion: Train 50 archers
-      </div>
-      <!-- Achievement 6: Master Wizard -->
-      <div class="achievement locked">
-        <i class="fas fa-lock"></i> Master Wizard: Unlock all wizard spells
-      </div>
-      <!-- Achievement 7: Paladin Guardian -->
-      <div class="achievement locked">
-        <i class="fas fa-lock"></i> Paladin Guardian: Protect the castle from 10 enemy invasions
-      </div>
-      <!-- Achievement 8: Kingdom Expansionist -->
-      <div class="achievement locked">
-        <i class="fas fa-lock"></i> Kingdom Expansionist: Conquer 5 neighboring territories
-      </div>
-      <!-- Achievement 9: Wealth Accumulator -->
-      <div class="achievement locked">
-        <i class="fas fa-lock"></i> Wealth Accumulator: Amass 10000 gold coins
-      </div>
-      <!-- Achievement 10: Skillful Miner -->
-      <div class="achievement locked">
-        <i class="fas fa-lock"></i> Skillful Miner: Reach mining level 10
-      </div>
-      <!-- Achievement 11: Forest Ranger -->
-      <div class="achievement locked">
-        <i class="fas fa-lock"></i> Forest Ranger: Explore all regions of the enchanted forest
-      </div>
-      <!-- Achievement 12: Legendary Explorer -->
-      <div class="achievement locked">
-        <i class="fas fa-lock"></i> Legendary Explorer: Uncover all hidden treasures
-      </div>
-      <!-- Achievement 13: Kingdom Prosperity -->
-      <div class="achievement locked">
-        <i class="fas fa-lock"></i> Kingdom Prosperity: Achieve maximum prosperity for your kingdom
-      </div>
+      <div id="goldHoarder" class="achievement locked">Gold Hoarder: Collect 1000 gold coins</div>
+      <div id="clickerNovice" class="achievement locked">Clicker Novice: Click 100 times</div>
+      <div id="clickerPro" class="achievement locked">Clicker Pro: Click 1000 times</div>
+      <div id="woodcutter" class="achievement locked">Woodcutter: Increase woodcutting level to 10</div>
+      <div id="miner" class="achievement locked">Miner: Increase mining level to 10</div>
+      <div id="knightRecruiter" class="achievement locked">Knight Recruiter: Recruit 5 knights</div>
+      <div id="archerRecruiter" class="achievement locked">Archer Recruiter: Recruit 5 archers</div>
+      <div id="wizardRecruiter" class="achievement locked">Wizard Recruiter: Recruit 5 wizards</div>
+      <div id="paladinRecruiter" class="achievement locked">Paladin Recruiter: Recruit 5 paladins</div>
+      <div id="clickerMaster" class="achievement locked">Clicker Master: Click 10000 times</div>
+      <div id="ultimateRuler" class="achievement locked">Ultimate Ruler: Collect 1000000 gold coins</div>
+      <!-- Add more achievements here -->
     </div>
   </div>
 </div>
-      
-    <!-- Bottom Navigation Bar -->
+
+    <!-- Bottom Navigation Tab Bar -->
     <div class="nav nav-pills nav-fill fixed-bottom">
       <a class="nav-link active" data-toggle="pill" href="#castle-tab">Castle</a>
       <a class="nav-link" data-toggle="pill" href="#skilling-tab">Skilling</a>
       <a class="nav-link" data-toggle="pill" href="#shop-tab">Shop</a>
       <a class="nav-link" data-toggle="pill" href="#settings-tab">Settings</a>
-      <!-- New Achievements Tab -->
-      <a class="nav-link" data-toggle="pill" href="#achievements-tab">Achievements</a>
     </div>
   </div>
 
+  <!-- Achievement Unlocked Notification Popup -->
+  <div id="achievement-popup" class="achievement-popup">
+    <div id="achievement-message" class="achievement-message"></div>
+  </div>
+
+  <!-- Fullscreen Button -->
   <button id="fullscreen-button" style="display: none;" onclick="autoEnterFullscreen()">Enter Fullscreen</button>
 
+  <!-- JavaScript libraries -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <!-- Custom JavaScript -->
   <script src="script.js"></script>
+  <!-- Audio elements -->
   <audio id="medievaltheme" loop autoplay>
     <source src="medievalknight.mp3" type="audio/mp3">
     Your browser does not support the audio element.
   </audio>
   <audio id="click-sound" src="click-sound.mp3" type="audio/mp3"></audio>
-</body>
+  <audio id="upgradeSound">
+    <source src="upgradesound.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
 
+  <!-- Achievement Unlocked Notification JavaScript -->
+  <script>
+    function showAchievementNotification(achievement) {
+      const achievementPopup = document.getElementById("achievement-popup");
+      const achievementMessage = document.getElementById("achievement-message");
+
+      achievementMessage.textContent = `Achievement Unlocked: ${achievement}`;
+      achievementPopup.style.display = "block";
+
+      // Hide the notification after 3 seconds
+      setTimeout(function() {
+        achievementPopup.style.display = "none";
+      }, 3000);
+    }
+  </script>
+</body>
 </html>
