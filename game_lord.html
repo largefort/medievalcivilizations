@@ -9,8 +9,6 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
   <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="rpgui.css">
-  <link rel="stylesheet" href="rpgui.min.css">
   <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
   <style>
     body {
@@ -129,8 +127,8 @@
           </div>
         </div>
       </div>
-      
-       <div class="tab-pane fade" id="skilling-tab">
+
+      <div class="tab-pane fade" id="skilling-tab">
         <div class="text-center">
           <h2>Skilling</h2>
           <div class="upgrade" onclick="handleSkillingClick('woodcutting')">Woodcutting</div>
@@ -183,28 +181,8 @@
           </a>
         </div>
       </div>
-
-<div class="tab-pane fade" id="achievements-tab">
-  <div class="text-center">
-    <h2>Achievements</h2>
-    <div id="achievements-list">
-      <div id="goldHoarder" class="achievement locked">Gold Hoarder: Collect 1000 gold coins</div>
-      <div id="clickerNovice" class="achievement locked">Clicker Novice: Click 100 times</div>
-      <div id="clickerPro" class="achievement locked">Clicker Pro: Click 1000 times</div>
-      <div id="woodcutter" class="achievement locked">Woodcutter: Increase woodcutting level to 10</div>
-      <div id="miner" class="achievement locked">Miner: Increase mining level to 10</div>
-      <div id="knightRecruiter" class="achievement locked">Knight Recruiter: Recruit 5 knights</div>
-      <div id="archerRecruiter" class="achievement locked">Archer Recruiter: Recruit 5 archers</div>
-      <div id="wizardRecruiter" class="achievement locked">Wizard Recruiter: Recruit 5 wizards</div>
-      <div id="paladinRecruiter" class="achievement locked">Paladin Recruiter: Recruit 5 paladins</div>
-      <div id="clickerMaster" class="achievement locked">Clicker Master: Click 10000 times</div>
-      <div id="ultimateRuler" class="achievement locked">Ultimate Ruler: Collect 1000000 gold coins</div>
-      <!-- Add more achievements here -->
     </div>
-  </div>
-</div>
 
-    <!-- Bottom Navigation Tab Bar -->
     <div class="nav nav-pills nav-fill fixed-bottom">
       <a class="nav-link active" data-toggle="pill" href="#castle-tab">Castle</a>
       <a class="nav-link" data-toggle="pill" href="#skilling-tab">Skilling</a>
@@ -213,45 +191,17 @@
     </div>
   </div>
 
-  <!-- Achievement Unlocked Notification Popup -->
-  <div id="achievement-popup" class="achievement-popup">
-    <div id="achievement-message" class="achievement-message"></div>
-  </div>
-
-  <!-- Fullscreen Button -->
   <button id="fullscreen-button" style="display: none;" onclick="autoEnterFullscreen()">Enter Fullscreen</button>
 
-  <!-- JavaScript libraries -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  <!-- Custom JavaScript -->
   <script src="script.js"></script>
-  <!-- Audio elements -->
   <audio id="medievaltheme" loop autoplay>
-    <source src="medievalknight.mp3" type="audio/mp3">
+    <source src="medievallord.mp3" type="audio/mp3">
     Your browser does not support the audio element.
   </audio>
   <audio id="click-sound" src="click-sound.mp3" type="audio/mp3"></audio>
-  <audio id="upgradeSound">
-    <source src="upgradesound.mp3" type="audio/mpeg">
-    Your browser does not support the audio element.
-  </audio>
-
-  <!-- Achievement Unlocked Notification JavaScript -->
-  <script>
-    function showAchievementNotification(achievement) {
-      const achievementPopup = document.getElementById("achievement-popup");
-      const achievementMessage = document.getElementById("achievement-message");
-
-      achievementMessage.textContent = `Achievement Unlocked: ${achievement}`;
-      achievementPopup.style.display = "block";
-
-      // Hide the notification after 3 seconds
-      setTimeout(function() {
-        achievementPopup.style.display = "none";
-      }, 3000);
-    }
-  </script>
 </body>
+
 </html>
