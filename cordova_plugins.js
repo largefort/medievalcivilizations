@@ -1,24 +1,16 @@
 cordova.define('cordova/plugin_list', function(require, exports, module) {
   module.exports = [
     {
-      "id": "cordova-plugin-consent.Consent",
-      "file": "plugins/cordova-plugin-consent/www/consent.js",
-      "pluginId": "cordova-plugin-consent",
+      "id": "cordova-plugin-admobpro.AdMob",
+      "file": "plugins/cordova-plugin-admobpro/www/AdMob.js",
+      "pluginId": "cordova-plugin-admobpro",
       "clobbers": [
-        "consent"
-      ]
-    },
-    {
-      "id": "cordova-plugin-splashscreen.SplashScreen",
-      "file": "plugins/cordova-plugin-splashscreen/www/splashscreen.js",
-      "pluginId": "cordova-plugin-splashscreen",
-      "clobbers": [
-        "navigator.splashscreen"
+        "window.AdMob"
       ]
     }
   ];
   module.exports.metadata = {
-    "cordova-plugin-consent": "3.0.0-alpha.6",
-    "cordova-plugin-splashscreen": "6.0.1"
+    "cordova-plugin-extension": "1.6.0",
+    "cordova-plugin-admobpro": "8.13.1"
   };
 });

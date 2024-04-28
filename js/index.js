@@ -76,3 +76,8 @@ function onDeviceReady() {
       }
       document.getElementById("checkInterstitial").innerHTML = gotHereMsg3;
     }
+
+
+    console.log('Running cordova-' + cordova.platformId + '@' + cordova.version);
+    document.getElementById('deviceready').classList.add('ready');
+}

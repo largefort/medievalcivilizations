@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Medieval Clicker</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
   <link rel="stylesheet" href="styles.css">
   <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
@@ -108,94 +108,105 @@
   <meta name="google-adsense-account" content="your-google-adsense-account">
   <script async src="https://pagead2.googlesyndication.com/pagead/js?client=your-google-adsense-account" crossorigin="anonymous"></script>
 </head>
-  <!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-KXFL2822');</script>
-<!-- End Google Tag Manager -->
-<body>
-  <div class="container">
-    <div class="tab-content">
-      <div class="tab-pane fade show active" id="castle-tab">
-        <div class="text-center">
-          <!-- Paladin Civilization Castle Image -->
-          <img id="castle" src="castle_paladin.jpg" alt="Castle" class="castle-image" onclick="clickCastle()">
-          <div id="counter" class="mt-3">
-            Gold coins: 0
-          </div>
-          <div id="owned-upgrades" class="mt-3">
-            <div>Knight: <span id="knight-count">0</span></div>
-            <div>Archer: <span id="archer-count">0</span></div>
-            <div>Wizard: <span id="wizard-count">0</span></div>
-            <div>Paladin: <span id="paladin-count">0</span></div>
-          </div>
+
+<div class="container">
+  <div class="tab-content">
+    <div class="tab-pane fade show active" id="castle-tab">
+      <div class="text-center">
+        <!-- Knight Civilization Castle Image -->
+        <img id="castle" src="castle_paladin.jpg" alt="Castle" class="castle-image" onclick="clickCastle()">
+        <div id="counter" class="mt-3">
+          Gold coins: 0
+        </div>
+        <div id="owned-upgrades" class="mt-3">
+          <div>Knight: <span id="knight-count"><i class="fas fa-chess-knight"></i> 0</span></div>
+          <div>Archer: <span id="archer-count"><i class="fas fa-bullseye"></i> 0</span></div>
+          <div>Wizard: <span id="wizard-count"><i class="fas fa-hat-wizard"></i> 0</span></div>
+          <div>Paladin: <span id="paladin-count"><i class="fas fa-shield-alt"></i> 0</span></div>
         </div>
       </div>
+    </div>
 
-      <div class="tab-pane fade" id="skilling-tab">
-        <div class="text-center">
-          <h2>Skilling</h2>
-          <div class="upgrade" onclick="handleSkillingClick('woodcutting')">Woodcutting</div>
-          <div class="upgrade" onclick="handleSkillingClick('mining')">Mining</div>
-          <div class="mt-3">
-            <div>Woodcutting Level: <span id="woodcutting-level">1</span></div>
-            <div>Mining Level: <span id="mining-level">1</span></div>
-          </div>
+    <div class="tab-pane fade" id="skilling-tab">
+      <div class="text-center">
+        <h2>Skilling</h2>
+        <div class="upgrade" onclick="handleSkillingClick('woodcutting')">
+          <i class="fas fa-tree"></i> Woodcutting
+        </div>
+        <div class="upgrade" onclick="handleSkillingClick('mining')">
+          <i class="fas fa-gem"></i> Mining
+        </div>
+        <div class="mt-3">
+          <div>Woodcutting Level: <span id="woodcutting-level">1</span></div>
+          <div>Mining Level: <span id="mining-level">1</span></div>
         </div>
       </div>
+    </div>
 
-      <div class="tab-pane fade" id="shop-tab">
-        <div class="text-center">
-          <h2>Shop</h2>
-          <div class="upgrade" onclick="buyUpgrade('knight')">Knight (<span id="knight-cost">10</span> coins)</div>
-          <audio id="knight-upgrade-sound">
-            <source src="upgradesound.mp3" type="audio/mp3">
-            Your browser does not support the audio element.
-          </audio>
-          <div class="upgrade" onclick="buyUpgrade('archer')">Archer (<span id="archer-cost">25</span> coins)</div>
-          <audio id="archer-upgrade-sound">
-            <source src="upgradesound.mp3" type="audio/mp3">
-            Your browser does not support the audio element.
-          </audio>
-          <div class="upgrade" onclick="buyUpgrade('wizard')">Wizard (<span id="wizard-cost">50</span> coins)</div>
-          <audio id="wizard-upgrade-sound">
-            <source src="upgradesound.mp3" type="audio/mp3">
-            Your browser does not support the audio element.
-          </audio>
-          <div class="upgrade" onclick="buyUpgrade('paladin')">Paladin (<span id="paladin-cost">100</span> coins)</div>
-          <audio id="paladin-upgrade-sound">
-            <source src="upgradesound.mp3" type="audio/mp3">
-            Your browser does not support the audio element.
-          </audio>
+    <div class="tab-pane fade" id="shop-tab">
+      <div class="text-center">
+        <h2>Shop</h2>
+        <div class="upgrade" onclick="buyUpgrade('knight')">
+          <i class="fas fa-chess-knight"></i> Knight (<span id="knight-cost">10</span> coins)
         </div>
+        <audio id="knight-upgrade-sound">
+          <source src="upgradesound.mp3" type="audio/mp3">
+          Your browser does not support the audio element.
+        </audio>
+        <div class="upgrade" onclick="buyUpgrade('archer')">
+          <i class="fas fa-bullseye"></i> Archer (<span id="archer-cost">25</span> coins)
+        </div>
+        <audio id="archer-upgrade-sound">
+          <source src="upgradesound.mp3" type="audio/mp3">
+          Your browser does not support the audio element.
+        </audio>
+        <div class="upgrade" onclick="buyUpgrade('wizard')">
+          <i class="fas fa-hat-wizard"></i> Wizard (<span id="wizard-cost">50</span> coins)
+        </div>
+        <audio id="wizard-upgrade-sound">
+          <source src="upgradesound.mp3" type="audio/mp3">
+          Your browser does not support the audio element.
+        </audio>
+        <div class="upgrade" onclick="buyUpgrade('paladin')">
+          <i class="fas fa-shield-alt"></i> Paladin (<span id="paladin-cost">100</span> coins)
+        </div>
+        <audio id="paladin-upgrade-sound">
+          <source src="upgradesound.mp3" type="audio/mp3">
+          Your browser does not support the audio element.
+        </audio>
       </div>
+    </div>
 
-      <div class="tab-pane fade" id="settings-tab">
-        <div class="text-center">
-          <h2>Settings</h2>
-          <div class="form-check">
-            <input type="checkbox" id="toggle-music"> <label class="form-check-label">Toggle Music</label>
-          </div>
-          <div class="form-check">
-            <input type="checkbox" id="toggle-sfx"> <label class="form-check-label">Toggle Sound Effects</label>
-          </div>
-          <!-- Add the PNG image from Crazy Games with clickable URL -->
-          <a href="https://idev.games/game/medieval-civilizations" target="_blank">
-            <img src="idev.png" alt="idev.games image" width="100">
-          </a>
+    <div class="tab-pane fade" id="settings-tab">
+      <div class="text-center">
+        <h2>Settings</h2>
+        <div class="form-check">
+          <input type="checkbox" id="toggle-music"> <label class="form-check-label" for="toggle-music"><i class="fas fa-volume-up"></i> Toggle Music</label>
         </div>
+        <div class="form-check">
+          <input type="checkbox" id="toggle-sfx"> <label class="form-check-label" for="toggle-sfx"><i class="fas fa-volume-up"></i> Toggle Sound Effects</label>
+        </div>
+        <!-- Add the PNG image from Crazy Games with clickable URL -->
+        <a href="https://idev.games/game/medieval-civilizations" target="_blank">
+          <img src="idev.png" alt="idev.games image" width="100">
+        </a>
       </div>
     </div>
 
     <div class="nav nav-pills nav-fill fixed-bottom">
-      <a class="nav-link active" data-toggle="pill" href="#castle-tab">Castle</a>
-      <a class="nav-link" data-toggle="pill" href="#skilling-tab">Skilling</a>
-      <a class="nav-link" data-toggle="pill" href="#shop-tab">Shop</a>
-      <a class="nav-link" data-toggle="pill" href="#settings-tab">Settings</a>
+      <a class="nav-link active" data-toggle="pill" href="#castle-tab">
+        <i class="fas fa-chess-rook"></i> Castle
+      </a>
+      <a class="nav-link" data-toggle="pill" href="#skilling-tab">
+        <i class="fa-solid fa-chart-simple"></i> Skilling
+      </a>
+      <a class="nav-link" data-toggle="pill" href="#shop-tab">
+        <i class="fas fa-cart-shopping"></i> Shop
+      </a>
+      <a class="nav-link" data-toggle="pill" href="#settings-tab">
+        <i class="fas fa-gears"></i> Settings
+      </a>
     </div>
-  </div>
 
   <button id="fullscreen-button" style="display: none;" onclick="autoEnterFullscreen()">Enter Fullscreen</button>
 
@@ -203,14 +214,15 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <script src="script.js"></script>
+  <script src="js/index.js"></script>
+  <script src="cordova.js"></script>
+  <script>
+  </script>
   <audio id="medievaltheme" loop autoplay>
     <source src="medievalpaladin.mp3" type="audio/mp3">
     Your browser does not support the audio element.
   </audio>
   <audio id="click-sound" src="click-sound.mp3" type="audio/mp3"></audio>
 </body>
-  <!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KXFL2822"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
+
 </html>
