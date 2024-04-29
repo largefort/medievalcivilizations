@@ -313,7 +313,8 @@ servers.forEach(server => {
 <script src="script.js"></script>
 <script src="server.js"></script>     
 <script src="js/index.js"></script>
-</script>      
+      
+<script>      
 const express = require('express');
 const http = require('http');
 const socketIo = require('socket.io');
@@ -345,6 +346,5 @@ const port = process.env.PORT || 3000;
 server.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });
-</script>      
 </body>
 </html>
