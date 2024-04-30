@@ -86,3 +86,7 @@
         body.medieval {
             background-color: darkolivegreen;
         }
+            body {
+            cursor: url('cursor.cur'), auto;
+        }
+
