@@ -17,7 +17,7 @@
     border-radius: 5px; /* Slightly rounded corners */
     cursor: pointer; /* Change cursor on hover */
     transition: background-color 0.3s; /* Smooth background color transition on hover */
-    font-family: 'MedievalFont', serif; /* Updated font family with MedievalFont */
+    font-family: 'MedievalSharp', serif; /* Updated font family with MedievalFont */
 }
 
 /* Change button color on hover */
@@ -32,7 +32,7 @@
     padding: 20px; /* Padding inside the container */
     border-radius: 10px; /* Slightly rounded corners */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Drop shadow for a 3D effect */
-    font-family: 'MedievalFont', serif; /* Updated font family with MedievalFont */
+    font-family: 'MedievalSharp', serif; /* Updated font family with MedievalFont */
  /* Bottom Navigation Styles */
         .nav-pills .nav-link {
             background-color: #5a3921;
@@ -86,3 +86,7 @@
         body.medieval {
             background-color: darkolivegreen;
         }
+            body {
+            cursor: url('cursor.cur'), auto;
+        }
+

@@ -1,0 +1,11 @@
+{
+  "background_color": "#FFF",
+  "display": "standalone",
+  "orientation": "any",
+  "start_url": "index.html",
+  "name": "MedievalCivilizations",
+  "short_name": "MedievalCivilizations",
+  "version": "com.jafetegill.medievalcivilizations.web",
+  "description": "Sample Apache Cordova App",
+  "author": "Apache Cordova Team"
+}

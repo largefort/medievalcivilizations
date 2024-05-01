@@ -10,6 +10,7 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
     }
   ];
   module.exports.metadata = {
+    "cordova-android-play-services-gradle-release": "4.0.0",
     "cordova-plugin-extension": "1.6.0",
     "cordova-plugin-admobpro": "8.13.1"
   };
