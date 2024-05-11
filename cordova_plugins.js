@@ -7,11 +7,19 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
       "clobbers": [
         "window.AdMob"
       ]
+    },
+    {
+      "id": "cordova-plugin-device.device",
+      "file": "plugins/cordova-plugin-device/www/device.js",
+      "pluginId": "cordova-plugin-device",
+      "clobbers": [
+        "device"
+      ]
     }
   ];
   module.exports.metadata = {
-    "cordova-android-play-services-gradle-release": "4.0.0",
     "cordova-plugin-extension": "1.6.0",
-    "cordova-plugin-admobpro": "8.13.1"
+    "cordova-plugin-admobpro": "8.13.1",
+    "cordova-plugin-device": "2.1.0"
   };
 });

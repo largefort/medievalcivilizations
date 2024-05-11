@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Medieval Civilization Selection</title>
     <link rel="stylesheet" href="styles.css"> <!-- Check the path to your stylesheet -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap">
     <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
     <style>
         body {
@@ -160,8 +161,12 @@
                 <img src="paladin.png" alt="Paladin Civilization">
                 <h3>Paladin</h3>
             </a>
-        </div>
-    </div>
+
+     <!-- Civilization 5: DarkLord -->
+            <a href="#" onclick="showConfirmationModal('darklord')" title="Select DarkLord Civilization">
+                <img src="darklord.png" alt="DarkLord Civilization">
+                <h3>DarkLord</h3>
+            </a>
 
     <!-- Confirmation Modal -->
     <div id="confirmationModal" class="modal">
@@ -216,5 +221,6 @@
         // Call the loadSelectedCivilization function when the page loads
         window.onload = loadSelectedCivilization;
     </script>
+
 </body>
 </html>

@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -5,81 +7,125 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap">
   <link rel="stylesheet" href="styles.css">
   <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
   <style>
+    /* Import medieval style font */
+    @font-face {
+        font-family: 'MedievalFont';
+        src: url('medievalfont.woff') format('woff');
+    }
+
+    html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        position: relative;
+    }
+
     body {
-      font-family: 'MedievalFont', serif; /* Ensure you have a medieval style font */
-      background-image: url('parchment.jpg'); /* Parchment-style background */
-      color: #dcd0c0; /* Soft, aged white for text */
-      margin: 0;
-      padding: 0;
+        font-family: 'MedievalFont', serif;
+        background-image: url('parchment.jpg');
+        color: #dcd0c0;
     }
 
     .container {
-      background-color: rgba(0, 0, 0, 0.5);
-      border: 10px double #8c7a6b; /* Double border with a medieval wood color */
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
-      margin-top: 50px;
+        background-color: rgba(0, 0, 0, 0.5);
+        border: 10px double #8c7a6b;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+        margin-top: 50px;
     }
 
     .nav-pills .nav-link {
-      font-size: 18px;
-      background-color: #6b4e37; /* Deep wood color */
-      border-radius: 10px;
-      color: #ffd700; /* Gold color for text */
-      margin: 5px;
-      transition: background-color 0.3s, color 0.3s;
+        font-size: 18px;
+        padding: 10px 10px;
+        background-color: #6b4e37;
+        border-radius: 10px;
+        color: #ffd700;
+        margin: 5px;
+        transition: background-color 0.3s, color 0.3s;
+    }
+
+    @media (max-width: 768px) {
+        .nav-pills .nav-link {
+            font-size: 16px;
+            padding: 8px 8px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .nav-pills .nav-link {
+            font-size: 14px;
+            padding: 6px 6px;
+        }
     }
 
     .nav-pills .nav-link.active, .nav-pills .nav-link:hover {
-      background-color: #50372c; /* Darker shade for active/hover state */
-      color: #ffffff;
-      font-weight: bold;
+        background-color: #50372c;
+        color: #ffffff;
+        font-weight: bold;
     }
 
     .upgrade {
-      background-image: url('leather_texture.jpg'); /* Leather texture for upgrade buttons */
-      color: #fffbeb; /* Off-white text for better visibility */
-      border: 3px solid #4a3425; /* Dark leather border */
-      cursor: pointer;
-      transition: background-color 0.3s, color 0.3s;
-      border-radius: 10px;
+        background-image: url('leather_texture.jpg');
+        color: #fffbeb;
+        border: 3px solid #4a3425;
+        cursor: pointer;
+        transition: background-color 0.3s, color 0.3s;
+        border-radius: 10px;
     }
 
     .upgrade:hover {
-      background-color: #3e2a1b; /* Dark brown for hover */
-      color: #f4e4c3;
+        background-color: #3e2a1b;
+        color: #f4e4c3;
     }
 
     .modal-content {
-      background-color: #261c1a;
-      color: #f7dfc4;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-      text-align: center;
+        background-color: #261c1a;
+        color: #f7dfc4;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        text-align: center;
     }
 
     .castle-image {
-      border: 5px solid #543c2c;
-      border-radius: 10px;
-      max-width: 100%;
-      height: auto;
+        border: 5px solid #543c2c;
+        border-radius: 10px;
+        max-width: 100%;
+        height: auto;
     }
 
-    @font-face {
-      font-family: 'MedievalFont';
-      src: url('medievalfont.woff') format('woff');
+    .ad-banner {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 50px;
+        background-color: #543c2c;
+        color: #f7dfc4;
+        text-align: center;
+        padding: 10px 0;
+        box-sizing: border-box;
+    }
+    #uuid-display {
+        position: fixed;
+        top: 10px;
+        left: 10px;
+        color: gold;
+        background-color: rgba(0, 0, 0, 0.5);
+        padding: 5px;
+        border-radius: 5px;
+        z-index: 1000;
     }
   </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuid.min.js"></script>
 </head>
-
 <body>
-</head>
-
+<div id="uuid-display"></div>
 <div class="container">
   <div class="tab-content">
     <div class="tab-pane fade show active" id="castle-tab">
@@ -181,16 +227,28 @@
 
     <button id="fullscreen-button" style="display: none;" onclick="autoEnterFullscreen()">Enter Fullscreen</button>
 
+    <script>
+      function getOrGenerateUUID() {
+          let existingUUID = localStorage.getItem('deviceUUID');
+          if (!existingUUID) {
+              let newUUID = uuid.v4(); // Corrected line
+              localStorage.setItem('deviceUUID', newUUID);
+              return newUUID;
+          }
+          return existingUUID;
+      }
+
+      const deviceUUID = getOrGenerateUUID();
+      document.getElementById('uuid-display').innerText = `UUID: ${deviceUUID}`;
+    </script>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="script.js"></script>
-    <script src="cordova.js"></script>
     <script src="js/index.js"></script>
-    <audio id="medievaltheme" loop autoplay>
-      <source src="medievalwizard.mp3" type="audio/mp3">
-      Your browser does not support the audio element.
-    </audio>
-    <audio id="click-sound" src="click-sound.mp3" type="audio/mp3"></audio>
+    <script src="js/uuid.js"></script>
+    <script src="cordova.js"></script>
 </body>
 </html>
+
