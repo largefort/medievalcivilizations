@@ -15,11 +15,20 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
       "clobbers": [
         "device"
       ]
+    },
+    {
+      "id": "cordova-plugin-nativeaudio.nativeaudio",
+      "file": "plugins/cordova-plugin-nativeaudio/www/nativeaudio.js",
+      "pluginId": "cordova-plugin-nativeaudio",
+      "clobbers": [
+        "window.plugins.NativeAudio"
+      ]
     }
   ];
   module.exports.metadata = {
     "cordova-plugin-extension": "1.6.0",
     "cordova-plugin-admobpro": "8.13.1",
-    "cordova-plugin-device": "2.1.0"
+    "cordova-plugin-device": "2.1.0",
+    "cordova-plugin-nativeaudio": "3.0.9"
   };
 });
