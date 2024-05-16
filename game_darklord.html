@@ -110,6 +110,7 @@
         padding: 10px 0;
         box-sizing: border-box;
     }
+
     #uuid-display {
         position: fixed;
         top: 10px;
@@ -119,6 +120,63 @@
         padding: 5px;
         border-radius: 5px;
         z-index: 1000;
+    }
+
+    /* Chat Window */
+    .chat-window {
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        width: 300px;
+        max-height: 400px;
+        background-color: rgba(0, 0, 0, 0.7);
+        border: 2px solid #6b4e37;
+        border-radius: 10px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .chat-header {
+        background-color: #6b4e37;
+        color: #ffd700;
+        padding: 10px;
+        text-align: center;
+        font-weight: bold;
+    }
+
+    .chat-messages {
+        flex-grow: 1;
+        padding: 10px;
+        overflow-y: auto;
+        color: #f4e4c3;
+        border-top: 2px solid #6b4e37;
+    }
+
+    .chat-input {
+        display: flex;
+        border-top: 2px solid #6b4e37;
+    }
+
+    .chat-input input {
+        flex-grow: 1;
+        padding: 10px;
+        border: none;
+        border-right: 2px solid #6b4e37;
+        background-color: #3e2a1b;
+        color: #f4e4c3;
+    }
+
+    .chat-input button {
+        padding: 10px;
+        background-color: #6b4e37;
+        border: none;
+        color: #ffd700;
+        cursor: pointer;
+    }
+
+    .chat-input input:focus, .chat-input button:focus {
+        outline: none;
     }
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuid.min.js"></script>
@@ -223,71 +281,107 @@
     </div>
 
     <button id="fullscreen-button" style="display: none;" onclick="autoEnterFullscreen()">Enter Fullscreen</button>
+</div>
 
-    <script>
-      function getOrGenerateUUID() {
-          let existingUUID = localStorage.getItem('deviceUUID');
-          if (!existingUUID) {
-              let newUUID = uuid.v4();
-              localStorage.setItem('deviceUUID', newUUID);
-              return newUUID;
-          }
-          return existingUUID;
+<!-- Chat Window -->
+<div class="chat-window">
+  <div class="chat-header">Chat</div>
+  <div class="chat-messages" id="chat-messages"></div>
+  <div class="chat-input">
+    <input type="text" id="chat-input" placeholder="Type a message..." onkeypress="handleChatKeyPress(event)">
+    <button onclick="sendMessage()">Send</button>
+  </div>
+</div>
+
+<script>
+  function getOrGenerateUUID() {
+      let existingUUID = localStorage.getItem('deviceUUID');
+      if (!existingUUID) {
+          let newUUID = uuid.v4();
+          localStorage.setItem('deviceUUID', newUUID);
+          return newUUID;
       }
+      return existingUUID;
+  }
 
-      const deviceUUID = getOrGenerateUUID();
-      document.getElementById('uuid-display').innerText = `UUID: ${deviceUUID}`;
+  const deviceUUID = getOrGenerateUUID();
+  document.getElementById('uuid-display').innerText = `UUID: ${deviceUUID}`;
 
-      const socket = new WebSocket('ws://localhost:3000');
+  const socket = new WebSocket('ws://medievalcivilizations.online');
 
-      socket.onopen = () => {
-          socket.send(JSON.stringify({ type: 'newPlayer', uuid: deviceUUID }));
-      };
+  socket.onopen = () => {
+      socket.send(JSON.stringify({ type: 'newPlayer', uuid: deviceUUID }));
+  };
 
-      socket.onmessage = (event) => {
-          let message = JSON.parse(event.data);
+  socket.onmessage = (event) => {
+      let message = JSON.parse(event.data);
 
-          if (message.type === 'init') {
-              updateGameState(message.state);
-          } else if (message.type === 'update') {
-              updateGameState(message.state);
-          }
-      };
-
-      function clickCastle() {
-          socket.send(JSON.stringify({ type: 'click', uuid: deviceUUID }));
+      if (message.type === 'init') {
+          updateGameState(message.state);
+      } else if (message.type === 'update') {
+          updateGameState(message.state);
+      } else if (message.type === 'chat') {
+          displayMessage(message);
       }
+  };
 
-      function buyUpgrade(upgrade) {
-          socket.send(JSON.stringify({ type: 'buyUpgrade', upgrade, uuid: deviceUUID }));
+  function clickCastle() {
+      socket.send(JSON.stringify({ type: 'click', uuid: deviceUUID }));
+  }
+
+  function buyUpgrade(upgrade) {
+      socket.send(JSON.stringify({ type: 'buyUpgrade', upgrade, uuid: deviceUUID }));
+  }
+
+  function updateGameState(state) {
+      let player = state[deviceUUID];
+
+      if (player) {
+          document.getElementById('counter').innerText = `Gold coins: ${player.gold}`;
+          document.getElementById('knight-count').innerText = `${player.upgrades.knight}`;
+          document.getElementById('archer-count').innerText = `${player.upgrades.archer}`;
+          document.getElementById('wizard-count').innerText = `${player.upgrades.wizard}`;
+          document.getElementById('paladin-count').innerText = `${player.upgrades.paladin}`;
       }
+  }
 
-      function updateGameState(state) {
-          let player = state[deviceUUID];
-
-          if (player) {
-              document.getElementById('counter').innerText = `Gold coins: ${player.gold}`;
-              document.getElementById('knight-count').innerText = `${player.upgrades.knight}`;
-              document.getElementById('archer-count').innerText = `${player.upgrades.archer}`;
-              document.getElementById('wizard-count').innerText = `${player.upgrades.wizard}`;
-              document.getElementById('paladin-count').innerText = `${player.upgrades.paladin}`;
-          }
+  function handleChatKeyPress(event) {
+      if (event.key === 'Enter') {
+          sendMessage();
       }
-    </script>
+  }
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="script.js"></script>
-    <script src="js/index.js"></script>
-    <script src="js/uuid.js"></script>
-    <script src="js/bgm.js"></script>
-    <script src="GameAnalytics.js"></script>
-    <script src="GameAnalytics.min.js"></script>
-    <audio id="medievaltheme" loop autoplay>
-      <source src="medievaldarklord.mp3" type="audio/mp3">
-      Your browser does not support the audio element.
-    </audio>
-    <audio id="click-sound" src="click-sound.mp3" type="audio/mp3"></audio>
+  function sendMessage() {
+      const input = document.getElementById('chat-input');
+      const message = input.value.trim();
+      if (message) {
+          socket.send(JSON.stringify({ type: 'chat', uuid: deviceUUID, message }));
+          input.value = '';
+      }
+  }
+
+  function displayMessage(message) {
+      const chatMessages = document.getElementById('chat-messages');
+      const newMessage = document.createElement('div');
+      newMessage.textContent = `${message.uuid}: ${message.message}`;
+      chatMessages.appendChild(newMessage);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
+</script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="script.js"></script>
+<script src="js/index.js"></script>
+<script src="js/uuid.js"></script>
+<script src="js/bgm.js"></script>
+<script src="GameAnalytics.js"></script>
+<script src="GameAnalytics.min.js"></script>
+<audio id="medievaltheme" loop autoplay>
+  <source src="medievaldarklord.mp3" type="audio/mp3">
+  Your browser does not support the audio element.
+</audio>
+<audio id="click-sound" src="click-sound.mp3" type="audio/mp3"></audio>
 </body>
 </html>
