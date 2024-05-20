@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Medieval Clicker Multiplayer</title>
+  <title>Medieval Clicker</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="styles.css">
   <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
   <style>
+    /* Import medieval style font */
     @font-face {
         font-family: 'MedievalFont';
         src: url('medievalfont.woff') format('woff');
@@ -129,7 +130,8 @@
   <div class="tab-content">
     <div class="tab-pane fade show active" id="castle-tab">
       <div class="text-center">
-        <img id="castle" src="castle_knight.jpg" alt="Castle" class="castle-image" onclick="clickCastle()">
+        <!-- Knight Civilization Castle Image -->
+        <img id="castle" src="castle_darklands.jpg" alt="Castle" class="castle-image" onclick="clickCastle()">
         <div id="counter" class="mt-3">
           Gold coins: 0
         </div>
@@ -201,6 +203,7 @@
         <div class="form-check">
           <input type="checkbox" id="toggle-sfx"> <label class="form-check-label" for="toggle-sfx"><i class="fas fa-volume-up"></i> Toggle Sound Effects</label>
         </div>
+        <!-- Add the PNG image from Crazy Games with clickable URL -->
         <a href="https://idev.games/game/medieval-civilizations" target="_blank">
           <img src="idev.png" alt="idev.games image" width="100">
         </a>
@@ -228,7 +231,7 @@
       function getOrGenerateUUID() {
           let existingUUID = localStorage.getItem('deviceUUID');
           if (!existingUUID) {
-              let newUUID = uuid.v4();
+              let newUUID = uuid.v4(); // Corrected line
               localStorage.setItem('deviceUUID', newUUID);
               return newUUID;
           }
@@ -237,42 +240,6 @@
 
       const deviceUUID = getOrGenerateUUID();
       document.getElementById('uuid-display').innerText = `UUID: ${deviceUUID}`;
-
-      const socket = new WebSocket('ws://localhost:3000');
-
-      socket.onopen = () => {
-          socket.send(JSON.stringify({ type: 'newPlayer', uuid: deviceUUID }));
-      };
-
-      socket.onmessage = (event) => {
-          let message = JSON.parse(event.data);
-
-          if (message.type === 'init') {
-              updateGameState(message.state);
-          } else if (message.type === 'update') {
-              updateGameState(message.state);
-          }
-      };
-
-      function clickCastle() {
-          socket.send(JSON.stringify({ type: 'click', uuid: deviceUUID }));
-      }
-
-      function buyUpgrade(upgrade) {
-          socket.send(JSON.stringify({ type: 'buyUpgrade', upgrade, uuid: deviceUUID }));
-      }
-
-      function updateGameState(state) {
-          let player = state[deviceUUID];
-
-          if (player) {
-              document.getElementById('counter').innerText = `Gold coins: ${player.gold}`;
-              document.getElementById('knight-count').innerText = `${player.upgrades.knight}`;
-              document.getElementById('archer-count').innerText = `${player.upgrades.archer}`;
-              document.getElementById('wizard-count').innerText = `${player.upgrades.wizard}`;
-              document.getElementById('paladin-count').innerText = `${player.upgrades.paladin}`;
-          }
-      }
     </script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -280,15 +247,54 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="script.js"></script>
     <script src="js/index.js"></script>
+    <script src="cordova.js"></script>
     <script src="js/uuid.js"></script>
     <script src="js/bgm.js"></script>
     <script src="GameAnalytics.js"></script>
     <script src="GameAnalytics.min.js"></script>
+    <!-- GameAnalytics -->
+<script>
+(function(w,d,a,m){var s='script';var g='GameAnalytics';w[g]=w[g]||function(){(w[g].q=w[g].q||[]).push(arguments)},a=d.createElement(s),m=d.getElementsByTagName(s)[0];a.async=1;a.src='http://download.gameanalytics.com/js/GameAnalytics-[VERSION].min.js';m.parentNode.insertBefore(a,m)})(window,document);
+
+GameAnalytics("setEnabledInfoLog", true);
+GameAnalytics("initialize", "611c98febc5c1d857efc67b0c431b979", "2a8656dbee715fa9ba31787c59dcf9802e233619");
+</script>
+<!-- End GameAnalytics -->
     <audio id="medievaltheme" loop autoplay>
-      <source src="medievalknight.mp3" type="audio/mp3">
+      <source src="medievaldarklord.mp3" type="audio/mp3">
       Your browser does not support the audio element.
     </audio>
     <audio id="click-sound" src="click-sound.mp3" type="audio/mp3"></audio>
+
+    <!-- Colyseus Integration -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/colyseus.js/0.14.9/colyseus.min.js"></script>
+    <script>
+      var client = new Colyseus.Client('ws://localhost:2567');
+      client.joinOrCreate("medieval_clicker_room").then(room => {
+        console.log("joined successfully", room);
+        room.onMessage("message_type", (message) => {
+          console.log("Received message from server:", message);
+        });
+
+        function clickCastle() {
+          room.send("click", { /* click event data */ });
+          console.log("Castle clicked!");
+        }
+
+        function buyUpgrade(upgradeType) {
+          room.send("buy_upgrade", { type: upgradeType });
+          console.log(upgradeType + " upgrade bought!");
+        }
+
+        function handleSkillingClick(skillType) {
+          room.send("skill_click", { type: skillType });
+          console.log(skillType + " skill clicked!");
+        }
+
+      }).catch(e => {
+        console.error("join error", e);
+      });
+    </script>
+    <!-- End Colyseus Integration -->
 </body>
 </html>
-
