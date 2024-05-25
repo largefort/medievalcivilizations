@@ -5,6 +5,10 @@ const socketIo = require('socket.io');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { v4: uuidv4 } = require('uuid');
+const dotenv = require('dotenv');
+
+// Load environment variables from .env file
+dotenv.config();
 
 const app = express();
 const server = http.createServer(app);
@@ -15,7 +19,7 @@ const servers = []; // Store servers in memory
 const guilds = {}; // Store guilds in memory
 const players = {}; // Store player data in memory
 
-const secretKey = 'your-secret-key';
+const secretKey = process.env.SECRET_KEY;
 
 // Middleware for parsing JSON bodies
 app.use(express.json());
@@ -100,3 +104,4 @@ function calculateRank(level) {
 server.listen(3000, () => {
     console.log('Server is running on port 3000');
 });
+
