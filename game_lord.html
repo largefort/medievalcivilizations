@@ -121,71 +121,81 @@
         border-radius: 5px;
         z-index: 1000;
     }
+
+    .medieval-note {
+        font-family: 'MedievalFont', serif;
+        color: #ffd700;
+        background-color: rgba(0, 0, 0, 0.7);
+        padding: 10px;
+        border: 2px solid #8c7a6b;
+        border-radius: 10px;
+        margin-top: 10px;
+    }
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuid.min.js"></script>
 </head>
 <body>
-<div id="uuid-display"></div>
+<div id="uuid-display" aria-live="polite"></div>
 <div class="container">
   <div class="tab-content">
-    <div class="tab-pane fade show active" id="castle-tab">
+    <div class="tab-pane fade show active" id="castle-tab" role="tabpanel" aria-labelledby="castle-tab-tab">
       <div class="text-center">
         <!-- Knight Civilization Castle Image -->
-        <img id="castle" src="castle_lord.jpg" alt="Castle" class="castle-image" onclick="clickCastle()">
-        <div id="counter" class="mt-3">
+        <img id="castle" src="castle_lord.jpg" alt="Castle" class="castle-image" onclick="clickCastle()" aria-label="Castle image, click to earn gold coins" onfocus="speakText(this)" tabindex="0">
+        <div id="counter" class="mt-3" aria-live="polite">
           Gold coins: 0
         </div>
         <div id="owned-upgrades" class="mt-3">
-          <div>Knight: <span id="knight-count"><i class="fas fa-chess-knight"></i> 0</span></div>
-          <div>Archer: <span id="archer-count"><i class="fas fa-bullseye"></i> 0</span></div>
-          <div>Wizard: <span id="wizard-count"><i class="fas fa-hat-wizard"></i> 0</span></div>
-          <div>Paladin: <span id="paladin-count"><i class="fas fa-shield-alt"></i> 0</span></div>
+          <div>Knight: <span id="knight-count"><i class="fas fa-chess-knight" aria-hidden="true"></i> <span aria-live="polite">0</span></span></div>
+          <div>Archer: <span id="archer-count"><i class="fas fa-bullseye" aria-hidden="true"></i> <span aria-live="polite">0</span></span></div>
+          <div>Wizard: <span id="wizard-count"><i class="fas fa-hat-wizard" aria-hidden="true"></i> <span aria-live="polite">0</span></span></div>
+          <div>Paladin: <span id="paladin-count"><i class="fas fa-shield-alt" aria-hidden="true"></i> <span aria-live="polite">0</span></span></div>
         </div>
       </div>
     </div>
 
-    <div class="tab-pane fade" id="skilling-tab">
+    <div class="tab-pane fade" id="skilling-tab" role="tabpanel" aria-labelledby="skilling-tab-tab">
       <div class="text-center">
         <h2>Skilling</h2>
-        <div class="upgrade" onclick="handleSkillingClick('woodcutting')">
-          <i class="fas fa-tree"></i> Woodcutting
+        <div class="upgrade" onclick="handleSkillingClick('woodcutting')" aria-label="Woodcutting skill" onfocus="speakText(this)" tabindex="0">
+          <i class="fas fa-tree" aria-hidden="true"></i> Woodcutting
         </div>
-        <div class="upgrade" onclick="handleSkillingClick('mining')">
-          <i class="fas fa-gem"></i> Mining
+        <div class="upgrade" onclick="handleSkillingClick('mining')" aria-label="Mining skill" onfocus="speakText(this)" tabindex="0">
+          <i class="fas fa-gem" aria-hidden="true"></i> Mining
         </div>
         <div class="mt-3">
-          <div>Woodcutting Level: <span id="woodcutting-level">1</span></div>
-          <div>Mining Level: <span id="mining-level">1</span></div>
+          <div>Woodcutting Level: <span id="woodcutting-level" aria-live="polite">1</span></div>
+          <div>Mining Level: <span id="mining-level" aria-live="polite">1</span></div>
         </div>
       </div>
     </div>
 
-    <div class="tab-pane fade" id="shop-tab">
+    <div class="tab-pane fade" id="shop-tab" role="tabpanel" aria-labelledby="shop-tab-tab">
       <div class="text-center">
         <h2>Shop</h2>
-        <div class="upgrade" onclick="buyUpgrade('knight')">
-          <i class="fas fa-chess-knight"></i> Knight (<span id="knight-cost">10</span> coins)
+        <div class="upgrade" onclick="buyUpgrade('knight')" aria-label="Buy Knight upgrade for 10 coins" onfocus="speakText(this)" tabindex="0">
+          <i class="fas fa-chess-knight" aria-hidden="true"></i> Knight (<span id="knight-cost">10</span> coins)
         </div>
         <audio id="knight-upgrade-sound">
           <source src="upgradesound.mp3" type="audio/mp3">
           Your browser does not support the audio element.
         </audio>
-        <div class="upgrade" onclick="buyUpgrade('archer')">
-          <i class="fas fa-bullseye"></i> Archer (<span id="archer-cost">25</span> coins)
+        <div class="upgrade" onclick="buyUpgrade('archer')" aria-label="Buy Archer upgrade for 25 coins" onfocus="speakText(this)" tabindex="0">
+          <i class="fas fa-bullseye" aria-hidden="true"></i> Archer (<span id="archer-cost">25</span> coins)
         </div>
         <audio id="archer-upgrade-sound">
           <source src="upgradesound.mp3" type="audio/mp3">
           Your browser does not support the audio element.
         </audio>
-        <div class="upgrade" onclick="buyUpgrade('wizard')">
-          <i class="fas fa-hat-wizard"></i> Wizard (<span id="wizard-cost">50</span> coins)
+        <div class="upgrade" onclick="buyUpgrade('wizard')" aria-label="Buy Wizard upgrade for 50 coins" onfocus="speakText(this)" tabindex="0">
+          <i class="fas fa-hat-wizard" aria-hidden="true"></i> Wizard (<span id="wizard-cost">50</span> coins)
         </div>
         <audio id="wizard-upgrade-sound">
           <source src="upgradesound.mp3" type="audio/mp3">
           Your browser does not support the audio element.
         </audio>
-        <div class="upgrade" onclick="buyUpgrade('paladin')">
-          <i class="fas fa-shield-alt"></i> Paladin (<span id="paladin-cost">100</span> coins)
+        <div class="upgrade" onclick="buyUpgrade('paladin')" aria-label="Buy Paladin upgrade for 100 coins" onfocus="speakText(this)" tabindex="0">
+          <i class="fas fa-shield-alt" aria-hidden="true"></i> Paladin (<span id="paladin-cost">100</span> coins)
         </div>
         <audio id="paladin-upgrade-sound">
           <source src="upgradesound.mp3" type="audio/mp3">
@@ -194,38 +204,44 @@
       </div>
     </div>
 
-    <div class="tab-pane fade" id="settings-tab">
+    <div class="tab-pane fade" id="settings-tab" role="tabpanel" aria-labelledby="settings-tab-tab">
       <div class="text-center">
         <h2>Settings</h2>
         <div class="form-check">
-          <input type="checkbox" id="toggle-music"> <label class="form-check-label" for="toggle-music"><i class="fas fa-volume-up"></i> Toggle Music</label>
+          <input type="checkbox" id="toggle-music" aria-label="Toggle background music" onfocus="speakText(this)" tabindex="0"> <label class="form-check-label" for="toggle-music"><i class="fas fa-volume-up"></i> Toggle Music</label>
         </div>
         <div class="form-check">
-          <input type="checkbox" id="toggle-sfx"> <label class="form-check-label" for="toggle-sfx"><i class="fas fa-volume-up"></i> Toggle Sound Effects</label>
+          <input type="checkbox" id="toggle-sfx" aria-label="Toggle sound effects" onfocus="speakText(this)" tabindex="0"> <label class="form-check-label" for="toggle-sfx"><i class="fas fa-volume-up"></i> Toggle Sound Effects</label>
+        </div>
+        <div class="form-check">
+          <input type="checkbox" id="toggle-tts" aria-label="Toggle text-to-speech" onchange="toggleTTS()" onfocus="speakText(this)" tabindex="0"> <label class="form-check-label" for="toggle-tts"><i class="fas fa-volume-up"></i> Toggle Text-to-Speech</label>
+        </div>
+        <div class="medieval-note">
+          This switch is for people with disabilities. Ye may turn it on if ye so desire, but it is meant for those in need.
         </div>
         <!-- Add the PNG image from Crazy Games with clickable URL -->
-        <a href="https://idev.games/game/medieval-civilizations" target="_blank">
+        <a href="https://idev.games/game/medieval-civilizations" target="_blank" aria-label="Visit idev.games" onfocus="speakText(this)" tabindex="0">
           <img src="idev.png" alt="idev.games image" width="100">
         </a>
       </div>
     </div>
 
-    <div class="nav nav-pills nav-fill fixed-bottom">
-      <a class="nav-link active" data-toggle="pill" href="#castle-tab">
-        <i class="fas fa-chess-rook"></i> Castle
+    <div class="nav nav-pills nav-fill fixed-bottom" role="tablist">
+      <a class="nav-link active" data-toggle="pill" href="#castle-tab" role="tab" aria-controls="castle-tab" aria-selected="true" onfocus="speakText(this)" tabindex="0">
+        <i class="fas fa-chess-rook" aria-hidden="true"></i> Castle
       </a>
-      <a class="nav-link" data-toggle="pill" href="#skilling-tab">
-        <i class="fa-solid fa-chart-simple"></i> Skilling
+      <a class="nav-link" data-toggle="pill" href="#skilling-tab" role="tab" aria-controls="skilling-tab" aria-selected="false" onfocus="speakText(this)" tabindex="0">
+        <i class="fa-solid fa-chart-simple" aria-hidden="true"></i> Skilling
       </a>
-      <a class="nav-link" data-toggle="pill" href="#shop-tab">
-        <i class="fas fa-cart-shopping"></i> Shop
+      <a class="nav-link" data-toggle="pill" href="#shop-tab" role="tab" aria-controls="shop-tab" aria-selected="false" onfocus="speakText(this)" tabindex="0">
+        <i class="fas fa-cart-shopping" aria-hidden="true"></i> Shop
       </a>
-      <a class="nav-link" data-toggle="pill" href="#settings-tab">
-        <i class="fas fa-gears"></i> Settings
+      <a class="nav-link" data-toggle="pill" href="#settings-tab" role="tab" aria-controls="settings-tab" aria-selected="false" onfocus="speakText(this)" tabindex="0">
+        <i class="fas fa-gears" aria-hidden="true"></i> Settings
       </a>
     </div>
 
-    <button id="fullscreen-button" style="display: none;" onclick="autoEnterFullscreen()">Enter Fullscreen</button>
+    <button id="fullscreen-button" style="display: none;" onclick="autoEnterFullscreen()" aria-label="Enter Fullscreen" onfocus="speakText(this)" tabindex="0">Enter Fullscreen</button>
 
     <script>
       function getOrGenerateUUID() {
@@ -240,6 +256,28 @@
 
       const deviceUUID = getOrGenerateUUID();
       document.getElementById('uuid-display').innerText = `UUID: ${deviceUUID}`;
+
+      let isTTSOn = true;
+
+      function speakText(element) {
+          if (!isTTSOn) return;
+          speechSynthesis.cancel();  // Cancel any ongoing speech
+          const text = element.getAttribute('aria-label') || element.innerText;
+          const utterance = new SpeechSynthesisUtterance(text);
+          speechSynthesis.speak(utterance);
+      }
+
+      function toggleTTS() {
+          isTTSOn = !isTTSOn;
+          speechSynthesis.cancel();  // Cancel any ongoing speech
+          const status = isTTSOn ? 'enabled' : 'disabled';
+          const utterance = new SpeechSynthesisUtterance(`Text-to-speech has been ${status}`);
+          speechSynthesis.speak(utterance);
+      }
+
+      document.querySelectorAll('[aria-label], .upgrade').forEach(element => {
+          element.addEventListener('click', () => speakText(element));
+      });
     </script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -248,6 +286,17 @@
     <script src="script.js"></script>
     <script src="js/uuid.js"></script>
     <script src="js/bgm.js"></script>
+    <script src="cordova.js"></script>
+    <script src="GameAnalytics.js"></script>
+    <script src="GameAnalytics.min.js"></script>
+    <!-- GameAnalytics -->
+    <script>
+      (function(w,d,a,m){var s='script';var g='GameAnalytics';w[g]=w[g]||function(){(w[g].q=w[g].q||[]).push(arguments)},a=d.createElement(s),m=d.getElementsByTagName(s)[0];a.async=1;a.src='http://download.gameanalytics.com/js/GameAnalytics-[VERSION].min.js';m.parentNode.insertBefore(a,m)})(window,document);
+
+      GameAnalytics("setEnabledInfoLog", true);
+      GameAnalytics("initialize", "611c98febc5c1d857efc67b0c431b979", "2a8656dbee715fa9ba31787c59dcf9802e233619");
+    </script>
+    <!-- End GameAnalytics -->
     <audio id="medievaltheme" loop autoplay>
       <source src="medievallord.mp3" type="audio/mp3">
       Your browser does not support the audio element.
@@ -255,4 +304,3 @@
     <audio id="click-sound" src="click-sound.mp3" type="audio/mp3"></audio>
 </body>
 </html>
-
