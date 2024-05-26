@@ -1,6 +1,6 @@
 {
-    "css": ".new-style { color: red; } .upgrade:hover { background-color: #5a4b3f; }",
-    "js": "console.log('New feature loaded'); function showAlert() { alert('New update available!'); }",
+    "css": ".new-style { color: red; }",
+    "js": "console.log('New feature loaded');",
     "features": [
         {
             "type": "html",
@@ -11,43 +11,6 @@
             "type": "function",
             "functionBody": "function newFeature() { alert('New Feature'); }"
         }
-    ],
-    "assets": [
-        {
-            "type": "image",
-            "src": "https://example.com/new-image.jpg",
-            "alt": "New Image",
-            "className": "new-image-class",
-            "parentSelector": "#image-container"
-        },
-        {
-            "type": "audio",
-            "src": "https://example.com/new-audio.mp3",
-            "parentSelector": "#audio-container"
-        }
-    ],
-    "levels": [
-        {
-            "name": "Level 2",
-            "difficulty": "Medium",
-            "description": "This is the second level."
-        },
-        {
-            "name": "Level 3",
-            "difficulty": "Hard",
-            "description": "This is the third level."
-        }
-    ],
-    "quests": [
-        {
-            "title": "Find the Hidden Treasure",
-            "description": "Locate and retrieve the hidden treasure in the forest.",
-            "reward": "100 gold coins"
-        },
-        {
-            "title": "Defeat the Dragon",
-            "description": "Slay the dragon terrorizing the village.",
-            "reward": "200 gold coins"
-        }
     ]
 }
+
