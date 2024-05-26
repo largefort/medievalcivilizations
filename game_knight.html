@@ -1,4 +1,4 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -152,9 +152,6 @@
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuid.min.js"></script>
 </head>
-  <!-- Ezoic - sidebar_floating_1 - sidebar_floating_1 -->
-<div id="ezoic-pub-ad-placeholder-103"> </div>
-<!-- End Ezoic - sidebar_floating_1 - sidebar_floating_1 -->
 <body>
 <div id="uuid-display" aria-live="polite"></div>
 <div class="container">
@@ -272,7 +269,7 @@
       function getOrGenerateUUID() {
           let existingUUID = localStorage.getItem('deviceUUID');
           if (!existingUUID) {
-              let newUUID = uuid.v4(); // Corrected line
+              let newUUID = uuid.v4();
               localStorage.setItem('deviceUUID', newUUID);
               return newUUID;
           }
@@ -286,50 +283,53 @@
 
       function speakText(element) {
           if (!isTTSOn) return;
-          speechSynthesis.cancel();  // Cancel any ongoing speech
+
           const text = element.getAttribute('aria-label') || element.innerText;
-          const utterance = new SpeechSynthesisUtterance(text);
 
-          // Ensure voices are loaded
-          let voices = speechSynthesis.getVoices();
-          if (!voices.length) {
-              speechSynthesis.onvoiceschanged = () => {
-                  voices = speechSynthesis.getVoices();
-                  setVoice(utterance, voices);
-                  speechSynthesis.speak(utterance);
-              };
-          } else {
-              setVoice(utterance, voices);
-              speechSynthesis.speak(utterance);
-          }
-      }
-
-      function setVoice(utterance, voices) {
-          const voice = voices.find(voice => voice.name.includes('Google') || voice.name.includes('Microsoft'));
-          if (voice) {
-              utterance.voice = voice;
-          }
-
-          // Set TTS parameters
-          utterance.pitch = 1; // Adjust pitch (0.1 to 2)
-          utterance.rate = 1;  // Adjust rate (0.1 to 10)
-          utterance.volume = 1; // Adjust volume (0 to 1)
+          TTS.speak({
+              text: text,
+              locale: 'en-US',
+              rate: 1.0
+          }, function() {
+              console.log('Success');
+          }, function(reason) {
+              console.log('Error:', reason);
+          });
       }
 
       function toggleTTS() {
           isTTSOn = !isTTSOn;
-          speechSynthesis.cancel();  // Cancel any ongoing speech
+
           const status = isTTSOn ? 'enabled' : 'disabled';
-          const utterance = new SpeechSynthesisUtterance(`Text-to-speech has been ${status}`);
-          let voices = speechSynthesis.getVoices();
-          setVoice(utterance, voices);
-          speechSynthesis.speak(utterance);
+          TTS.speak({
+              text: `Text-to-speech has been ${status}`,
+              locale: 'en-US',
+              rate: 1.0
+          }, function() {
+              console.log('Success');
+          }, function(reason) {
+              console.log('Error:', reason);
+          });
       }
 
-      document.querySelectorAll('[aria-label], .upgrade').forEach(element => {
-          element.addEventListener('click', () => speakText(element));
-      });
+      document.addEventListener('deviceready', function() {
+          document.querySelectorAll('[aria-label], .upgrade').forEach(element => {
+              element.addEventListener('click', () => speakText(element));
+          });
+      }, false);
+
+      // Function to update the document title with gold coin count
+      function updateDocumentTitle() {
+          const coinCountElement = document.getElementById('counter');
+          const coinCountText = coinCountElement.textContent || coinCountElement.innerText;
+          const coinCount = coinCountText.replace(/[^0-9]/g, ''); // Extract only the number
+          document.title = `Gold Coins: ${coinCount}`;
+      }
+
+      // Update the title every second
+      setInterval(updateDocumentTitle, 1000);
     </script>
+
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -341,11 +341,6 @@
     <script src="js/index.js"></script>
     <script src="GameAnalytics.js"></script>
     <script src="GameAnalytics.min.js"></script>
-    <script src="MedievalRemoteSDK.js"></script>
-    <script>
-      // Initialize the SDK with your updates URL
-      const sdk = new MedievalRemoteSDK('https://medievalCivilizations.online/updates.json');
-    </script>
     <!-- GameAnalytics -->
     <script>
       (function(w,d,a,m){var s='script';var g='GameAnalytics';w[g]=w[g]||function(){(w[g].q=w[g].q||[]).push(arguments)},a=d.createElement(s),m=d.getElementsByTagName(s)[0];a.async=1;a.src='http://download.gameanalytics.com/js/GameAnalytics-[VERSION].min.js';m.parentNode.insertBefore(a,m)})(window,document);
