@@ -1,0 +1,15 @@
+{
+    "css": ".new-style { color: brown; }",
+    "js": "console.log('New feature loaded');",
+    "features": [
+        {
+            "type": "html",
+            "parentSelector": "#container",
+            "html": "<div class='new-feature'>New Feature Content</div>"
+        },
+        {
+            "type": "function",
+            "functionBody": "function newFeature() { alert('New Feature'); }"
+        }
+    ]
+}
