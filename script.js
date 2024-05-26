@@ -121,19 +121,6 @@ function toggleSoundEffects() {
 document.getElementById("toggle-music").addEventListener("change", toggleMusic);
 document.getElementById("toggle-sfx").addEventListener("change", toggleSoundEffects);
 
-// Function to request fullscreen
-function requestFullscreen(element) {
-    if (element.requestFullscreen) {
-        element.requestFullscreen();
-    } else if (element.mozRequestFullScreen) { // Firefox
-        element.mozRequestFullScreen();
-    } else if (element.webkitRequestFullscreen) { // Chrome and Safari
-        element.webkitRequestFullscreen();
-    } else if (element.msRequestFullscreen) { // Internet Explorer
-        element.msRequestFullscreen();
-    }
-}
-
 function updateUI() {
     document.getElementById("counter").textContent = `Gold coins: ${compactNumberFormat(coins)}`;
     document.getElementById("knight-count").textContent = knightCount;
@@ -142,6 +129,10 @@ function updateUI() {
     document.getElementById("woodcutting-level").textContent = woodcuttingLevel;
     document.getElementById("mining-level").textContent = miningLevel;
     document.getElementById("paladin-count").textContent = paladinCount;
+    document.getElementById("knight-purchase-count").textContent = knightCount;
+    document.getElementById("archer-purchase-count").textContent = archerCount;
+    document.getElementById("wizard-purchase-count").textContent = wizardCount;
+    document.getElementById("paladin-purchase-count").textContent = paladinCount;
 
     updatePassiveIncome();
 }
@@ -157,12 +148,10 @@ function clickCastle() {
 
 function buyUpgrade(type) {
     let cost = 0;
-    let upgradeCount;
 
     switch (type) {
         case "knight":
             cost = 10;
-            upgradeCount = knightCount;
             if (coins >= cost) {
                 coins -= cost;
                 knightCount++;
@@ -170,7 +159,6 @@ function buyUpgrade(type) {
             break;
         case "archer":
             cost = 25;
-            upgradeCount = archerCount;
             if (coins >= cost) {
                 coins -= cost;
                 archerCount++;
@@ -178,7 +166,6 @@ function buyUpgrade(type) {
             break;
         case "wizard":
             cost = 50;
-            upgradeCount = wizardCount;
             if (coins >= cost) {
                 coins -= cost;
                 wizardCount++;
@@ -186,7 +173,6 @@ function buyUpgrade(type) {
             break;
         case "paladin":
             cost = 100;
-            upgradeCount = paladinCount;
             if (coins >= cost) {
                 coins -= cost;
                 paladinCount++;
@@ -249,3 +235,16 @@ function earnPassiveIncome() {
 }
 
 setInterval(earnPassiveIncome, 1000);
+
+// Request fullscreen
+function requestFullscreen(element) {
+    if (element.requestFullscreen) {
+        element.requestFullscreen();
+    } else if (element.mozRequestFullScreen) { // Firefox
+        element.mozRequestFullScreen();
+    } else if (element.webkitRequestFullscreen) { // Chrome and Safari
+        element.webkitRequestFullscreen();
+    } else if (element.msRequestFullscreen) { // Internet Explorer
+        element.msRequestFullscreen();
+    }
+}
