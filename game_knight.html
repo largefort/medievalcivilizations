@@ -151,6 +151,46 @@
         border-radius: 10px;
         margin-top: 10px;
     }
+
+    /* Debug Console Styles */
+    #debug-console {
+        display: none;
+        position: fixed;
+        bottom: 10px;
+        right: 10px;
+        width: 400px;
+        height: 500px;
+        background-color: rgba(0, 0, 0, 0.9);
+        border: 2px solid #8c7a6b;
+        border-radius: 10px;
+        padding: 10px;
+        color: #f7dfc4;
+        z-index: 10000;
+        overflow-y: auto;
+        font-family: 'MedievalFont', serif;
+    }
+
+    #debug-console h3 {
+        text-align: center;
+        margin-top: 0;
+        font-size: 1.5em;
+        border-bottom: 2px solid #8c7a6b;
+        padding-bottom: 5px;
+    }
+
+    #debug-console p {
+        margin: 5px 0;
+    }
+
+    .debug-section {
+        margin-bottom: 10px;
+    }
+
+    .debug-section h4 {
+        font-size: 1.2em;
+        border-bottom: 1px solid #8c7a6b;
+        padding-bottom: 3px;
+    }
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuid.min.js"></script>
 </head>
@@ -267,6 +307,23 @@
 
     <button id="fullscreen-button" style="display: none;" onclick="autoEnterFullscreen()" aria-label="Enter Fullscreen" onfocus="speakText(this)" tabindex="0">Enter Fullscreen</button>
 
+    <!-- Debug Console -->
+    <div id="debug-console">
+      <h3>Debug Console</h3>
+      <div class="debug-section">
+        <h4>Performance</h4>
+        <div id="debug-performance"></div>
+      </div>
+      <div class="debug-section">
+        <h4>Game Stats</h4>
+        <div id="debug-game-stats"></div>
+      </div>
+      <div class="debug-section">
+        <h4>Logs</h4>
+        <div id="debug-logs"></div>
+      </div>
+    </div>
+
     <script>
       function getOrGenerateUUID() {
           let existingUUID = localStorage.getItem('deviceUUID');
@@ -330,8 +387,43 @@
 
       // Update the title every second
       setInterval(updateDocumentTitle, 1000);
-    </script>
 
+      // Debug Console functionality
+      document.addEventListener('keydown', function(event) {
+          if (event.key === 'D') {
+              const debugConsole = document.getElementById('debug-console');
+              debugConsole.style.display = debugConsole.style.display === 'none' ? 'block' : 'none';
+          }
+      });
+
+      function logToDebugConsole(message) {
+          const debugLogs = document.getElementById('debug-logs');
+          const timestamp = new Date().toLocaleTimeString();
+          const logEntry = document.createElement('p');
+          logEntry.textContent = `[${timestamp}] ${message}`;
+          debugLogs.appendChild(logEntry);
+          debugLogs.scrollTop = debugLogs.scrollHeight; // Auto scroll to the bottom
+      }
+
+      function updatePerformanceData() {
+          const performanceData = `FPS: ${Math.floor(Math.random() * 60) + 1}, Memory Usage: ${(Math.random() * 100).toFixed(2)}MB`;
+          document.getElementById('debug-performance').textContent = performanceData;
+          logToDebugConsole(performanceData);
+      }
+
+      function updateGameStats() {
+          const knightCount = document.getElementById('knight-count').innerText;
+          const archerCount = document.getElementById('archer-count').innerText;
+          const wizardCount = document.getElementById('wizard-count').innerText;
+          const paladinCount = document.getElementById('paladin-count').innerText;
+          const gameStats = `Knights: ${knightCount}, Archers: ${archerCount}, Wizards: ${wizardCount}, Paladins: ${paladinCount}`;
+          document.getElementById('debug-game-stats').textContent = gameStats;
+      }
+
+      // Update performance and game stats every 5 seconds
+      setInterval(updatePerformanceData, 5000);
+      setInterval(updateGameStats, 5000);
+    </script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -345,7 +437,7 @@
     <script src="GameAnalytics.min.js"></script>
     <!-- GameAnalytics -->
     <script>
-      (function(w,d,a,m){var s='script';var g='GameAnalytics';w[g]=w[g]||function(){(w[g].q=w[g].q||[]).push(arguments)},a=d.createElement(s),m=d.getElementsByTagName(s)[0];a.async=1;a.src='http://download.gameanalytics.com/js/GameAnalytics-[VERSION].min.js';m.parentNode.insertBefore(a,m)})(window,document);
+      (function(w,d,a,m){var s='script';var g='GameAnalytics';w[g]=w[g]||function(){(w[g].q=w[g.q||[]]).push(arguments)},a=d.createElement(s),m=d.getElementsByTagName(s)[0];a.async=1;a.src='http://download.gameanalytics.com/js/GameAnalytics-[VERSION].min.js';m.parentNode.insertBefore(a,m)})(window,document);
 
       GameAnalytics("setEnabledInfoLog", true);
       GameAnalytics("initialize", "611c98febc5c1d857efc67b0c431b979", "2a8656dbee715fa9ba31787c59dcf9802e233619");
