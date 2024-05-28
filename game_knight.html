@@ -158,8 +158,8 @@
         position: fixed;
         bottom: 10px;
         right: 10px;
-        width: 400px;
-        height: 500px;
+        width: 500px;
+        height: 600px;
         background-color: rgba(0, 0, 0, 0.9);
         border: 2px solid #8c7a6b;
         border-radius: 10px;
@@ -190,6 +190,27 @@
         font-size: 1.2em;
         border-bottom: 1px solid #8c7a6b;
         padding-bottom: 3px;
+    }
+
+    .debug-control {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+    }
+
+    .debug-control button {
+        font-family: 'MedievalFont', serif;
+        background-color: #50372c;
+        color: #f7dfc4;
+        border: 1px solid #8c7a6b;
+        border-radius: 5px;
+        padding: 5px 10px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .debug-control button:hover {
+        background-color: #6b4e37;
     }
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuid.min.js"></script>
@@ -310,6 +331,10 @@
     <!-- Debug Console -->
     <div id="debug-console">
       <h3>Debug Console</h3>
+      <div class="debug-control">
+        <button onclick="toggleLogging()">Start Logging</button>
+        <button onclick="clearLogs()">Clear Logs</button>
+      </div>
       <div class="debug-section">
         <h4>Performance</h4>
         <div id="debug-performance"></div>
@@ -317,6 +342,14 @@
       <div class="debug-section">
         <h4>Game Stats</h4>
         <div id="debug-game-stats"></div>
+      </div>
+      <div class="debug-section">
+        <h4>Network Requests</h4>
+        <div id="debug-network"></div>
+      </div>
+      <div class="debug-section">
+        <h4>Error Logs</h4>
+        <div id="debug-errors"></div>
       </div>
       <div class="debug-section">
         <h4>Logs</h4>
@@ -390,7 +423,7 @@
 
       // Debug Console functionality
       document.addEventListener('keydown', function(event) {
-          if (event.key === 'D') {
+          if (event.key === 'd') {
               const debugConsole = document.getElementById('debug-console');
               debugConsole.style.display = debugConsole.style.display === 'none' ? 'block' : 'none';
           }
@@ -419,6 +452,71 @@
           const gameStats = `Knights: ${knightCount}, Archers: ${archerCount}, Wizards: ${wizardCount}, Paladins: ${paladinCount}`;
           document.getElementById('debug-game-stats').textContent = gameStats;
       }
+
+      function logNetworkRequest(url, status) {
+          const debugNetwork = document.getElementById('debug-network');
+          const timestamp = new Date().toLocaleTimeString();
+          const logEntry = document.createElement('p');
+          logEntry.textContent = `[${timestamp}] ${url} - Status: ${status}`;
+          debugNetwork.appendChild(logEntry);
+          debugNetwork.scrollTop = debugNetwork.scrollHeight; // Auto scroll to the bottom
+      }
+
+      function logError(message) {
+          const debugErrors = document.getElementById('debug-errors');
+          const timestamp = new Date().toLocaleTimeString();
+          const logEntry = document.createElement('p');
+          logEntry.textContent = `[${timestamp}] ERROR: ${message}`;
+          debugErrors.appendChild(logEntry);
+          debugErrors.scrollTop = debugErrors.scrollHeight; // Auto scroll to the bottom
+      }
+
+      function toggleLogging() {
+          const logButton = document.querySelector('.debug-control button:first-child');
+          if (logButton.textContent === 'Start Logging') {
+              logButton.textContent = 'Stop Logging';
+              startLogging();
+          } else {
+              logButton.textContent = 'Start Logging';
+              stopLogging();
+          }
+      }
+
+      function clearLogs() {
+          document.getElementById('debug-logs').innerHTML = '';
+          document.getElementById('debug-network').innerHTML = '';
+          document.getElementById('debug-errors').innerHTML = '';
+      }
+
+      let loggingInterval;
+
+      function startLogging() {
+          loggingInterval = setInterval(() => {
+              updatePerformanceData();
+              updateGameStats();
+          }, 5000);
+      }
+
+      function stopLogging() {
+          clearInterval(loggingInterval);
+      }
+
+      // Example of logging network requests
+      function exampleNetworkRequest() {
+          const url = 'https://medievalcivilizations.online';
+          const status = '200 OK';
+          logNetworkRequest(url, status);
+      }
+
+      // Example of logging an error
+      function exampleError() {
+          const errorMessage = 'An unexpected error occurred';
+          logError(errorMessage);
+      }
+
+      // Start by logging some example data
+      exampleNetworkRequest();
+      exampleError();
 
       // Update performance and game stats every 5 seconds
       setInterval(updatePerformanceData, 5000);
