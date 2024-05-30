@@ -6,7 +6,6 @@
   <title>Medieval Clicker</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap">
   <link rel="stylesheet" href="http://medievalcivilizations.online/images/logo.png">
   <link rel="stylesheet" href="https://medievalcivilizationscdn.b-cdn.net/images/logo.png">
@@ -151,69 +150,8 @@
         border-radius: 10px;
         margin-top: 10px;
     }
-
-    /* Debug Console Styles */
-    #debug-console {
-        display: none;
-        position: fixed;
-        bottom: 10px;
-        right: 10px;
-        width: 500px;
-        height: 600px;
-        background-color: rgba(0, 0, 0, 0.9);
-        border: 2px solid #8c7a6b;
-        border-radius: 10px;
-        padding: 10px;
-        color: #f7dfc4;
-        z-index: 10000;
-        overflow-y: auto;
-        font-family: 'MedievalFont', serif;
-    }
-
-    #debug-console h3 {
-        text-align: center;
-        margin-top: 0;
-        font-size: 1.5em;
-        border-bottom: 2px solid #8c7a6b;
-        padding-bottom: 5px;
-    }
-
-    #debug-console p {
-        margin: 5px 0;
-    }
-
-    .debug-section {
-        margin-bottom: 10px;
-    }
-
-    .debug-section h4 {
-        font-size: 1.2em;
-        border-bottom: 1px solid #8c7a6b;
-        padding-bottom: 3px;
-    }
-
-    .debug-control {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 10px;
-    }
-
-    .debug-control button {
-        font-family: 'MedievalFont', serif;
-        background-color: #50372c;
-        color: #f7dfc4;
-        border: 1px solid #8c7a6b;
-        border-radius: 5px;
-        padding: 5px 10px;
-        cursor: pointer;
-        transition: background-color 0.3s;
-    }
-
-    .debug-control button:hover {
-        background-color: #6b4e37;
-    }
-  </style>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuid.min.js"></script>
+    </style>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuid.min.js"></script>
 </head>
 <body>
 <div id="uuid-display" aria-live="polite"></div>
@@ -293,13 +231,16 @@
       <div class="text-center">
         <h2>Settings</h2>
         <div class="form-check">
-          <input type="checkbox" id="toggle-music" aria-label="Toggle background music" onfocus="speakText(this)" tabindex="0"> <label class="form-check-label" for="toggle-music"><i class="fas fa-volume-up"></i> Toggle Music</label>
+          <input type="checkbox" id="toggle-music" class="form-check-input" aria-label="Toggle background music" onfocus="speakText(this)" tabindex="0"> 
+          <label class="form-check-label" for="toggle-music"><i class="fas fa-volume-up"></i> Toggle Music</label>
         </div>
         <div class="form-check">
-          <input type="checkbox" id="toggle-sfx" aria-label="Toggle sound effects" onfocus="speakText(this)" tabindex="0"> <label class="form-check-label" for="toggle-sfx"><i class="fas fa-volume-up"></i> Toggle Sound Effects</label>
+          <input type="checkbox" id="toggle-sfx" class="form-check-input" aria-label="Toggle sound effects" onfocus="speakText(this)" tabindex="0"> 
+          <label class="form-check-label" for="toggle-sfx"><i class="fas fa-volume-up"></i> Toggle Sound Effects</label>
         </div>
         <div class="form-check">
-          <input type="checkbox" id="toggle-tts" aria-label="Toggle text-to-speech" onchange="toggleTTS()" onfocus="speakText(this)" tabindex="0"> <label class="form-check-label" for="toggle-tts"><i class="fas fa-volume-up"></i> Toggle Text-to-Speech</label>
+          <input type="checkbox" id="toggle-tts" class="form-check-input" aria-label="Toggle text-to-speech" onchange="toggleTTS()" onfocus="speakText(this)" tabindex="0"> 
+          <label class="form-check-label" for="toggle-tts"><i class="fas fa-volume-up"></i> Toggle Text-to-Speech</label>
         </div>
         <div class="medieval-note">
           This switch is for people with disabilities. Ye may turn it on if ye so desire, but it is meant for those in need.
@@ -312,50 +253,21 @@
     </div>
 
     <div class="nav nav-pills nav-fill fixed-bottom" role="tablist">
-      <a class="nav-link active" data-toggle="pill" href="#castle-tab" role="tab" aria-controls="castle-tab" aria-selected="true" onfocus="speakText(this)" tabindex="0">
+      <a class="nav-link active" data-bs-toggle="pill" href="#castle-tab" role="tab" aria-controls="castle-tab" aria-selected="true" onfocus="speakText(this)" tabindex="0">
         <i class="fas fa-chess-rook" aria-hidden="true"></i> Castle
       </a>
-      <a class="nav-link" data-toggle="pill" href="#skilling-tab" role="tab" aria-controls="skilling-tab" aria-selected="false" onfocus="speakText(this)" tabindex="0">
-        <i class="fa-solid fa-chart-simple" aria-hidden="true"></i> Skilling
+      <a class="nav-link" data-bs-toggle="pill" href="#skilling-tab" role="tab" aria-controls="skilling-tab" aria-selected="false" onfocus="speakText(this)" tabindex="0">
+        <i class="fas fa-chart-simple" aria-hidden="true"></i> Skilling
       </a>
-      <a class="nav-link" data-toggle="pill" href="#shop-tab" role="tab" aria-controls="shop-tab" aria-selected="false" onfocus="speakText(this)" tabindex="0">
-        <i class="fas fa-cart-shopping" aria-hidden="true"></i> Shop
+      <a class="nav-link" data-bs-toggle="pill" href="#shop-tab" role="tab" aria-controls="shop-tab" aria-selected="false" onfocus="speakText(this)" tabindex="0">
+        <i class="fas fa-shopping-cart" aria-hidden="true"></i> Shop
       </a>
-      <a class="nav-link" data-toggle="pill" href="#settings-tab" role="tab" aria-controls="settings-tab" aria-selected="false" onfocus="speakText(this)" tabindex="0">
+      <a class="nav-link" data-bs-toggle="pill" href="#settings-tab" role="tab" aria-controls="settings-tab" aria-selected="false" onfocus="speakText(this)" tabindex="0">
         <i class="fas fa-gears" aria-hidden="true"></i> Settings
       </a>
     </div>
-
+    
     <button id="fullscreen-button" style="display: none;" onclick="autoEnterFullscreen()" aria-label="Enter Fullscreen" onfocus="speakText(this)" tabindex="0">Enter Fullscreen</button>
-
-    <!-- Debug Console -->
-    <div id="debug-console">
-      <h3>Debug Console</h3>
-      <div class="debug-control">
-        <button onclick="toggleLogging()">Start Logging</button>
-        <button onclick="clearLogs()">Clear Logs</button>
-      </div>
-      <div class="debug-section">
-        <h4>Performance</h4>
-        <div id="debug-performance"></div>
-      </div>
-      <div class="debug-section">
-        <h4>Game Stats</h4>
-        <div id="debug-game-stats"></div>
-      </div>
-      <div class="debug-section">
-        <h4>Network Requests</h4>
-        <div id="debug-network"></div>
-      </div>
-      <div class="debug-section">
-        <h4>Error Logs</h4>
-        <div id="debug-errors"></div>
-      </div>
-      <div class="debug-section">
-        <h4>Logs</h4>
-        <div id="debug-logs"></div>
-      </div>
-    </div>
 
     <script>
       function getOrGenerateUUID() {
@@ -420,111 +332,10 @@
 
       // Update the title every second
       setInterval(updateDocumentTitle, 1000);
-
-      // Debug Console functionality
-      document.addEventListener('keydown', function(event) {
-          if (event.key === 'd') {
-              const debugConsole = document.getElementById('debug-console');
-              debugConsole.style.display = debugConsole.style.display === 'none' ? 'block' : 'none';
-          }
-      });
-
-      function logToDebugConsole(message) {
-          const debugLogs = document.getElementById('debug-logs');
-          const timestamp = new Date().toLocaleTimeString();
-          const logEntry = document.createElement('p');
-          logEntry.textContent = `[${timestamp}] ${message}`;
-          debugLogs.appendChild(logEntry);
-          debugLogs.scrollTop = debugLogs.scrollHeight; // Auto scroll to the bottom
-      }
-
-      function updatePerformanceData() {
-          const performanceData = `FPS: ${Math.floor(Math.random() * 60) + 1}, Memory Usage: ${(Math.random() * 100).toFixed(2)}MB`;
-          document.getElementById('debug-performance').textContent = performanceData;
-          logToDebugConsole(performanceData);
-      }
-
-      function updateGameStats() {
-          const knightCount = document.getElementById('knight-count').innerText;
-          const archerCount = document.getElementById('archer-count').innerText;
-          const wizardCount = document.getElementById('wizard-count').innerText;
-          const paladinCount = document.getElementById('paladin-count').innerText;
-          const gameStats = `Knights: ${knightCount}, Archers: ${archerCount}, Wizards: ${wizardCount}, Paladins: ${paladinCount}`;
-          document.getElementById('debug-game-stats').textContent = gameStats;
-      }
-
-      function logNetworkRequest(url, status) {
-          const debugNetwork = document.getElementById('debug-network');
-          const timestamp = new Date().toLocaleTimeString();
-          const logEntry = document.createElement('p');
-          logEntry.textContent = `[${timestamp}] ${url} - Status: ${status}`;
-          debugNetwork.appendChild(logEntry);
-          debugNetwork.scrollTop = debugNetwork.scrollHeight; // Auto scroll to the bottom
-      }
-
-      function logError(message) {
-          const debugErrors = document.getElementById('debug-errors');
-          const timestamp = new Date().toLocaleTimeString();
-          const logEntry = document.createElement('p');
-          logEntry.textContent = `[${timestamp}] ERROR: ${message}`;
-          debugErrors.appendChild(logEntry);
-          debugErrors.scrollTop = debugErrors.scrollHeight; // Auto scroll to the bottom
-      }
-
-      function toggleLogging() {
-          const logButton = document.querySelector('.debug-control button:first-child');
-          if (logButton.textContent === 'Start Logging') {
-              logButton.textContent = 'Stop Logging';
-              startLogging();
-          } else {
-              logButton.textContent = 'Start Logging';
-              stopLogging();
-          }
-      }
-
-      function clearLogs() {
-          document.getElementById('debug-logs').innerHTML = '';
-          document.getElementById('debug-network').innerHTML = '';
-          document.getElementById('debug-errors').innerHTML = '';
-      }
-
-      let loggingInterval;
-
-      function startLogging() {
-          loggingInterval = setInterval(() => {
-              updatePerformanceData();
-              updateGameStats();
-          }, 5000);
-      }
-
-      function stopLogging() {
-          clearInterval(loggingInterval);
-      }
-
-      // Example of logging network requests
-      function exampleNetworkRequest() {
-          const url = 'https://medievalcivilizations.online';
-          const status = '200 OK';
-          logNetworkRequest(url, status);
-      }
-
-      // Example of logging an error
-      function exampleError() {
-          const errorMessage = 'An unexpected error occurred';
-          logError(errorMessage);
-      }
-
-      // Start by logging some example data
-      exampleNetworkRequest();
-      exampleError();
-
-      // Update performance and game stats every 5 seconds
-      setInterval(updatePerformanceData, 5000);
-      setInterval(updateGameStats, 5000);
     </script>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="script.js"></script>
     <script src="js/uuid.js"></script>
@@ -535,7 +346,7 @@
     <script src="GameAnalytics.min.js"></script>
     <!-- GameAnalytics -->
     <script>
-      (function(w,d,a,m){var s='script';var g='GameAnalytics';w[g]=w[g]||function(){(w[g].q=w[g.q||[]]).push(arguments)},a=d.createElement(s),m=d.getElementsByTagName(s)[0];a.async=1;a.src='http://download.gameanalytics.com/js/GameAnalytics-[VERSION].min.js';m.parentNode.insertBefore(a,m)})(window,document);
+      (function(w,d,a,m){var s='script';var g='GameAnalytics';w[g]=w[g]||function(){(w[g].q=w[g].q||[]).push(arguments)},a=d.createElement(s),m=d.getElementsByTagName(s)[0];a.async=1;a.src='http://download.gameanalytics.com/js/GameAnalytics-[VERSION].min.js';m.parentNode.insertBefore(a,m)})(window,document);
 
       GameAnalytics("setEnabledInfoLog", true);
       GameAnalytics("initialize", "611c98febc5c1d857efc67b0c431b979", "2a8656dbee715fa9ba31787c59dcf9802e233619");
