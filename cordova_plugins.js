@@ -23,14 +23,6 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
       "clobbers": [
         "window.plugins.NativeAudio"
       ]
-    },
-    {
-      "id": "cordova-plugin-tts.tts",
-      "file": "plugins/cordova-plugin-tts/www/tts.js",
-      "pluginId": "cordova-plugin-tts",
-      "clobbers": [
-        "TTS"
-      ]
     }
   ];
   module.exports.metadata = {
@@ -38,7 +30,6 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
     "cordova-plugin-admobpro": "8.13.1",
     "cordova-plugin-device": "2.1.0",
     "cordova-plugin-nativeaudio": "3.0.9",
-    "cordova-plugin-admob-frameworks": "1.2.1",
-    "cordova-plugin-tts": "0.2.3"
+    "cordova-plugin-admob-frameworks": "1.2.1"
   };
 });

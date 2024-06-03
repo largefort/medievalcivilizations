@@ -121,6 +121,19 @@ function toggleSoundEffects() {
 document.getElementById("toggle-music").addEventListener("change", toggleMusic);
 document.getElementById("toggle-sfx").addEventListener("change", toggleSoundEffects);
 
+// Function to request fullscreen
+function requestFullscreen(element) {
+    if (element.requestFullscreen) {
+        element.requestFullscreen();
+    } else if (element.mozRequestFullScreen) { // Firefox
+        element.mozRequestFullScreen();
+    } else if (element.webkitRequestFullscreen) { // Chrome and Safari
+        element.webkitRequestFullscreen();
+    } else if (element.msRequestFullscreen) { // Internet Explorer
+        element.msRequestFullscreen();
+    }
+}
+
 function updateUI() {
     document.getElementById("counter").textContent = `Gold coins: ${compactNumberFormat(coins)}`;
     document.getElementById("knight-count").textContent = knightCount;
@@ -129,13 +142,8 @@ function updateUI() {
     document.getElementById("woodcutting-level").textContent = woodcuttingLevel;
     document.getElementById("mining-level").textContent = miningLevel;
     document.getElementById("paladin-count").textContent = paladinCount;
-    document.getElementById("knight-purchase-count").textContent = knightCount;
-    document.getElementById("archer-purchase-count").textContent = archerCount;
-    document.getElementById("wizard-purchase-count").textContent = wizardCount;
-    document.getElementById("paladin-purchase-count").textContent = paladinCount;
 
     updatePassiveIncome();
-    updateUpgradeCosts();
 }
 
 function clickCastle() {
@@ -149,31 +157,36 @@ function clickCastle() {
 
 function buyUpgrade(type) {
     let cost = 0;
+    let upgradeCount;
 
     switch (type) {
         case "knight":
-            cost = Math.floor(10 * Math.pow(1.15, knightCount)); // Exponential cost increase
+            cost = 10;
+            upgradeCount = knightCount;
             if (coins >= cost) {
                 coins -= cost;
                 knightCount++;
             }
             break;
         case "archer":
-            cost = Math.floor(25 * Math.pow(1.15, archerCount)); // Exponential cost increase
+            cost = 25;
+            upgradeCount = archerCount;
             if (coins >= cost) {
                 coins -= cost;
                 archerCount++;
             }
             break;
         case "wizard":
-            cost = Math.floor(50 * Math.pow(1.15, wizardCount)); // Exponential cost increase
+            cost = 50;
+            upgradeCount = wizardCount;
             if (coins >= cost) {
                 coins -= cost;
                 wizardCount++;
             }
             break;
         case "paladin":
-            cost = Math.floor(100 * Math.pow(1.15, paladinCount)); // Exponential cost increase
+            cost = 100;
+            upgradeCount = paladinCount;
             if (coins >= cost) {
                 coins -= cost;
                 paladinCount++;
@@ -189,13 +202,6 @@ function buyUpgrade(type) {
 
     saveGameData();
     updateUI();
-}
-
-function updateUpgradeCosts() {
-    document.getElementById("knight-cost").textContent = Math.floor(10 * Math.pow(1.15, knightCount));
-    document.getElementById("archer-cost").textContent = Math.floor(25 * Math.pow(1.15, archerCount));
-    document.getElementById("wizard-cost").textContent = Math.floor(50 * Math.pow(1.15, wizardCount));
-    document.getElementById("paladin-cost").textContent = Math.floor(100 * Math.pow(1.15, paladinCount));
 }
 
 function compactNumberFormat(num) {
@@ -243,27 +249,3 @@ function earnPassiveIncome() {
 }
 
 setInterval(earnPassiveIncome, 1000);
-
-// Request fullscreen
-function requestFullscreen(element) {
-    if (element.requestFullscreen) {
-        element.requestFullscreen();
-    } else if (element.mozRequestFullScreen) { // Firefox
-        element.mozRequestFullScreen();
-    } else if (element.webkitRequestFullscreen) { // Chrome and Safari
-        element.webkitRequestFullscreen();
-    } else if (element.msRequestFullscreen) { // Internet Explorer
-        element.msRequestFullscreen();
-    }
-}
-
-// Update the document title with gold coin count
-function updateDocumentTitle() {
-    const coinCountElement = document.getElementById('counter');
-    const coinCountText = coinCountElement.textContent || coinCountElement.innerText;
-    const coinCount = coinCountText.replace(/[^0-9]/g, ''); // Extract only the number
-    document.title = `Gold Coins: ${coinCount}`;
-}
-
-// Update the title every second
-setInterval(updateDocumentTitle, 1000);

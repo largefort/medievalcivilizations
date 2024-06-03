@@ -1,15 +1,14 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Medieval Clicker</title>
+  <title>Medieval Clicker Multiplayer</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap">
   <link rel="stylesheet" href="styles.css">
-  <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
   <style>
     /* Import medieval style font */
     @font-face {
@@ -22,24 +21,21 @@
         margin: 0;
         padding: 0;
         position: relative;
-        background-image: url('images/parchment.jpg'); /* Add a parchment background */
-        background-size: cover;
-        background-attachment: fixed;
     }
 
     body {
         font-family: 'MedievalFont', serif;
+        background-image: url('parchment.jpg');
         color: #dcd0c0;
     }
 
     .container {
-        background-color: rgba(0, 0, 0, 0.7);
+        background-color: rgba(0, 0, 0, 0.5);
         border: 10px double #8c7a6b;
         padding: 20px;
         border-radius: 10px;
         box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
         margin-top: 50px;
-        background-image: url(''); /* Add a leather texture background */
     }
 
     .nav-pills .nav-link {
@@ -50,7 +46,6 @@
         color: #ffd700;
         margin: 5px;
         transition: background-color 0.3s, color 0.3s;
-        background-image: url('images/parchment_texture.jpeg'); /* Add a wood texture background */
     }
 
     @media (max-width: 768px) {
@@ -74,27 +69,17 @@
     }
 
     .upgrade {
-        background-image: url('images/parchment_texture.jpeg');
+        background-image: url('leather_texture.jpg');
         color: #fffbeb;
         border: 3px solid #4a3425;
         cursor: pointer;
         transition: background-color 0.3s, color 0.3s;
         border-radius: 10px;
-        position: relative;
-        background-size: cover;
     }
 
     .upgrade:hover {
         background-color: #3e2a1b;
         color: #f4e4c3;
-    }
-
-    .upgrade .purchase-count {
-        position: absolute;
-        bottom: 5px;
-        right: 10px;
-        font-size: 1.2em;
-        color: #ffd700;
     }
 
     .modal-content {
@@ -104,7 +89,6 @@
         border-radius: 10px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
         text-align: center;
-        background-image: url('images/parchment_texture.jpg'); /* Add a parchment texture background */
     }
 
     .castle-image {
@@ -112,7 +96,6 @@
         border-radius: 10px;
         max-width: 100%;
         height: auto;
-        background-image: url('images/stone_texture.jpg'); /* Add a stone texture background */
     }
 
     .ad-banner {
@@ -126,9 +109,7 @@
         text-align: center;
         padding: 10px 0;
         box-sizing: border-box;
-        background-image: url('images/wood_texture.jpg'); /* Add a wood texture background */
     }
-
     #uuid-display {
         position: fixed;
         top: 10px;
@@ -150,11 +131,50 @@
         margin-top: 10px;
     }
   </style>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuid.min.js"></script>
+  <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
 </head>
 <body>
 <div id="uuid-display" aria-live="polite"></div>
-<div class="container">
+
+<div class="container" id="login-container">
+  <h2>Login</h2>
+  <form id="login-form">
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="email" class="form-control" id="email" required>
+    </div>
+    <div class="form-group">
+      <label for="password">Password:</label>
+      <input type="password" class="form-control" id="password" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Login</button>
+  </form>
+  <p>Don't have an account? <a href="#" id="show-register">Register</a></p>
+</div>
+
+<div class="container" id="register-container" style="display: none;">
+  <h2>Register</h2>
+  <form id="register-form">
+    <div class="form-group">
+      <label for="reg-email">Email:</label>
+      <input type="email" class="form-control" id="reg-email" required>
+    </div>
+    <div class="form-group">
+      <label for="username">Username:</label>
+      <input type="text" class="form-control" id="username" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Register</button>
+  </form>
+  <p>Already have an account? <a href="#" id="show-login">Login</a></p>
+</div>
+
+<div class="container" id="server-selection" style="display: none;">
+  <h2>Select a Server</h2>
+  <ul id="server-list" class="list-group"></ul>
+  <button id="create-server" class="btn btn-success">Create New Server</button>
+</div>
+
+<div class="container" id="game-container" style="display: none;">
   <div class="tab-content">
     <div class="tab-pane fade show active" id="castle-tab" role="tabpanel" aria-labelledby="castle-tab-tab">
       <div class="text-center">
@@ -193,7 +213,6 @@
         <h2>Shop</h2>
         <div class="upgrade" onclick="buyUpgrade('knight')" aria-label="Buy Knight upgrade for 10 coins" onfocus="speakText(this)" tabindex="0">
           <i class="fas fa-chess-knight" aria-hidden="true"></i> Knight (<span id="knight-cost">10</span> coins)
-          <div class="purchase-count" id="knight-purchase-count">0</div>
         </div>
         <audio id="knight-upgrade-sound">
           <source src="upgradesound.mp3" type="audio/mp3">
@@ -201,7 +220,6 @@
         </audio>
         <div class="upgrade" onclick="buyUpgrade('archer')" aria-label="Buy Archer upgrade for 25 coins" onfocus="speakText(this)" tabindex="0">
           <i class="fas fa-bullseye" aria-hidden="true"></i> Archer (<span id="archer-cost">25</span> coins)
-          <div class="purchase-count" id="archer-purchase-count">0</div>
         </div>
         <audio id="archer-upgrade-sound">
           <source src="upgradesound.mp3" type="audio/mp3">
@@ -209,7 +227,6 @@
         </audio>
         <div class="upgrade" onclick="buyUpgrade('wizard')" aria-label="Buy Wizard upgrade for 50 coins" onfocus="speakText(this)" tabindex="0">
           <i class="fas fa-hat-wizard" aria-hidden="true"></i> Wizard (<span id="wizard-cost">50</span> coins)
-          <div class="purchase-count" id="wizard-purchase-count">0</div>
         </div>
         <audio id="wizard-upgrade-sound">
           <source src="upgradesound.mp3" type="audio/mp3">
@@ -217,12 +234,36 @@
         </audio>
         <div class="upgrade" onclick="buyUpgrade('paladin')" aria-label="Buy Paladin upgrade for 100 coins" onfocus="speakText(this)" tabindex="0">
           <i class="fas fa-shield-alt" aria-hidden="true"></i> Paladin (<span id="paladin-cost">100</span> coins)
-          <div class="purchase-count" id="paladin-purchase-count">0</div>
         </div>
         <audio id="paladin-upgrade-sound">
           <source src="upgradesound.mp3" type="audio/mp3">
           Your browser does not support the audio element.
         </audio>
+      </div>
+    </div>
+
+    <div class="tab-pane fade" id="guild-tab" role="tabpanel" aria-labelledby="guild-tab-tab">
+      <div class="text-center">
+        <h2>Guild</h2>
+        <div id="guild-container">
+          <div class="form-group">
+            <label for="guild-name">Guild Name:</label>
+            <input type="text" class="form-control" id="guild-name" placeholder="Enter guild name">
+          </div>
+          <button id="create-guild" class="btn btn-primary">Create Guild</button>
+          <h3>Join a Guild</h3>
+          <ul id="guild-list" class="list-group"></ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-pane fade" id="rankings-tab" role="tabpanel" aria-labelledby="rankings-tab-tab">
+      <div class="text-center">
+        <h2>Rankings</h2>
+        <div id="player-rankings">
+          <p>Level: <span id="player-level">1</span></p>
+          <p>Rank: <span id="player-rank">Lord</span></p>
+        </div>
       </div>
     </div>
 
@@ -241,10 +282,6 @@
         <div class="medieval-note">
           This switch is for people with disabilities. Ye may turn it on if ye so desire, but it is meant for those in need.
         </div>
-        <!-- Add the PNG image from Crazy Games with clickable URL -->
-        <a href="https://idev.games/game/medieval-civilizations" target="_blank" aria-label="Visit idev.games" onfocus="speakText(this)" tabindex="0">
-          <img src="idev.png" alt="idev.games image" width="100">
-        </a>
       </div>
     </div>
 
@@ -258,100 +295,191 @@
       <a class="nav-link" data-toggle="pill" href="#shop-tab" role="tab" aria-controls="shop-tab" aria-selected="false" onfocus="speakText(this)" tabindex="0">
         <i class="fas fa-cart-shopping" aria-hidden="true"></i> Shop
       </a>
+      <a class="nav-link" data-toggle="pill" href="#guild-tab" role="tab" aria-controls="guild-tab" aria-selected="false" onfocus="speakText(this)" tabindex="0">
+        <i class="fas fa-users" aria-hidden="true"></i> Guild
+      </a>
+      <a class="nav-link" data-toggle="pill" href="#rankings-tab" role="tab" aria-controls="rankings-tab" aria-selected="false" onfocus="speakText(this)" tabindex="0">
+        <i class="fas fa-trophy" aria-hidden="true"></i> Rankings
+      </a>
       <a class="nav-link" data-toggle="pill" href="#settings-tab" role="tab" aria-controls="settings-tab" aria-selected="false" onfocus="speakText(this)" tabindex="0">
         <i class="fas fa-gears" aria-hidden="true"></i> Settings
       </a>
     </div>
+  </div>
+</div>
 
-    <button id="fullscreen-button" style="display: none;" onclick="autoEnterFullscreen()" aria-label="Enter Fullscreen" onfocus="speakText(this)" tabindex="0">Enter Fullscreen</button>
+<script>
+  const socket = io();
 
-    <script>
-      function getOrGenerateUUID() {
-          let existingUUID = localStorage.getItem('deviceUUID');
-          if (!existingUUID) {
-              let newUUID = uuid.v4();
-              localStorage.setItem('deviceUUID', newUUID);
-              return newUUID;
-          }
-          return existingUUID;
-      }
+  document.getElementById('show-register').addEventListener('click', () => {
+    document.getElementById('login-container').style.display = 'none';
+    document.getElementById('register-container').style.display = 'block';
+  });
 
-      const deviceUUID = getOrGenerateUUID();
-      document.getElementById('uuid-display').innerText = `UUID: ${deviceUUID}`;
+  document.getElementById('show-login').addEventListener('click', () => {
+    document.getElementById('register-container').style.display = 'none';
+    document.getElementById('login-container').style.display = 'block';
+  });
 
-      let isTTSOn = true;
+  document.getElementById('register-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = document.getElementById('reg-email').value;
+    const username = document.getElementById('username').value;
 
-      function speakText(element) {
-          if (!isTTSOn) return;
+    const response = await fetch('/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, username })
+    });
 
-          const text = element.getAttribute('aria-label') || element.innerText;
+    const result = await response.json();
+    if (response.ok) {
+      alert(`Registration successful! Your password is: ${result.password}`);
+      document.getElementById('show-login').click();
+    } else {
+      alert('Registration failed!');
+    }
+  });
 
-          TTS.speak({
-              text: text,
-              locale: 'en-US',
-              rate: 1.0
-          }, function() {
-              console.log('Success');
-          }, function(reason) {
-              console.log('Error:', reason);
-          });
-      }
+  document.getElementById('login-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
 
-      function toggleTTS() {
-          isTTSOn = !isTTSOn;
+    const response = await fetch('/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    });
 
-          const status = isTTSOn ? 'enabled' : 'disabled';
-          TTS.speak({
-              text: `Text-to-speech has been ${status}`,
-              locale: 'en-US',
-              rate: 1.0
-          }, function() {
-              console.log('Success');
-          }, function(reason) {
-              console.log('Error:', reason);
-          });
-      }
+    const result = await response.json();
+    if (response.ok) {
+      localStorage.setItem('token', result.token);
+      loadServers();
+    } else {
+      alert('Login failed!');
+    }
+  });
 
-      document.addEventListener('deviceready', function() {
-          document.querySelectorAll('[aria-label], .upgrade').forEach(element => {
-              element.addEventListener('click', () => speakText(element));
-          });
-      }, false);
+  async function loadServers() {
+    const response = await fetch('/servers');
+    const servers = await response.json();
+    const serverList = document.getElementById('server-list');
+    serverList.innerHTML = '';
+    servers.forEach(server => {
+      const li = document.createElement('li');
+      li.textContent = server.name;
+      li.classList.add('list-group-item');
+      li.addEventListener('click', () => joinServer(server.id));
+      serverList.appendChild(li);
+    });
+    document.getElementById('login-container').style.display = 'none';
+    document.getElementById('server-selection').style.display = 'block';
+  }
 
-      // Function to update the document title with gold coin count
-      function updateDocumentTitle() {
-          const coinCountElement = document.getElementById('counter');
-          const coinCountText = coinCountElement.textContent || coinCountElement.innerText;
-          const coinCount = coinCountText.replace(/[^0-9]/g, ''); // Extract only the number
-          document.title = `Gold Coins: ${coinCount}`;
-      }
+  document.getElementById('create-server').addEventListener('click', async () => {
+    const response = await fetch('/create-server', {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+    });
+    const server = await response.json();
+    loadServers();
+  });
 
-      // Update the title every second
-      setInterval(updateDocumentTitle, 1000);
-    </script>
+  function joinServer(serverId) {
+    socket.emit('joinServer', serverId);
+    document.getElementById('server-selection').style.display = 'none';
+    document.getElementById('game-container').style.display = 'block';
+  }
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="script.js"></script>
-    <script src="js/uuid.js"></script>
-    <script src="js/bgm.js"></script>
-    <script src="cordova.js"></script>
-    <script src="js/index.js"></script>
-    <script src="GameAnalytics.js"></script>
-    <script src="GameAnalytics.min.js"></script>
-    <!-- GameAnalytics -->
-    <script>
-      (function(w,d,a,m){var s='script';var g='GameAnalytics';w[g]=w[g]||function(){(w[g].q=w[g].q||[]).push(arguments)},a=d.createElement(s),m=d.getElementsByTagName(s)[0];a.async=1;a.src='http://download.gameanalytics.com/js/GameAnalytics-[VERSION].min.js';m.parentNode.insertBefore(a,m)})(window,document);
+  socket.on('message', (message) => {
+    console.log('Message from server:', message);
+  });
 
-      GameAnalytics("setEnabledInfoLog", true);
-      GameAnalytics("initialize", "611c98febc5c1d857efc67b0c431b979", "2a8656dbee715fa9ba31787c59dcf9802e233619");
-    </script>
-    <!-- End GameAnalytics -->
-    <audio id="medievaltheme" loop autoplay>
-      <source src="medievallord.mp3" type="audio/mp3">
-      Your browser does not support the audio element.
-    </audio>
-    <audio id="click-sound" src="click-sound.mp3" type="audio/mp3"></audio>
+  function getOrGenerateUUID() {
+    let existingUUID = localStorage.getItem('deviceUUID');
+    if (!existingUUID) {
+      let newUUID = uuid.v4(); // Corrected line
+      localStorage.setItem('deviceUUID', newUUID);
+      return newUUID;
+    }
+    return existingUUID;
+  }
+
+  const deviceUUID = getOrGenerateUUID();
+  document.getElementById('uuid-display').innerText = `UUID: ${deviceUUID}`;
+
+  let isTTSOn = true;
+
+  function speakText(element) {
+    if (!isTTSOn) return;
+    speechSynthesis.cancel();  // Cancel any ongoing speech
+    const text = element.getAttribute('aria-label') || element.innerText;
+    const utterance = new SpeechSynthesisUtterance(text);
+    speechSynthesis.speak(utterance);
+  }
+
+  function toggleTTS() {
+    isTTSOn = !isTTSOn;
+    speechSynthesis.cancel();  // Cancel any ongoing speech
+    const status = isTTSOn ? 'enabled' : 'disabled';
+    const utterance = new SpeechSynthesisUtterance(`Text-to-speech has been ${status}`);
+    speechSynthesis.speak(utterance);
+  }
+
+  document.querySelectorAll('[aria-label], .upgrade').forEach(element => {
+    element.addEventListener('click', () => speakText(element));
+  });
+
+  document.getElementById('create-guild').addEventListener('click', () => {
+    const guildName = document.getElementById('guild-name').value;
+    if (guildName) {
+      socket.emit('createGuild', { guildName });
+    }
+  });
+
+  socket.on('guildCreated', (guild) => {
+    const guildList = document.getElementById('guild-list');
+    const li = document.createElement('li');
+    li.textContent = guild.name;
+    li.classList.add('list-group-item');
+    li.addEventListener('click', () => joinGuild(guild.id));
+    guildList.appendChild(li);
+  });
+
+  function joinGuild(guildId) {
+    socket.emit('joinGuild', { guildId });
+  }
+
+  socket.on('updatePlayerLevel', (level) => {
+    document.getElementById('player-level').textContent = level;
+  });
+
+  socket.on('updatePlayerRank', (rank) => {
+    document.getElementById('player-rank').textContent = rank;
+  });
+</script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="script.js"></script>
+<script src="js/uuid.js"></script>
+<script src="js/bgm.js"></script>
+<script src="GameAnalytics.js"></script>
+<script src="GameAnalytics.min.js"></script>
+<!-- GameAnalytics -->
+<script>
+  (function(w,d,a,m){var s='script';var g='GameAnalytics';w[g]=w[g]||function(){(w[g].q=w[g].q||[]).push(arguments)},a=d.createElement(s),m=d.getElementsByTagName(s)[0];a.async=1;a.src='http://download.gameanalytics.com/js/GameAnalytics-[VERSION].min.js';m.parentNode.insertBefore(a,m)})(window,document);
+
+  GameAnalytics("setEnabledInfoLog", true);
+  GameAnalytics("initialize", "611c98febc5c1d857efc67b0c431b979", "2a8656dbee715fa9ba31787c59dcf9802e233619");
+</script>
+<!-- End GameAnalytics -->
+<audio id="medievaltheme" loop autoplay>
+  <source src="medievallord.mp3" type="audio/mp3">
+  Your browser does not support the audio element.
+</audio>
+<audio id="click-sound" src="click-sound.mp3" type="audio/mp3"></audio>
 </body>
 </html>
