@@ -307,25 +307,25 @@
     </div>
   </div>
 </div>
-
 <script>
   const socket = io();
 
-  document.getElementById('show-register').addEventListener('click', () => {
-    document.getElementById('login-container').style.display = 'none';
-    document.getElementById('register-container').style.display = 'block';
-  });
+document.getElementById('show-register').addEventListener('click', () => {
+  document.getElementById('login-container').style.display = 'none';
+  document.getElementById('register-container').style.display = 'block';
+});
 
-  document.getElementById('show-login').addEventListener('click', () => {
-    document.getElementById('register-container').style.display = 'none';
-    document.getElementById('login-container').style.display = 'block';
-  });
+document.getElementById('show-login').addEventListener('click', () => {
+  document.getElementById('register-container').style.display = 'none';
+  document.getElementById('login-container').style.display = 'block';
+});
 
-  document.getElementById('register-form').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const email = document.getElementById('reg-email').value;
-    const username = document.getElementById('username').value;
+document.getElementById('register-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const email = document.getElementById('reg-email').value;
+  const username = document.getElementById('username').value;
 
+  try {
     const response = await fetch('/register', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -337,15 +337,19 @@
       alert(`Registration successful! Your password is: ${result.password}`);
       document.getElementById('show-login').click();
     } else {
-      alert('Registration failed!');
+      alert(result.message || 'Registration failed!');
     }
-  });
+  } catch (error) {
+    alert('An error occurred during registration. Please try again later.');
+  }
+});
 
-  document.getElementById('login-form').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
+document.getElementById('login-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
 
+  try {
     const response = await fetch('/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -357,12 +361,18 @@
       localStorage.setItem('token', result.token);
       loadServers();
     } else {
-      alert('Login failed!');
+      alert(result.message || 'Login failed!');
     }
-  });
+  } catch (error) {
+    alert('An error occurred during login. Please try again later.');
+  }
+});
 
-  async function loadServers() {
-    const response = await fetch('/servers');
+async function loadServers() {
+  try {
+    const response = await fetch('/servers', {
+      headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+    });
     const servers = await response.json();
     const serverList = document.getElementById('server-list');
     serverList.innerHTML = '';
@@ -375,89 +385,97 @@
     });
     document.getElementById('login-container').style.display = 'none';
     document.getElementById('server-selection').style.display = 'block';
+  } catch (error) {
+    alert('Failed to load servers. Please try again later.');
   }
+}
 
-  document.getElementById('create-server').addEventListener('click', async () => {
+document.getElementById('create-server').addEventListener('click', async () => {
+  try {
     const response = await fetch('/create-server', {
       method: 'POST',
       headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
     });
-    const server = await response.json();
+    await response.json();
     loadServers();
-  });
-
-  function joinServer(serverId) {
-    socket.emit('joinServer', serverId);
-    document.getElementById('server-selection').style.display = 'none';
-    document.getElementById('game-container').style.display = 'block';
+  } catch (error) {
+    alert('Failed to create server. Please try again later.');
   }
+});
 
-  socket.on('message', (message) => {
-    console.log('Message from server:', message);
-  });
+function joinServer(serverId) {
+  socket.emit('joinServer', serverId);
+  document.getElementById('server-selection').style.display = 'none';
+  document.getElementById('game-container').style.display = 'block';
+}
 
-  function getOrGenerateUUID() {
-    let existingUUID = localStorage.getItem('deviceUUID');
-    if (!existingUUID) {
-      let newUUID = uuid.v4(); // Corrected line
-      localStorage.setItem('deviceUUID', newUUID);
-      return newUUID;
-    }
-    return existingUUID;
+socket.on('message', (message) => {
+  console.log('Message from server:', message);
+});
+
+function getOrGenerateUUID() {
+  let existingUUID = localStorage.getItem('deviceUUID');
+  if (!existingUUID) {
+    let newUUID = uuid.v4(); // Ensure uuid library is included
+    localStorage.setItem('deviceUUID', newUUID);
+    return newUUID;
   }
+  return existingUUID;
+}
 
-  const deviceUUID = getOrGenerateUUID();
-  document.getElementById('uuid-display').innerText = `UUID: ${deviceUUID}`;
+const deviceUUID = getOrGenerateUUID();
+document.getElementById('uuid-display').innerText = `UUID: ${deviceUUID}`;
 
-  let isTTSOn = true;
+let isTTSOn = true;
 
-  function speakText(element) {
-    if (!isTTSOn) return;
-    speechSynthesis.cancel();  // Cancel any ongoing speech
-    const text = element.getAttribute('aria-label') || element.innerText;
-    const utterance = new SpeechSynthesisUtterance(text);
-    speechSynthesis.speak(utterance);
+function speakText(element) {
+  if (!isTTSOn) return;
+  speechSynthesis.cancel();  // Cancel any ongoing speech
+  const text = element.getAttribute('aria-label') || element.innerText;
+  const utterance = new SpeechSynthesisUtterance(text);
+  speechSynthesis.speak(utterance);
+}
+
+function toggleTTS() {
+  isTTSOn = !isTTSOn;
+  speechSynthesis.cancel();  // Cancel any ongoing speech
+  const status = isTTSOn ? 'enabled' : 'disabled';
+  const utterance = new SpeechSynthesisUtterance(`Text-to-speech has been ${status}`);
+  speechSynthesis.speak(utterance);
+}
+
+document.querySelectorAll('[aria-label], .upgrade').forEach(element => {
+  element.addEventListener('click', () => speakText(element));
+});
+
+document.getElementById('create-guild').addEventListener('click', () => {
+  const guildName = document.getElementById('guild-name').value;
+  if (guildName) {
+    socket.emit('createGuild', { guildName });
   }
+});
 
-  function toggleTTS() {
-    isTTSOn = !isTTSOn;
-    speechSynthesis.cancel();  // Cancel any ongoing speech
-    const status = isTTSOn ? 'enabled' : 'disabled';
-    const utterance = new SpeechSynthesisUtterance(`Text-to-speech has been ${status}`);
-    speechSynthesis.speak(utterance);
-  }
+socket.on('guildCreated', (guild) => {
+  const guildList = document.getElementById('guild-list');
+  const li = document.createElement('li');
+  li.textContent = guild.name;
+  li.classList.add('list-group-item');
+  li.addEventListener('click', () => joinGuild(guild.id));
+  guildList.appendChild(li);
+});
 
-  document.querySelectorAll('[aria-label], .upgrade').forEach(element => {
-    element.addEventListener('click', () => speakText(element));
-  });
+function joinGuild(guildId) {
+  socket.emit('joinGuild', { guildId });
+}
 
-  document.getElementById('create-guild').addEventListener('click', () => {
-    const guildName = document.getElementById('guild-name').value;
-    if (guildName) {
-      socket.emit('createGuild', { guildName });
-    }
-  });
+socket.on('updatePlayerLevel', (level) => {
+  document.getElementById('player-level').textContent = level;
+});
 
-  socket.on('guildCreated', (guild) => {
-    const guildList = document.getElementById('guild-list');
-    const li = document.createElement('li');
-    li.textContent = guild.name;
-    li.classList.add('list-group-item');
-    li.addEventListener('click', () => joinGuild(guild.id));
-    guildList.appendChild(li);
-  });
+socket.on('updatePlayerRank', (rank) => {
+  document.getElementById('player-rank').textContent = rank;
+});
 
-  function joinGuild(guildId) {
-    socket.emit('joinGuild', { guildId });
-  }
-
-  socket.on('updatePlayerLevel', (level) => {
-    document.getElementById('player-level').textContent = level;
-  });
-
-  socket.on('updatePlayerRank', (rank) => {
-    document.getElementById('player-rank').textContent = rank;
-  });
 </script>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
