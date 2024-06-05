@@ -6,7 +6,7 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIo(server, {
     cors: {
-        origin: "https://medievalcivilizations.online/register",
+        origin: "https://medievalcivilizations.online",
         methods: ["GET", "POST"]
     }
 });
