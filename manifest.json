@@ -1,11 +1,40 @@
 {
-  "background_color": "#FFF",
-  "display": "standalone",
+  "dir": "auto",
+  "name": "medieval civilizations",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "display": "fullscreen",
   "orientation": "any",
-  "start_url": "index.html",
-  "name": "MedievalCivilizations",
-  "short_name": "MedievalCivilizations",
-  "version": "com.jafetegill.medievalcivilizations.web",
-  "description": "Sample Apache Cordova App",
-  "author": "Apache Cordova Team"
+  "start_url": "https://medievalcivilizations.online/?launchedfrom=homescreen",
+  "scope": "https://medievalcivilizations.online",
+  "id": "https://medievalcivilizations.online/MWOMdbp1Iha2evvn6MfX",
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "https://pwa.xyz/v0/b/pwaa-8d87e.appspot.com/o/wUaXE7kRQQf7a4tJvxVg%2FcbzkXJyCDMjtHwi.png?alt=media&amp;token=b0671ab2-459d-45b5-8035-8568c87356fe",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://pwa.xyz/v0/b/pwaa-8d87e.appspot.com/o/wUaXE7kRQQf7a4tJvxVg%2FdhAXDmmTYwpBSln.png?alt=media&amp;token=067f1033-ad9f-44d9-ad03-c07f15498ac5",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "protocol_handlers": [
+    {
+      "protocol": "web+pwa",
+      "url": "https://medievalcivilizations.online/?launchedfrom=homescreen&amp;pwaprotocolredirect=%s"
+    },
+    {
+      "protocol": "web+medievalcivilizations",
+      "url": "https://medievalcivilizations.online/?launchedfrom=homescreen&amp;pwaprotocolredirect=%s"
+    }
+  ],
+  "short_name": "medievalcivilizations",
+  "categories": [
+    "games"
+  ]
 }
