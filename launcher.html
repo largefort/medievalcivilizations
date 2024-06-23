@@ -134,7 +134,7 @@
 </style>
 </head>
     <link rel="manifest" href="https://progressier.app/MWOMdbp1Iha2evvn6MfX/progressier.json"/><script defer src="https://progressier.app/MWOMdbp1Iha2evvn6MfX/script.js"></script> 
-    </head>
+</head>
 <body>
     <div class="container">
         <h1>Welcome to Medieval Clicker</h1>
@@ -142,33 +142,35 @@
         <div class="civilization-container">
             <!-- Civilization 1: Knight -->
             <a href="#" onclick="showConfirmationModal('knight')" title="Select Knight Civilization">
-                <img src="knight.png" alt="Knight Civilization">
+                <video src="knight.mp4" autoplay loop muted></video>
                 <h3>Knight</h3>
             </a>
 
             <!-- Civilization 2: Lord -->
             <a href="#" onclick="showConfirmationModal('lord')" title="Select Lord Civilization">
-                <img src="lord.png" alt="Lord Civilization">
+                <video src="lord.mp4" autoplay loop muted></video>
                 <h3>Lord</h3>
             </a>
 
             <!-- Civilization 3: Wizard -->
             <a href="#" onclick="showConfirmationModal('wizard')" title="Select Wizard Civilization">
-                <img src="wizard.png" alt="Wizard Civilization">
+                <video src="wizard.mp4" autoplay loop muted></video>
                 <h3>Wizard</h3>
             </a>
 
             <!-- Civilization 4: Paladin -->
             <a href="#" onclick="showConfirmationModal('paladin')" title="Select Paladin Civilization">
-                <img src="paladin.png" alt="Paladin Civilization">
+                <video src="paladin.mp4" autoplay loop muted></video>
                 <h3>Paladin</h3>
             </a>
 
-     <!-- Civilization 5: DarkLord -->
+            <!-- Civilization 5: DarkLord -->
             <a href="#" onclick="showConfirmationModal('darklord')" title="Select DarkLord Civilization">
-                <img src="darklord.png" alt="DarkLord Civilization">
+                <video src="darklord.mp4" autoplay loop muted></video>
                 <h3>DarkLord</h3>
             </a>
+        </div>
+    </div>
 
     <!-- Confirmation Modal -->
     <div id="confirmationModal" class="modal">
@@ -180,7 +182,7 @@
             <button onclick="confirmCivilizationSelection()">Yes, I'm sure</button>
         </div>
     </div>
-
+    
     <script>
         function showConfirmationModal(civilization) {
             // Display the confirmation modal
