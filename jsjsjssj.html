@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Medieval Clicker</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
+    <style>
+        /* Import medieval style font */
+        @font-face {
+            font-family: 'MedievalFont';
+            src: url('medievalfont.woff') format('woff');
+        }
+
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            position: relative;
+            background-image: url('images/dark_parchment.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+        }
+
+        body {
+            font-family: 'MedievalFont', serif;
+            color: #dcd0c0;
+            overflow-x: hidden;
+        }
+
+        .container {
+            background-color: rgba(0, 0, 0, 0.7);
+            border: 10px double #8c7a6b;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+            margin-top: 50px;
+            background-image: url('images/leather_texture.jpg');
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .nav-pills .nav-link {
+            font-size: 18px;
+            padding: 10px 10px;
+            background-color: #6b4e37;
+            border-radius: 10px;
+            color: #ffd700;
+            margin: 5px;
+            transition: background-color 0.3s, color 0.3s;
+            background-image: url('images/wood_texture.jpg');
+        }
+
+        @media (max-width: 768px) {
+            .nav-pills .nav-link {
+                font-size: 16px;
+                padding: 8px 8px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-pills .nav-link {
+                font-size: 14px;
+                padding: 6px 6px;
+            }
+        }
+
+        .nav-pills .nav-link.active,
+        .nav-pills .nav-link:hover {
+            background-color: #50372c;
+            color: #ffffff;
+            font-weight: bold;
+        }
+
+        .upgrade {
+            background-image: url('images/parchment_texture.jpg');
+            color: #fffbeb;
+            border: 3px solid #4a3425;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+            border-radius: 10px;
+            position: relative;
+            background-size: cover;
+            animation: glow 2s infinite alternate;
+        }
+
+        .upgrade:hover {
+            background-color: #3e2a1b;
+            color: #f4e4c3;
+            transform: scale(1.05);
+        }
+
+        .upgrade .purchase-count {
+            position: absolute;
+            bottom: 5px;
+            right: 10px;
+            font-size: 1.2em;
+            color: #ffd700;
+        }
+
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 10px #ffd700;
+            }
+
+            to {
+                box-shadow: 0 0 20px #ffd700;
+            }
+        }
+
+        .modal-content {
+            background-color: #261c1a;
+            color: #f7dfc4;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            background-image: url('images/parchment_texture.jpg');
+        }
+
+        .castle-image {
+            border: 5px solid #543c2c;
+            border-radius: 10px;
+            max-width: 100%;
+            height: auto;
+            background-image: url('images/stone_texture.jpg');
+            transition: transform 0.3s, filter 0.3s;
+        }
+
+        .castle-image:hover {
+            transform: scale(1.05);
+            filter: brightness(1.2);
+        }
+
+        .ad-banner {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 50px;
+            background-color: #543c2c;
+            color: #f7dfc4;
+            text-align: center;
+            padding: 10px 0;
+            box-sizing: border-box;
+            background-image: url('images/wood_texture.jpg');
+        }
+
+        #uuid-display {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            color: gold;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 5px;
+            border-radius: 5px;
+            z-index: 1000;
+        }
+
+        .medieval-note {
+            font-family: 'MedievalFont', serif;
+            color: #ffd700;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            border: 2px solid #8c7a6b;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+
+        .light-shader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            background: radial-gradient(circle at center, rgba(255, 255, 0, 0.5), rgba(0, 0, 0, 0.8));
+            opacity: 0.7;
+        }
+      
+      #medieval-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuid.min.js"></script>
+</head>
+
+     }
+    </style>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuid.min.js"></script>
+</head>
+<body>
+<div id="uuid-display" aria-live="polite"></div>
+<div class="container">
+  <div class="tab-content">
+    <div class="tab-pane fade show active" id="castle-tab" role="tabpanel" aria-labelledby="castle-tab-tab">
+      <div class="text-center">
+        <!-- Knight Civilization Castle Image -->
+        <img id="castle" src="castle_darklands.jpg" alt="Castle" class="castle-image" onclick="clickCastle()" aria-label="Castle image, click to earn gold coins" onfocus="speakText(this)" tabindex="0">
+        <div id="counter" class="mt-3" aria-live="polite">
+          Gold coins: 0
+        </div>
+        <div id="owned-upgrades" class="mt-3">
+          <div>Knight: <span id="knight-count"><i class="fas fa-chess-knight" aria-hidden="true"></i> <span aria-live="polite">0</span></span></div>
+          <div>Archer: <span id="archer-count"><i class="fas fa-bullseye" aria-hidden="true"></i> <span aria-live="polite">0</span></span></div>
+          <div>Wizard: <span id="wizard-count"><i class="fas fa-hat-wizard" aria-hidden="true"></i> <span aria-live="polite">0</span></span></div>
+          <div>Paladin: <span id="paladin-count"><i class="fas fa-shield-alt" aria-hidden="true"></i> <span aria-live="polite">0</span></span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-pane fade" id="skilling-tab" role="tabpanel" aria-labelledby="skilling-tab-tab">
+      <div class="text-center">
+        <h2>Skilling</h2>
+        <div class="upgrade" onclick="handleSkillingClick('woodcutting')" aria-label="Woodcutting skill" onfocus="speakText(this)" tabindex="0">
+          <i class="fas fa-tree" aria-hidden="true"></i> Woodcutting
+        </div>
+        <div class="upgrade" onclick="handleSkillingClick('mining')" aria-label="Mining skill" onfocus="speakText(this)" tabindex="0">
+          <i class="fas fa-gem" aria-hidden="true"></i> Mining
+        </div>
+        <div class="mt-3">
+          <div>Woodcutting Level: <span id="woodcutting-level" aria-live="polite">1</span></div>
+          <div>Mining Level: <span id="mining-level" aria-live="polite">1</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-pane fade" id="shop-tab" role="tabpanel" aria-labelledby="shop-tab-tab">
+      <div class="text-center">
+        <h2>Shop</h2>
+        <div class="upgrade" onclick="buyUpgrade('knight')" aria-label="Buy Knight upgrade for 10 coins" onfocus="speakText(this)" tabindex="0">
+          <i class="fas fa-chess-knight" aria-hidden="true"></i> Knight (<span id="knight-cost">10</span> coins)
+          <div class="purchase-count" id="knight-purchase-count">0</div>
+        </div>
+        <audio id="knight-upgrade-sound">
+          <source src="upgradesound.mp3" type="audio/mp3">
+          Your browser does not support the audio element.
+        </audio>
+        <div class="upgrade" onclick="buyUpgrade('archer')" aria-label="Buy Archer upgrade for 25 coins" onfocus="speakText(this)" tabindex="0">
+          <i class="fas fa-bullseye" aria-hidden="true"></i> Archer (<span id="archer-cost">25</span> coins)
+          <div class="purchase-count" id="archer-purchase-count">0</div>
+        </div>
+        <audio id="archer-upgrade-sound">
+          <source src="upgradesound.mp3" type="audio/mp3">
+          Your browser does not support the audio element.
+        </audio>
+        <div class="upgrade" onclick="buyUpgrade('wizard')" aria-label="Buy Wizard upgrade for 50 coins" onfocus="speakText(this)" tabindex="0">
+          <i class="fas fa-hat-wizard" aria-hidden="true"></i> Wizard (<span id="wizard-cost">50</span> coins)
+          <div class="purchase-count" id="wizard-purchase-count">0</div>
+        </div>
+        <audio id="wizard-upgrade-sound">
+          <source src="upgradesound.mp3" type="audio/mp3">
+          Your browser does not support the audio element.
+        </audio>
+        <div class="upgrade" onclick="buyUpgrade('paladin')" aria-label="Buy Paladin upgrade for 100 coins" onfocus="speakText(this)" tabindex="0">
+          <i class="fas fa-shield-alt" aria-hidden="true"></i> Paladin (<span id="paladin-cost">100</span> coins)
+          <div class="purchase-count" id="paladin-purchase-count">0</div>
+        </div>
+        <audio id="paladin-upgrade-sound">
+          <source src="upgradesound.mp3" type="audio/mp3">
+          Your browser does not support the audio element.
+        </audio>
+      </div>
+    </div>
+
+    <div class="tab-pane fade" id="settings-tab" role="tabpanel" aria-labelledby="settings-tab-tab">
+      <div class="text-center">
+        <h2>Settings</h2>
+        <div class="form-check">
+          <input type="checkbox" id="toggle-music" class="form-check-input" aria-label="Toggle background music" onfocus="speakText(this)" tabindex="0"> 
+          <label class="form-check-label" for="toggle-music"><i class="fas fa-volume-up"></i> Toggle Music</label>
+        </div>
+        <div class="form-check">
+          <input type="checkbox" id="toggle-sfx" class="form-check-input" aria-label="Toggle sound effects" onfocus="speakText(this)" tabindex="0"> 
+          <label class="form-check-label" for="toggle-sfx"><i class="fas fa-volume-up"></i> Toggle Sound Effects</label>
+        </div>
+        <div class="form-check">
+          <input type="checkbox" id="toggle-tts" class="form-check-input" aria-label="Toggle text-to-speech" onchange="toggleTTS()" onfocus="speakText(this)" tabindex="0"> 
+          <label class="form-check-label" for="toggle-tts"><i class="fas fa-volume-up"></i> Toggle Text-to-Speech</label>
+        </div>
+        <div class="medieval-note">
+          This switch is for people with disabilities. Ye may turn it on if ye so desire, but it is meant for those in need.
+        </div>
+        <!-- Add the PNG image from Crazy Games with clickable URL -->
+        <a href="https://idev.games/game/medieval-civilizations" target="_blank" aria-label="Visit idev.games" onfocus="speakText(this)" tabindex="0">
+          <img src="idev.png" alt="idev.games image" width="100">
+        </a>
+      </div>
+    </div>
+
+    <div class="nav nav-pills nav-fill fixed-bottom" role="tablist">
+      <a class="nav-link active" data-bs-toggle="pill" href="#castle-tab" role="tab" aria-controls="castle-tab" aria-selected="true" onfocus="speakText(this)" tabindex="0">
+        <i class="fas fa-chess-rook" aria-hidden="true"></i> Castle
+      </a>
+      <a class="nav-link" data-bs-toggle="pill" href="#skilling-tab" role="tab" aria-controls="skilling-tab" aria-selected="false" onfocus="speakText(this)" tabindex="0">
+        <i class="fas fa-chart-simple" aria-hidden="true"></i> Skilling
+      </a>
+      <a class="nav-link" data-bs-toggle="pill" href="#shop-tab" role="tab" aria-controls="shop-tab" aria-selected="false" onfocus="speakText(this)" tabindex="0">
+        <i class="fas fa-shopping-cart" aria-hidden="true"></i> Shop
+      </a>
+      <a class="nav-link" data-bs-toggle="pill" href="#settings-tab" role="tab" aria-controls="settings-tab" aria-selected="false" onfocus="speakText(this)" tabindex="0">
+        <i class="fas fa-gears" aria-hidden="true"></i> Settings
+      </a>
+    </div>
+    
+    <button id="fullscreen-button" style="display: none;" onclick="autoEnterFullscreen()" aria-label="Enter Fullscreen" onfocus="speakText(this)" tabindex="0">Enter Fullscreen</button>
+
+    <script>
+      function getOrGenerateUUID() {
+          let existingUUID = localStorage.getItem('deviceUUID');
+          if (!existingUUID) {
+              let newUUID = uuid.v4();
+              localStorage.setItem('deviceUUID', newUUID);
+              return newUUID;
+          }
+          return existingUUID;
+      }
+
+      const deviceUUID = getOrGenerateUUID();
+      document.getElementById('uuid-display').innerText = `UUID: ${deviceUUID}`;
+
+      let isTTSOn = true;
+
+      function speakText(element) {
+          if (!isTTSOn) return;
+
+          const text = element.getAttribute('aria-label') || element.innerText;
+
+          TTS.speak({
+              text: text,
+              locale: 'en-US',
+              rate: 1.0
+          }, function() {
+              console.log('Success');
+          }, function(reason) {
+              console.log('Error:', reason);
+          });
+      }
+
+      function toggleTTS() {
+          isTTSOn = !isTTSOn;
+
+          const status = isTTSOn ? 'enabled' : 'disabled';
+          TTS.speak({
+              text: `Text-to-speech has been ${status}`,
+              locale: 'en-US',
+              rate: 1.0
+          }, function() {
+              console.log('Success');
+          }, function(reason) {
+              console.log('Error:', reason);
+          });
+      }
+
+      document.addEventListener('deviceready', function() {
+          document.querySelectorAll('[aria-label], .upgrade').forEach(element => {
+              element.addEventListener('click', () => speakText(element));
+          });
+      }, false);
+
+      // Function to update the document title with gold coin count
+      function updateDocumentTitle() {
+          const coinCountElement = document.getElementById('counter');
+          const coinCountText = coinCountElement.textContent || coinCountElement.innerText;
+          const coinCount = coinCountText.replace(/[^0-9]/g, ''); // Extract only the number
+          document.title = `Gold Coins: ${coinCount}`;
+      }
+
+      // Update the title every second
+      setInterval(updateDocumentTitle, 1000);
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mobilizejs/0.9/mobilize.min.js" integrity="sha512-9kdU3/W11/VXZLHO4mfCSJ1XrZ3tfpgTNCfR/H8PO5GtZ7MZSD/zVcwRDct0f2dd58JD0IZlPi7MAMh4zEl1hg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="script.js"></script>
+    <script src="js/uuid.js"></script>
+    <script src="js/bgm.js"></script>
+    <script src="cordova.js"></script>
+    <script src="js/index.js"></script>
+    <script>
+    // Get canvas and context
+    const canvas = document.getElementById('medieval-canvas');
+    const ctx = canvas.getContext('2d');
+
+    // Set canvas size to fill the screen
+    function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    // Torchlight effect
+    function drawTorchlight() {
+        const grd = ctx.createRadialGradient(
+            canvas.width / 2, 
+            canvas.height / 2, 
+            10, 
+            canvas.width / 2, 
+            canvas.height / 2, 
+            canvas.width / 2
+        );
+        grd.addColorStop(0, 'rgba(255, 140, 0, 0.7)');
+        grd.addColorStop(0.4, 'rgba(255, 69, 0, 0.3)');
+        grd.addColorStop(1, 'rgba(0, 0, 0, 0)');
+        
+        ctx.fillStyle = grd;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
+
+    // Ambient glow effect
+    function drawAmbientGlow() {
+        const grd = ctx.createRadialGradient(
+            canvas.width / 2, 
+            canvas.height / 2, 
+            0, 
+            canvas.width / 2, 
+            canvas.height / 2, 
+            canvas.width
+        );
+        grd.addColorStop(0, 'rgba(255, 255, 0, 0.1)');
+        grd.addColorStop(0.2, 'rgba(255, 255, 0, 0.05)');
+        grd.addColorStop(1, 'rgba(0, 0, 0, 0)');
+        
+        ctx.fillStyle = grd;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
+
+    // Animate the effects
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        drawTorchlight();
+        drawAmbientGlow();
+        requestAnimationFrame(animate);
+    }
+
+    animate();
+</script>
+    <audio id="medievaltheme" loop autoplay>
+      <source src="medievaldarklord.mp3" type="audio/mp3">
+      Your browser does not support the audio element.
+    </audio>
+    <audio id="click-sound" src="click-sound.mp3" type="audio/mp3"></audio>
+</body>
+</html>
