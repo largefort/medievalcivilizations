@@ -128,18 +128,6 @@
         box-sizing: border-box;
         background-image: url('images/wood_texture.jpg');
     }
-
-    #uuid-display {
-        position: fixed;
-        top: 10px;
-        left: 10px;
-        color: gold;
-        background-color: rgba(0, 0, 0, 0.5);
-        padding: 5px;
-        border-radius: 5px;
-        z-index: 1000;
-    }
-
     .medieval-note {
         font-family: 'MedievalFont', serif;
         color: #ffd700;
@@ -154,10 +142,9 @@
     cursor: url('cursor.cur'), auto;
 }
     </style>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuid.min.js"></script>
+   <script src="https://sdk.crazygames.com/crazygames-sdk-v3.js"></script>
 </head>
 <body>
-<div id="uuid-display" aria-live="polite"></div>
 <div class="container">
   <div class="tab-content">
     <div class="tab-pane fade show active" id="castle-tab" role="tabpanel" aria-labelledby="castle-tab-tab">
