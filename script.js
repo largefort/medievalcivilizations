@@ -242,10 +242,11 @@ function handleSkillingClick(skill) {
 }
 
 function updatePassiveIncome() {
-    const knightIncomeRate = 1;
-    const archerIncomeRate = 2;
-    const wizardIncomeRate = 4;
-    const paladinIncomeRate = 8;
+    // Calculate passive income based on knights, archers, wizards, and paladins
+    const knightIncomeRate = 1;   // Adjust the income rate for knights
+    const archerIncomeRate = 2;   // Adjust the income rate for archers
+    const wizardIncomeRate = 4;   // Adjust the income rate for wizards
+    const paladinIncomeRate = 8;  // Adjust the income rate for paladins
 
     const totalPassiveIncome = (knightCount * knightIncomeRate + archerCount * archerIncomeRate + wizardCount * wizardIncomeRate + paladinCount * paladinIncomeRate);
     passiveIncome = totalPassiveIncome;
@@ -265,32 +266,26 @@ function earnPassiveIncome() {
 
 setInterval(earnPassiveIncome, 1000);
 
+// Request fullscreen
 function requestFullscreen(element) {
     if (element.requestFullscreen) {
         element.requestFullscreen();
-    } else if (element.mozRequestFullScreen) {
+    } else if (element.mozRequestFullScreen) { // Firefox
         element.mozRequestFullScreen();
-    } else if (element.webkitRequestFullscreen) {
+    } else if (element.webkitRequestFullscreen) { // Chrome and Safari
         element.webkitRequestFullscreen();
-    } else if (element.msRequestFullscreen) {
+    } else if (element.msRequestFullscreen) { // Internet Explorer
         element.msRequestFullscreen();
     }
 }
 
+// Update the document title with gold coin count
 function updateDocumentTitle() {
     const coinCountElement = document.getElementById('counter');
     const coinCountText = coinCountElement.textContent || coinCountElement.innerText;
-    const coinCount = coinCountText.replace(/[^0-9]/g, '');
+    const coinCount = coinCountText.replace(/[^0-9]/g, ''); // Extract only the number
     document.title = `Gold Coins: ${coinCount}`;
 }
 
+// Update the title every second
 setInterval(updateDocumentTitle, 1000);
-
-document.getElementById('castle').addEventListener('click', clickCastle);
-
-document.querySelectorAll('.buy-upgrade').forEach(button => {
-  button.addEventListener('click', event => {
-    const unit = event.target.dataset.unit;
-    buyUpgrade(unit);
-  });
-});
