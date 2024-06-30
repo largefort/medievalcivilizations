@@ -82,6 +82,7 @@ function loadGameData() {
             paladinCount = savedState.paladinCount;
             lastSaveTime = savedState.lastSaveTime; // Update the last save time
 
+            calculateOfflineEarnings();
             updateUI();
         }
     };
@@ -89,7 +90,16 @@ function loadGameData() {
 
 initializeDB();
 
-// Function to toggle music
+function calculateOfflineEarnings() {
+    const currentTime = Date.now();
+    const timeDifference = (currentTime - lastSaveTime) / 1000; // in seconds
+    const offlineEarnings = timeDifference * passiveIncome;
+    coins += offlineEarnings;
+
+    document.getElementById('offline-earnings').innerText = offlineEarnings.toFixed(2);
+    $('#offline-earnings-modal').modal('show');
+}
+
 function toggleMusic() {
     const medievalThemeAudio = document.getElementById("medievaltheme");
     if (medievalThemeAudio.paused) {
@@ -99,25 +109,20 @@ function toggleMusic() {
     }
 }
 
-// Function to toggle sound effects
 function toggleSoundEffects() {
     const clickSoundAudio = document.getElementById("click-sound");
     const upgradeSoundAudio = document.getElementById("upgradeSound");
     const toggleSfxCheckbox = document.getElementById("toggle-sfx");
 
-    // Check the state of the toggle-sfx checkbox
     if (toggleSfxCheckbox.checked) {
-        // If the checkbox is checked, mute the sound effects
         clickSoundAudio.muted = true;
         upgradeSoundAudio.muted = true;
     } else {
-        // If the checkbox is not checked, unmute the sound effects
         clickSoundAudio.muted = false;
         upgradeSoundAudio.muted = false;
     }
 }
 
-// Add event listeners to the checkboxes
 document.getElementById("toggle-music").addEventListener("change", toggleMusic);
 document.getElementById("toggle-sfx").addEventListener("change", toggleSoundEffects);
 
@@ -134,6 +139,25 @@ function updateUI() {
     document.getElementById("wizard-purchase-count").textContent = wizardCount;
     document.getElementById("paladin-purchase-count").textContent = paladinCount;
 
+    document.getElementById('total-coins').innerText = coins.toFixed(2);
+    document.getElementById('knight-production').innerText = (knightCount * 1).toFixed(2);
+    document.getElementById('archer-production').innerText = (archerCount * 2).toFixed(2);
+    document.getElementById('wizard-production').innerText = (wizardCount * 3).toFixed(2);
+    document.getElementById('paladin-production').innerText = (paladinCount * 4).toFixed(2);
+
+    document.getElementById('knight-count').innerText = knightCount;
+    document.getElementById('archer-count').innerText = archerCount;
+    document.getElementById('wizard-count').innerText = wizardCount;
+    document.getElementById('paladin-count').innerText = paladinCount;
+
+    const now = new Date();
+    const elapsedTime = Math.floor((now - new Date(lastSaveTime)) / 1000);
+    const seconds = elapsedTime % 60;
+    const minutes = Math.floor(elapsedTime / 60) % 60;
+    const hours = Math.floor(elapsedTime / 3600) % 24;
+    const days = Math.floor(elapsedTime / 86400);
+    document.getElementById('elapsed-time').innerText = `${seconds}s ${minutes}m ${hours}h ${days}d`;
+
     updatePassiveIncome();
     updateUpgradeCosts();
 }
@@ -143,7 +167,6 @@ function clickCastle() {
     saveGameData();
     updateUI();
 
-    // Play the preloaded click sound
     clickSound.play();
 }
 
@@ -182,7 +205,6 @@ function buyUpgrade(type) {
     }
 
     if (cost > 0) {
-        // Play the upgrade sound
         const upgradeSound = document.getElementById("upgradeSound");
         upgradeSound.play();
     }
@@ -220,11 +242,10 @@ function handleSkillingClick(skill) {
 }
 
 function updatePassiveIncome() {
-    // Calculate passive income based on knights, archers, wizards, and paladins
-    const knightIncomeRate = 1;   // Adjust the income rate for knights
-    const archerIncomeRate = 2;   // Adjust the income rate for archers
-    const wizardIncomeRate = 4;   // Adjust the income rate for wizards
-    const paladinIncomeRate = 8;  // Adjust the income rate for paladins
+    const knightIncomeRate = 1;
+    const archerIncomeRate = 2;
+    const wizardIncomeRate = 4;
+    const paladinIncomeRate = 8;
 
     const totalPassiveIncome = (knightCount * knightIncomeRate + archerCount * archerIncomeRate + wizardCount * wizardIncomeRate + paladinCount * paladinIncomeRate);
     passiveIncome = totalPassiveIncome;
@@ -244,26 +265,32 @@ function earnPassiveIncome() {
 
 setInterval(earnPassiveIncome, 1000);
 
-// Request fullscreen
 function requestFullscreen(element) {
     if (element.requestFullscreen) {
         element.requestFullscreen();
-    } else if (element.mozRequestFullScreen) { // Firefox
+    } else if (element.mozRequestFullScreen) {
         element.mozRequestFullScreen();
-    } else if (element.webkitRequestFullscreen) { // Chrome and Safari
+    } else if (element.webkitRequestFullscreen) {
         element.webkitRequestFullscreen();
-    } else if (element.msRequestFullscreen) { // Internet Explorer
+    } else if (element.msRequestFullscreen) {
         element.msRequestFullscreen();
     }
 }
 
-// Update the document title with gold coin count
 function updateDocumentTitle() {
     const coinCountElement = document.getElementById('counter');
     const coinCountText = coinCountElement.textContent || coinCountElement.innerText;
-    const coinCount = coinCountText.replace(/[^0-9]/g, ''); // Extract only the number
+    const coinCount = coinCountText.replace(/[^0-9]/g, '');
     document.title = `Gold Coins: ${coinCount}`;
 }
 
-// Update the title every second
 setInterval(updateDocumentTitle, 1000);
+
+document.getElementById('castle').addEventListener('click', clickCastle);
+
+document.querySelectorAll('.buy-upgrade').forEach(button => {
+  button.addEventListener('click', event => {
+    const unit = event.target.dataset.unit;
+    buyUpgrade(unit);
+  });
+});
