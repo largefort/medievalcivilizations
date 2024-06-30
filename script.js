@@ -127,37 +127,42 @@ document.getElementById("toggle-music").addEventListener("change", toggleMusic);
 document.getElementById("toggle-sfx").addEventListener("change", toggleSoundEffects);
 
 function updateUI() {
-    document.getElementById("counter").textContent = `Gold coins: ${compactNumberFormat(coins)}`;
+    document.getElementById("total-coins").textContent = compactNumberFormat(coins);
+    document.getElementById("knight-production").textContent = knightCount * 1; // Adjust production rates as needed
+    document.getElementById("archer-production").textContent = archerCount * 2;
+    document.getElementById("wizard-production").textContent = wizardCount * 4;
+    document.getElementById("paladin-production").textContent = paladinCount * 8;
     document.getElementById("knight-count").textContent = knightCount;
     document.getElementById("archer-count").textContent = archerCount;
     document.getElementById("wizard-count").textContent = wizardCount;
-    document.getElementById("woodcutting-level").textContent = woodcuttingLevel;
-    document.getElementById("mining-level").textContent = miningLevel;
     document.getElementById("paladin-count").textContent = paladinCount;
-    document.getElementById("knight-purchase-count").textContent = knightCount;
-    document.getElementById("archer-purchase-count").textContent = archerCount;
-    document.getElementById("wizard-purchase-count").textContent = wizardCount;
-    document.getElementById("paladin-purchase-count").textContent = paladinCount;
 
-    document.getElementById('total-coins').innerText = coins.toFixed(2);
-    document.getElementById('knight-production').innerText = (knightCount * 1).toFixed(2);
-    document.getElementById('archer-production').innerText = (archerCount * 2).toFixed(2);
-    document.getElementById('wizard-production').innerText = (wizardCount * 3).toFixed(2);
-    document.getElementById('paladin-production').innerText = (paladinCount * 4).toFixed(2);
+    const startTimeFormatted = new Date(startTime).toLocaleString();
+    document.getElementById("start-time").textContent = startTimeFormatted;
 
-    document.getElementById('knight-count').innerText = knightCount;
-    document.getElementById('archer-count').innerText = archerCount;
-    document.getElementById('wizard-count').innerText = wizardCount;
-    document.getElementById('paladin-count').innerText = paladinCount;
+    const elapsedTimeFormatted = formatTimeDuration(Date.now() - startTime);
+    document.getElementById("elapsed-time").textContent = elapsedTimeFormatted;
 
-    const now = new Date();
-    const elapsedTime = Math.floor((now - new Date(lastSaveTime)) / 1000);
-    const seconds = elapsedTime % 60;
-    const minutes = Math.floor(elapsedTime / 60) % 60;
-    const hours = Math.floor(elapsedTime / 3600) % 24;
-    const days = Math.floor(elapsedTime / 86400);
-    document.getElementById('elapsed-time').innerText = `${seconds}s ${minutes}m ${hours}h ${days}d`;
+    updateUpgradeCosts();
+}
 
+function formatTimeDuration(duration) {
+    // Format duration into hh:mm:ss
+    const seconds = Math.floor((duration / 1000) % 60);
+    const minutes = Math.floor((duration / (1000 * 60)) % 60);
+    const hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
+
+    const hoursDisplay = (hours < 10) ? `0${hours}` : hours;
+    const minutesDisplay = (minutes < 10) ? `0${minutes}` : minutes;
+    const secondsDisplay = (seconds < 10) ? `0${seconds}` : seconds;
+
+    return `${hoursDisplay}:${minutesDisplay}:${secondsDisplay}`;
+}
+
+// Adjust the existing updateUI function as needed to display all stats correctly.
+
+// Call updateUI after loading game data
+    loadGameData();
     updatePassiveIncome();
     updateUpgradeCosts();
 }
