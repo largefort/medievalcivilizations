@@ -1,27 +1,27 @@
 function updateStatsTab() {
     // Update total coins
-    const totalCoinsElement = document.getElementById("total-coins");
+    const totalCoinsElement = document.getElementById("coins");
     if (totalCoinsElement) {
         totalCoinsElement.textContent = compactNumberFormat(coins);
     }
 
     // Update production rates
-    const knightProductionElement = document.getElementById("knight-production");
+    const knightProductionElement = document.getElementById("knightcount");
     if (knightProductionElement) {
         knightProductionElement.textContent = knightCount * 1; // Adjust production rates as needed
     }
 
-    const archerProductionElement = document.getElementById("archer-production");
+    const archerProductionElement = document.getElementById("archercount");
     if (archerProductionElement) {
         archerProductionElement.textContent = archerCount * 2; // Adjust production rates as needed
     }
 
-    const wizardProductionElement = document.getElementById("wizard-production");
+    const wizardProductionElement = document.getElementById("wizardcount");
     if (wizardProductionElement) {
         wizardProductionElement.textContent = wizardCount * 4; // Adjust production rates as needed
     }
 
-    const paladinProductionElement = document.getElementById("paladin-production");
+    const paladinProductionElement = document.getElementById("paladincount");
     if (paladinProductionElement) {
         paladinProductionElement.textContent = paladinCount * 8; // Adjust production rates as needed
     }
