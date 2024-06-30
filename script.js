@@ -82,7 +82,6 @@ function loadGameData() {
             paladinCount = savedState.paladinCount;
             lastSaveTime = savedState.lastSaveTime; // Update the last save time
 
-            calculateOfflineEarnings();
             updateUI();
         }
     };
@@ -90,16 +89,7 @@ function loadGameData() {
 
 initializeDB();
 
-function calculateOfflineEarnings() {
-    const currentTime = Date.now();
-    const timeDifference = (currentTime - lastSaveTime) / 1000; // in seconds
-    const offlineEarnings = timeDifference * passiveIncome;
-    coins += offlineEarnings;
-
-    document.getElementById('offline-earnings').innerText = offlineEarnings.toFixed(2);
-    $('#offline-earnings-modal').modal('show');
-}
-
+// Function to toggle music
 function toggleMusic() {
     const medievalThemeAudio = document.getElementById("medievaltheme");
     if (medievalThemeAudio.paused) {
@@ -109,20 +99,25 @@ function toggleMusic() {
     }
 }
 
+// Function to toggle sound effects
 function toggleSoundEffects() {
     const clickSoundAudio = document.getElementById("click-sound");
     const upgradeSoundAudio = document.getElementById("upgradeSound");
     const toggleSfxCheckbox = document.getElementById("toggle-sfx");
 
+    // Check the state of the toggle-sfx checkbox
     if (toggleSfxCheckbox.checked) {
+        // If the checkbox is checked, mute the sound effects
         clickSoundAudio.muted = true;
         upgradeSoundAudio.muted = true;
     } else {
+        // If the checkbox is not checked, unmute the sound effects
         clickSoundAudio.muted = false;
         upgradeSoundAudio.muted = false;
     }
 }
 
+// Add event listeners to the checkboxes
 document.getElementById("toggle-music").addEventListener("change", toggleMusic);
 document.getElementById("toggle-sfx").addEventListener("change", toggleSoundEffects);
 
@@ -139,38 +134,6 @@ function updateUI() {
     document.getElementById("wizard-purchase-count").textContent = wizardCount;
     document.getElementById("paladin-purchase-count").textContent = paladinCount;
 
-    // Update stats tab
-    document.getElementById("total-coins").textContent = compactNumberFormat(coins);
-    document.getElementById("knight-production").textContent = knightCount * 1; // Adjust production rates as needed
-    document.getElementById("archer-production").textContent = archerCount * 2;
-    document.getElementById("wizard-production").textContent = wizardCount * 4;
-    document.getElementById("paladin-production").textContent = paladinCount * 8;
-
-    const startTimeFormatted = new Date(startTime).toLocaleString();
-    document.getElementById("start-time").textContent = startTimeFormatted;
-
-    const elapsedTimeFormatted = formatTimeDuration(Date.now() - startTime);
-    document.getElementById("elapsed-time").textContent = elapsedTimeFormatted;
-
-    updatePassiveIncome();
-    updateUpgradeCosts();
-}
-
-function formatTimeDuration(duration) {
-    // Format duration into hh:mm:ss
-    const seconds = Math.floor((duration / 1000) % 60);
-    const minutes = Math.floor((duration / (1000 * 60)) % 60);
-    const hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
-
-    const hoursDisplay = (hours < 10) ? `0${hours}` : hours;
-    const minutesDisplay = (minutes < 10) ? `0${minutes}` : minutes;
-    const secondsDisplay = (seconds < 10) ? `0${seconds}` : seconds;
-
-    return `${hoursDisplay}:${minutesDisplay}:${secondsDisplay}`;
-}
-
-// Call updateUI after loading game data
-    loadGameData();
     updatePassiveIncome();
     updateUpgradeCosts();
 }
@@ -180,6 +143,7 @@ function clickCastle() {
     saveGameData();
     updateUI();
 
+    // Play the preloaded click sound
     clickSound.play();
 }
 
@@ -218,6 +182,7 @@ function buyUpgrade(type) {
     }
 
     if (cost > 0) {
+        // Play the upgrade sound
         const upgradeSound = document.getElementById("upgradeSound");
         upgradeSound.play();
     }
