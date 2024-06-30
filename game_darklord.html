@@ -241,50 +241,38 @@
         </a>
       </div>
     </div>
-    
+
     <div class="tab-pane fade" id="stats-tab" role="tabpanel" aria-labelledby="stats-tab-tab">
       <div class="text-center">
         <h2>Stats</h2>
-        <div id="production" class="medieval-note">
-          <h3>Production</h3>
-          <div>Gold Coins Earned: <span id="total-coins">0</span></div>
-          <div>Knight Production: <span id="knight-production">0</span></div>
-          <div>Archer Production: <span id="archer-production">0</span></div>
-          <div>Wizard Production: <span id="wizard-production">0</span></div>
-          <div>Paladin Production: <span id="paladin-production">0</span></div>
-        </div>
-        <div id="army" class="medieval-note mt-3">
-          <h3>Army</h3>
-          <div>Knight Count: <span id="knight-count">0</span></div>
-          <div>Archer Count: <span id="archer-count">0</span></div>
-          <div>Wizard Count: <span id="wizard-count">0</span></div>
-          <div>Paladin Count: <span id="paladin-count">0</span></div>
-        </div>
-        <div id="play-time" class="medieval-note mt-3">
-          <h3>Play Time</h3>
-          <div>Started: <span id="start-time">0</span></div>
-          <div>Elapsed Time: <span id="elapsed-time">0</span></div>
-        </div>
+        <div>Total Knights: <span id="total-knights" aria-live="polite">0</span></div>
+        <div>Total Archers: <span id="total-archers" aria-live="polite">0</span></div>
+        <div>Total Wizards: <span id="total-wizards" aria-live="polite">0</span></div>
+        <div>Total Paladins: <span id="total-paladins" aria-live="polite">0</span></div>
+        <div>Total Woodcutting Level: <span id="total-woodcutting-level" aria-live="polite">1</span></div>
+        <div>Total Mining Level: <span id="total-mining-level" aria-live="polite">1</span></div>
+        <div>Total Coins Earned: <span id="total-coins-earned" aria-live="polite">0</span></div>
       </div>
     </div>
-  </div>
 
     <div class="nav nav-pills nav-fill fixed-bottom" role="tablist">
-  <a class="nav-link active" data-bs-toggle="pill" href="#castle-tab" role="tab" aria-controls="castle-tab" aria-selected="true" onfocus="speakText(this)" tabindex="0">
-    <i class="fas fa-chess-rook" aria-hidden="true"></i> Castle
-  </a>
-  <a class="nav-link" data-bs-toggle="pill" href="#skilling-tab" role="tab" aria-controls="skilling-tab" aria-selected="false" onfocus="speakText(this)" tabindex="0">
-    <i class="fas fa-chart-simple" aria-hidden="true"></i> Skilling
-  </a>
-  <a class="nav-link" data-bs-toggle="pill" href="#shop-tab" role="tab" aria-controls="shop-tab" aria-selected="false" onfocus="speakText(this)" tabindex="0">
-    <i class="fas fa-shopping-cart" aria-hidden="true"></i> Shop
-  </a>
-  <a class="nav-link" data-bs-toggle="pill" href="#settings-tab" role="tab" aria-controls="settings-tab" aria-selected="false" onfocus="speakText(this)" tabindex="0">
-    <i class="fas fa-gears" aria-hidden="true"></i> Settings
-  </a>
-  <a class="nav-link" data-bs-toggle="pill" href="#stats-tab" role="tab" aria-controls="stats-tab" aria-selected="false" onfocus="speakText(this)" tabindex="0">
-    <i class="fas fa-chart-bar" aria-hidden="true"></i> Stats
-  </a>
+      <a class="nav-link active" data-bs-toggle="pill" href="#castle-tab" role="tab" aria-controls="castle-tab" aria-selected="true" onfocus="speakText(this)" tabindex="0">
+        <i class="fas fa-chess-rook" aria-hidden="true"></i> Castle
+      </a>
+      <a class="nav-link" data-bs-toggle="pill" href="#skilling-tab" role="tab" aria-controls="skilling-tab" aria-selected="false" onfocus="speakText(this)" tabindex="0">
+        <i class="fas fa-chart-simple" aria-hidden="true"></i> Skilling
+      </a>
+      <a class="nav-link" data-bs-toggle="pill" href="#shop-tab" role="tab" aria-controls="shop-tab" aria-selected="false" onfocus="speakText(this)" tabindex="0">
+        <i class="fas fa-shopping-cart" aria-hidden="true"></i> Shop
+      </a>
+      <a class="nav-link" data-bs-toggle="pill" href="#settings-tab" role="tab" aria-controls="settings-tab" aria-selected="false" onfocus="speakText(this)" tabindex="0">
+        <i class="fas fa-gears" aria-hidden="true"></i> Settings
+      </a>
+      <a class="nav-link" data-bs-toggle="pill" href="#stats-tab" role="tab" aria-controls="stats-tab" aria-selected="false" onfocus="speakText(this)" tabindex="0">
+        <i class="fas fa-chart-bar" aria-hidden="true"></i> Stats
+      </a>
+    </div>
+  </div>
 </div>
   
     <script>
