@@ -1,20 +1,42 @@
 function updateStatsTab() {
     // Update total coins
-    document.getElementById("total-coins").textContent = compactNumberFormat(coins);
+    const totalCoinsElement = document.getElementById("total-coins");
+    if (totalCoinsElement) {
+        totalCoinsElement.textContent = compactNumberFormat(coins);
+    }
 
     // Update production rates
-    document.getElementById("knight-production").textContent = knightCount * 1;
-    document.getElementById("archer-production").textContent = archerCount * 2;
-    document.getElementById("wizard-production").textContent = wizardCount * 4;
-    document.getElementById("paladin-production").textContent = paladinCount * 8;
+    const knightProductionElement = document.getElementById("knight-production");
+    if (knightProductionElement) {
+        knightProductionElement.textContent = knightCount * 1; // Adjust production rates as needed
+    }
+
+    const archerProductionElement = document.getElementById("archer-production");
+    if (archerProductionElement) {
+        archerProductionElement.textContent = archerCount * 2; // Adjust production rates as needed
+    }
+
+    const wizardProductionElement = document.getElementById("wizard-production");
+    if (wizardProductionElement) {
+        wizardProductionElement.textContent = wizardCount * 4; // Adjust production rates as needed
+    }
+
+    const paladinProductionElement = document.getElementById("paladin-production");
+    if (paladinProductionElement) {
+        paladinProductionElement.textContent = paladinCount * 8; // Adjust production rates as needed
+    }
 
     // Update game start time
-    const startTimeFormatted = new Date(startTime).toLocaleString();
-    document.getElementById("start-time").textContent = startTimeFormatted;
+    const startTimeElement = document.getElementById("start-time");
+    if (startTimeElement) {
+        startTimeElement.textContent = formatStartTime(startTime);
+    }
 
     // Update elapsed time
-    const elapsedTimeFormatted = formatTimeDuration(Date.now() - startTime);
-    document.getElementById("elapsed-time").textContent = elapsedTimeFormatted;
+    const elapsedTimeElement = document.getElementById("elapsed-time");
+    if (elapsedTimeElement) {
+        elapsedTimeElement.textContent = formatElapsedTime(startTime);
+    }
 }
 
 function compactNumberFormat(num) {
@@ -25,8 +47,16 @@ function compactNumberFormat(num) {
     return +(num / 1e12).toFixed(1) + "T";
 }
 
+function formatStartTime(startTime) {
+    return new Date(startTime).toLocaleString();
+}
+
+function formatElapsedTime(startTime) {
+    const elapsedMilliseconds = Date.now() - startTime;
+    return formatTimeDuration(elapsedMilliseconds);
+}
+
 function formatTimeDuration(duration) {
-    // Format duration into hh:mm:ss
     const seconds = Math.floor((duration / 1000) % 60);
     const minutes = Math.floor((duration / (1000 * 60)) % 60);
     const hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
