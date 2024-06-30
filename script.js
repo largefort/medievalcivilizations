@@ -160,9 +160,6 @@ function formatTimeDuration(duration) {
 }
 
 // Adjust the existing updateUI function as needed to display all stats correctly.
-
-// Call updateUI after loading game data
-    loadGameData();
     updatePassiveIncome();
     updateUpgradeCosts();
 }
