@@ -127,15 +127,24 @@ document.getElementById("toggle-music").addEventListener("change", toggleMusic);
 document.getElementById("toggle-sfx").addEventListener("change", toggleSoundEffects);
 
 function updateUI() {
+    document.getElementById("counter").textContent = `Gold coins: ${compactNumberFormat(coins)}`;
+    document.getElementById("knight-count").textContent = knightCount;
+    document.getElementById("archer-count").textContent = archerCount;
+    document.getElementById("wizard-count").textContent = wizardCount;
+    document.getElementById("woodcutting-level").textContent = woodcuttingLevel;
+    document.getElementById("mining-level").textContent = miningLevel;
+    document.getElementById("paladin-count").textContent = paladinCount;
+    document.getElementById("knight-purchase-count").textContent = knightCount;
+    document.getElementById("archer-purchase-count").textContent = archerCount;
+    document.getElementById("wizard-purchase-count").textContent = wizardCount;
+    document.getElementById("paladin-purchase-count").textContent = paladinCount;
+
+    // Update stats tab
     document.getElementById("total-coins").textContent = compactNumberFormat(coins);
     document.getElementById("knight-production").textContent = knightCount * 1; // Adjust production rates as needed
     document.getElementById("archer-production").textContent = archerCount * 2;
     document.getElementById("wizard-production").textContent = wizardCount * 4;
     document.getElementById("paladin-production").textContent = paladinCount * 8;
-    document.getElementById("knight-count").textContent = knightCount;
-    document.getElementById("archer-count").textContent = archerCount;
-    document.getElementById("wizard-count").textContent = wizardCount;
-    document.getElementById("paladin-count").textContent = paladinCount;
 
     const startTimeFormatted = new Date(startTime).toLocaleString();
     document.getElementById("start-time").textContent = startTimeFormatted;
@@ -143,6 +152,7 @@ function updateUI() {
     const elapsedTimeFormatted = formatTimeDuration(Date.now() - startTime);
     document.getElementById("elapsed-time").textContent = elapsedTimeFormatted;
 
+    updatePassiveIncome();
     updateUpgradeCosts();
 }
 
@@ -159,7 +169,8 @@ function formatTimeDuration(duration) {
     return `${hoursDisplay}:${minutesDisplay}:${secondsDisplay}`;
 }
 
-// Adjust the existing updateUI function as needed to display all stats correctly.
+// Call updateUI after loading game data
+    loadGameData();
     updatePassiveIncome();
     updateUpgradeCosts();
 }
