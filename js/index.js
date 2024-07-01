@@ -22,62 +22,27 @@
 document.addEventListener('deviceready', onDeviceReady, false);
 
 function onDeviceReady() {
-    // Cordova is now initialized. Have fun!
-    var admobid = {};
-    if (/(android)/i.test(navigator.userAgent)) { //Android
-      admobid = {
-        banner : 'ca-app-pub-5816082932921993/5439448724',
-        interstitial : 'ca-app-pub-5816082932921993/4900570284',
-        gotHereMsg1 : 'banner and interstitial have the android IDs'
-      };
-    } else if (/(ipod|iphone|ipad)/i.test(navigator.userAgent)) { //iOS
-      admobid = {
-        banner : 'Stand in iOS banner ID',
-        interstitial: 'stand in iOS interstitial ID',
-        gotHereMsg1 : 'banner and interstitial have the iOS IDs'
-      };
-    } else { //Neither
-      admobid = {
-        gotHereMsg1 : 'banner and interstitial have no IDs'
-      }
-    }
+    console.log('Device is ready');
+    createGameDirectoryInAppData();
+    createGameDirectoryInInternalStorage();
+}
 
-    if (window.AdMob) {
-      var admob = window.AdMob;
-      admob.createBanner ({
-        adId : admobid.banner,
-        position : admob.AD_POSITION.BOTTOM_CENTER,
-        isTesting : false, //False for live ; True for production
-        autoShow : true
-      });
-      admob.prepareInterstitial ({
-        adId : admobid.interstitial,
-        autoShow : false
-      });
-      gotHereMsg2 = "window.AdMob is true";
-    } else {
-      gotHereMsg2 = "window.AdMob is not true";
-    }
+function createGameDirectoryInAppData() {
+    window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function(dir) {
+        dir.getDirectory('MedievalCivilizations', { create: true }, function(subdir) {
+            console.log('Directory "MedievalCivilizations" in app data created or already exists');
+        }, onError);
+    }, onError);
+}
 
-    //Got an ID and the actual ID's
-    document.getElementById("getIdCheck").innerHTML = admobid.gotHereMsg1;
-    document.getElementById("bannerId").innerHTML = admobid.banner;
-    document.getElementById("interstitialId").innerHTML = admobid.interstitial;
-    //window.AdMob is true and banner is created + interstitial is prepared
-    document.getElementById("isWindowAdmob").innerHTML = gotHereMsg2;
-    //Show interstitial function is executed or has not been executed
-    document.getElementById("startInterstitial").onclick = function () {
-      if (window.AdMob) {
-        var admob = window.AdMob;
-        admob.showInterstitial();
-        gotHereMsg3 = "Show Interstitial function has been executed";
-      } else {
-        gotHereMsg3 = "Show Interstitial function has not been executed";
-      }
-      document.getElementById("checkInterstitial").innerHTML = gotHereMsg3;
-    }
+function createGameDirectoryInInternalStorage() {
+    window.resolveLocalFileSystemURL(cordova.file.externalDataDirectory, function(dir) {
+        dir.getDirectory('MedievalCivilizations', { create: true }, function(subdir) {
+            console.log('Directory "MedievalCivilizations" in internal storage created or already exists');
+        }, onError);
+    }, onError);
+}
 
-
-    console.log('Running cordova-' + cordova.platformId + '@' + cordova.version);
-    document.getElementById('deviceready').classList.add('ready');
+function onError(error) {
+    console.error('Error: ' + error.code);
 }

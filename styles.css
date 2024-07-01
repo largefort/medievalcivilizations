@@ -90,3 +90,8 @@ body {
 body.medieval {
     background-color: darkolivegreen;
 }
+
+/* Custom Cursor */
+body {
+    cursor: url('cursor.cur'), auto;
+}
