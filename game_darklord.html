@@ -12,147 +12,268 @@
   <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
   <style>
     /* Import medieval style font */
-    @font-face {
-        font-family: 'MedievalFont';
-        src: url('medievalfont.woff') format('woff');
-    }
+      @font-face {
+          font-family: 'MedievalFont';
+          src: url('medievalfont.woff') format('woff');
+      }
 
-    html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-        position: relative;
-        background-image: url('images/dark_parchment.jpg');
-        background-size: cover;
-        background-attachment: fixed;
-    }
+      html, body {
+          height: 100%;
+          margin: 0;
+          padding: 0;
+          position: relative;
+          background-image: url('images/parchment.jpg');
+          background-size: cover;
+          background-attachment: fixed;
+      }
 
-    body {
-        font-family: 'MedievalFont', serif;
-        color: #dcd0c0;
-    }
+      body {
+          font-family: 'MedievalFont', serif;
+          color: #dcd0c0;
+          text-shadow: 1px 1px 2px #000;
+          animation: fadeIn 2s ease-in;
+      }
 
-    .container {
-        background-color: rgba(0, 0, 0, 0.7);
-        border: 10px double #8c7a6b;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
-        margin-top: 50px;
-        background-image: url('images/leather_texture.jpg');
-    }
+      @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+      }
 
-    .nav-pills .nav-link {
-        font-size: 18px;
-        padding: 10px 10px;
-        background-color: #6b4e37;
-        border-radius: 10px;
-        color: #ffd700;
-        margin: 5px;
-        transition: background-color 0.3s, color 0.3s;
-        background-image: url('images/wood_texture.jpg');
-    }
+      .container {
+          background-color: rgba(0, 0, 0, 0.7);
+          border: 10px double #8c7a6b;
+          padding: 20px;
+          border-radius: 10px;
+          box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+          margin-top: 50px;
+          background-image: url('images/leather_texture.jpg');
+          animation: slideIn 1s ease-in;
+      }
 
-    @media (max-width: 768px) {
-        .nav-pills .nav-link {
-            font-size: 16px;
-            padding: 8px 8px;
-        }
-    }
+      @keyframes slideIn {
+          from { transform: translateY(-100%); }
+          to { transform: translateY(0); }
+      }
 
-    @media (max-width: 480px) {
-        .nav-pills .nav-link {
-            font-size: 14px;
-            padding: 6px 6px;
-        }
-    }
+      .nav-pills .nav-link {
+          font-size: 18px;
+          padding: 10px 10px;
+          background-color: #6b4e37;
+          border-radius: 10px;
+          color: #ffd700;
+          margin: 5px;
+          transition: background-color 0.3s, color 0.3s, transform 0.3s;
+          background-image: url('images/wood_texture.jpg');
+          text-shadow: 1px 1px 2px #000;
+          animation: pulse 2s infinite;
+      }
 
-    .nav-pills .nav-link.active, .nav-pills .nav-link:hover {
-        background-color: #50372c;
-        color: #ffffff;
-        font-weight: bold;
-    }
+      @keyframes pulse {
+          0%, 100% { transform: scale(1); }
+          50% { transform: scale(1.05); }
+      }
 
-    .upgrade {
-        background-image: url('images/parchment_texture.jpg');
-        color: #fffbeb;
-        border: 3px solid #4a3425;
-        cursor: pointer;
-        transition: background-color 0.3s, color 0.3s;
-        border-radius: 10px;
-        position: relative;
-        background-size: cover;
-    }
+      @media (max-width: 768px) {
+          .nav-pills .nav-link {
+              font-size: 16px;
+              padding: 8px 8px;
+          }
+      }
 
-    .upgrade:hover {
-        background-color: #3e2a1b;
-        color: #f4e4c3;
-    }
+      @media (max-width: 480px) {
+          .nav-pills .nav-link {
+              font-size: 14px;
+              padding: 6px 6px;
+          }
+      }
 
-    .upgrade .purchase-count {
-        position: absolute;
-        bottom: 5px;
-        right: 10px;
-        font-size: 1.2em;
-        color: #ffd700;
-    }
+      .nav-pills .nav-link.active, .nav-pills .nav-link:hover {
+          background-color: #50372c;
+          color: #ffffff;
+          font-weight: bold;
+          transform: scale(1.1);
+      }
 
-    .modal-content {
-        background-color: #261c1a;
-        color: #f7dfc4;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-        text-align: center;
-        background-image: url('images/parchment_texture.jpg');
-    }
+      .upgrade {
+          background-image: url('images/parchment_texture.jpg');
+          color: #fffbeb;
+          border: 3px solid #4a3425;
+          cursor: pointer;
+          transition: background-color 0.3s, color 0.3s, transform 0.3s;
+          border-radius: 10px;
+          position: relative;
+          background-size: cover;
+          text-shadow: 1px 1px 2px #000;
+          animation: glow 2s infinite alternate;
+      }
 
-    .castle-image {
-        border: 5px solid #543c2c;
-        border-radius: 10px;
-        max-width: 100%;
-        height: auto;
-        background-image: url('images/stone_texture.jpg');
-    }
+      @keyframes glow {
+          from { box-shadow: 0 0 10px #ffd700; }
+          to { box-shadow: 0 0 20px #ffd700; }
+      }
 
-    .ad-banner {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 50px;
-        background-color: #543c2c;
-        color: #f7dfc4;
-        text-align: center;
-        padding: 10px 0;
-        box-sizing: border-box;
-        background-image: url('images/wood_texture.jpg');
-    }
+      .upgrade:hover {
+          background-color: #3e2a1b;
+          color: #f4e4c3;
+          transform: scale(1.1);
+      }
 
-    #uuid-display {
-        position: fixed;
-        top: 10px;
-        left: 10px;
-        color: gold;
-        background-color: rgba(0, 0, 0, 0.5);
-        padding: 5px;
-        border-radius: 5px;
-        z-index: 1000;
-    }
+      .upgrade .purchase-count {
+          position: absolute;
+          bottom: 5px;
+          right: 10px;
+          font-size: 1.2em;
+          color: #ffd700;
+          text-shadow: 1px 1px 2px #000;
+      }
 
-    .medieval-note {
-        font-family: 'MedievalFont', serif;
-        color: #ffd700;
-        background-color: rgba(0, 0, 0, 0.7);
-        padding: 10px;
-        border: 2px solid #8c7a6b;
-        border-radius: 10px;
-        margin-top: 10px;
-    }
-     }
-  html, body, * {
-    cursor: url('cursor.cur'), auto;
+      .modal-content {
+          background-color: #261c1a;
+          color: #f7dfc4;
+          padding: 20px;
+          border-radius: 10px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+          text-align: center;
+          background-image: url('images/parchment_texture.jpg');
+          animation: appear 0.5s ease-in-out;
+      }
+
+      @keyframes appear {
+          from { transform: scale(0); }
+          to { transform: scale(1); }
+      }
+
+      .castle-image {
+          border: 5px solid #543c2c;
+          border-radius: 10px;
+          max-width: 100%;
+          height: auto;
+          background-image: url('images/stone_texture.jpg');
+
+          transition: transform 0.3s;
+          cursor: pointer;
+      }
+
+      .castle-image:active {
+          animation: clickAnimation 0.2s ease-in-out;
+      }
+
+      @keyframes clickAnimation {
+          0% { transform: scale(1); }
+          50% { transform: scale(0.9); }
+          100% { transform: scale(1); }
+      }
+
+      .ad-banner {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          height: 50px;
+          background-color: #543c2c;
+          color: #f7dfc4;
+          text-align: center;
+          padding: 10px 0;
+          box-sizing: border-box;
+          background-image: url('images/wood_texture.jpg');
+          text-shadow: 1px 1px 2px #000;
+          animation: bounce 3s infinite;
+      }
+
+      @keyframes bounce {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-10px); }
+      }
+
+      #uuid-display {
+          position: fixed;
+          top: 10px;
+          left: 10px;
+          color: gold;
+          background-color: rgba(0, 0, 0, 0.5);
+          padding: 5px;
+          border-radius: 5px;
+          z-index: 1000;
+          text-shadow: 1px 1px 2px #000;
+          filter: drop-shadow(0 0 10px #3e2a1b);
+          animation: fadeIn 2s ease-in;
+      }
+
+      .medieval-note {
+          font-family: 'MedievalFont', serif;
+          color: #ffd700;
+          background-color: rgba(0, 0, 0, 0.7);
+          padding: 10px;
+          border: 2px solid #8c7a6b;
+          border-radius: 10px;
+          margin-top: 10px;
+          text-shadow: 1px 1px 2px #000;
+          animation: flicker 1.5s infinite alternate;
+      }
+
+      @keyframes flicker {
+          from { opacity: 1; }
+          to { opacity: 0.8; }
+      }
+
+      .nav-bottom {
+          display: flex;
+          justify-content: space-around;
+          align-items: center;
+          background-image: url('images/wood_texture.jpg');
+          border-top: 5px solid #8c7a6b;
+          padding: 10px 0;
+          box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.5);
+          animation: slideUp 1s ease-in;
+      }
+
+      @keyframes slideUp {
+          from { transform: translateY(100%); }
+          to { transform: translateY(0); }
+      }
+
+      .nav-bottom .nav-link {
+          flex: 1;
+          text-align: center;
+          color: #ffd700;
+          text-decoration: none;
+          padding: 10px 0;
+          font-family: 'MedievalFont', serif;
+          text-shadow: 1px 1px 2px #000;
+          transition: transform 0.3s;
+      }
+
+      .nav-bottom .nav-link i {
+          display: block;
+          font-size: 24px;
+          margin-bottom: 5px;
+      }
+
+      .nav-bottom .nav-link.active, .nav-bottom .nav-link:hover {
+          background-color: #50372c;
+          color: #ffffff;
+          transform: scale(1.1);
+      }
+.floating-text {
+    position: fixed;
+    font-size: 24px;
+    color: gold;
+    animation: floatUp 1s ease-out forwards;
+    pointer-events: none;
+    z-index: 1000;
 }
+
+@keyframes floatUp {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+}
+
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuid.min.js"></script>
 </head>

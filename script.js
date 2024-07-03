@@ -8,6 +8,8 @@ let paladinCount = 0;
 let passiveIncome = 0;
 let db;
 let lastSaveTime = Date.now(); // Initialize lastSaveTime with the current time
+// Base coin value per click
+let baseCoinsPerClick = 1;
 
 // Add an HTML audio element for the upgrade sound
 document.write(`
@@ -138,13 +140,38 @@ function updateUI() {
     updateUpgradeCosts();
 }
 
-function clickCastle() {
-    coins++;
+// Function to calculate total coins per click
+function getCoinsPerClick() {
+    return baseCoinsPerClick + knightCount * 2 + archerCount * 3 + wizardCount * 5 + paladinCount * 10;
+}
+
+function clickCastle(event) {
+    const coinsGained = getCoinsPerClick();
+    coins += coinsGained;
     saveGameData();
     updateUI();
 
     // Play the preloaded click sound
     clickSound.play();
+
+    // Create floating text
+    const floatingText = document.createElement('div');
+    floatingText.className = 'floating-text';
+    floatingText.innerText = `+${coinsGained}`;
+
+    // Position the floating text at the mouse cursor, adjusted for scroll
+    const pageX = event.pageX;
+    const pageY = event.pageY;
+    floatingText.style.left = `${event.clientX}px`
+    floatingText.style.top = `${event.clientY}px`
+
+    // Add the floating text to the body
+    document.body.appendChild(floatingText);
+
+    // Remove the floating text after the animation completes
+    setTimeout(() => {
+        floatingText.remove();
+    }, 1000); // Match this duration with the CSS animation duration
 }
 
 function buyUpgrade(type) {
@@ -190,6 +217,9 @@ function buyUpgrade(type) {
     saveGameData();
     updateUI();
 }
+
+// Ensure the castle image has the correct event listener
+document.getElementById('castle').addEventListener('click', clickCastle);
 
 function updateUpgradeCosts() {
     document.getElementById("knight-cost").textContent = Math.floor(10 * Math.pow(1.15, knightCount));

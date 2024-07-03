@@ -30,6 +30,7 @@
     body {
         font-family: 'MedievalFont', serif;
         color: #dcd0c0;
+        text-shadow: 1px 1px 2px #000;
     }
 
     .container {
@@ -40,6 +41,7 @@
         box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
         margin-top: 50px;
         background-image: url('images/leather_texture.jpg');
+        filter: drop-shadow(0 0 10px #3e2a1b);
     }
 
     .nav-pills .nav-link {
@@ -49,8 +51,10 @@
         border-radius: 10px;
         color: #ffd700;
         margin: 5px;
-        transition: background-color 0.3s, color 0.3s;
+        transition: background-color 0.3s, color 0.3s, transform 0.3s;
         background-image: url('images/wood_texture.jpg');
+        text-shadow: 1px 1px 2px #000;
+        filter: drop-shadow(0 0 5px #50372c);
     }
 
     @media (max-width: 768px) {
@@ -71,6 +75,7 @@
         background-color: #50372c;
         color: #ffffff;
         font-weight: bold;
+        transform: scale(1.05);
     }
 
     .upgrade {
@@ -78,15 +83,18 @@
         color: #fffbeb;
         border: 3px solid #4a3425;
         cursor: pointer;
-        transition: background-color 0.3s, color 0.3s;
+        transition: background-color 0.3s, color 0.3s, transform 0.3s;
         border-radius: 10px;
         position: relative;
         background-size: cover;
+        text-shadow: 1px 1px 2px #000;
+        filter: drop-shadow(0 0 10px #3e2a1b);
     }
 
     .upgrade:hover {
         background-color: #3e2a1b;
         color: #f4e4c3;
+        transform: scale(1.05);
     }
 
     .upgrade .purchase-count {
@@ -95,6 +103,7 @@
         right: 10px;
         font-size: 1.2em;
         color: #ffd700;
+        text-shadow: 1px 1px 2px #000;
     }
 
     .modal-content {
@@ -113,6 +122,7 @@
         max-width: 100%;
         height: auto;
         background-image: url('images/stone_texture.jpg');
+        filter: drop-shadow(0 0 10px #3e2a1b);
     }
 
     .ad-banner {
@@ -127,6 +137,7 @@
         padding: 10px 0;
         box-sizing: border-box;
         background-image: url('images/wood_texture.jpg');
+        text-shadow: 1px 1px 2px #000;
     }
 
     #uuid-display {
@@ -138,6 +149,8 @@
         padding: 5px;
         border-radius: 5px;
         z-index: 1000;
+        text-shadow: 1px 1px 2px #000;
+        filter: drop-shadow(0 0 10px #3e2a1b);
     }
 
     .medieval-note {
@@ -148,10 +161,174 @@
         border: 2px solid #8c7a6b;
         border-radius: 10px;
         margin-top: 10px;
+        text-shadow: 1px 1px 2px #000;
     }
-     }
-    </style>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuid.min.js"></script>
+
+    .nav-bottom {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        background-image: url('images/wood_texture.jpg');
+        border-top: 5px solid #8c7a6b;
+        padding: 10px 0;
+        box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .nav-bottom .nav-link {
+        flex: 1;
+        text-align: center;
+        color: #ffd700;
+        text-decoration: none;
+        padding: 10px 0;
+        font-family: 'MedievalFont', serif;
+        text-shadow: 1px 1px 2px #000;
+    }
+
+    .nav-bottom .nav-link i {
+        display: block;
+        font-size: 24px;
+        margin-bottom: 5px;
+    }
+
+    .nav-bottom .nav-link.active, .nav-bottom .nav-link:hover {
+        background-color: #50372c;
+        color: #ffffff;
+        transform: scale(1.05);
+    }
+
+    /* Additional medieval styles */
+    header {
+        background-image: url('images/wood_texture.jpg');
+        color: #ffd700;
+        text-align: center;
+        padding: 20px;
+        font-size: 2em;
+        border-bottom: 5px solid #8c7a6b;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+        text-shadow: 1px 1px 2px #000;
+        filter: drop-shadow(0 0 10px #3e2a1b);
+    }
+
+    footer {
+        background-image: url('images/wood_texture.jpg');
+        color: #ffd700;
+        text-align: center;
+        padding: 20px;
+        font-size: 1.2em;
+        border-top: 5px solid #8c7a6b;
+        box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.5);
+        text-shadow: 1px 1px 2px #000;
+        position: absolute;
+        width: 100%;
+        bottom: 0;
+        filter: drop-shadow(0 0 10px #3e2a1b);
+    }
+
+    button.medieval-btn {
+        background-image: url('images/wood_texture.jpg');
+        color: #ffd700;
+        border: 3px solid #8c7a6b;
+        padding: 10px 20px;
+        border-radius: 10px;
+        font-family: 'MedievalFont', serif;
+        cursor: pointer;
+        transition: background-color 0.3s, color 0.3s, transform 0.3s;
+        text-shadow: 1px 1px 2px #000;
+        filter: drop-shadow(0 0 10px #3e2a1b);
+    }
+
+    button.medieval-btn:hover {
+        background-color: #50372c;
+        color: #ffffff;
+        transform: scale(1.05);
+    }
+
+    .frame {
+        border: 10px solid #8c7a6b;
+        padding: 20px;
+        border-radius: 10px;
+        background-color: rgba(0, 0, 0, 0.7);
+        background-image: url('images/parchment_texture.jpg');
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+        text-shadow: 1px 1px 2px #000;
+        filter: drop-shadow(0 0 10px #3e2a1b);
+        margin-bottom: 20px;
+    }
+
+    .scroll {
+        background-image: url('images/parchment_texture.jpg');
+        padding: 20px;
+        border: 3px solid #8c7a6b;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+        margin: 20px 0;
+        text-shadow: 1px 1px 2px #000;
+        filter: drop-shadow(0 0 10px #3e2a1b);
+    }
+
+    .banner {
+        background-image: url('images/wood_texture.jpg');
+        color: #ffd700;
+        text-align: center;
+        padding: 20px;
+        font-size: 1.5em;
+        border: 5px solid #8c7a6b;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+        text-shadow: 1px 1px 2px #000;
+        filter: drop-shadow(0 0 10px #3e2a1b);
+    }
+
+    .table-medieval {
+        width: 100%;
+        border-collapse: collapse;
+        background-image: url('images/parchment_texture.jpg');
+        border: 3px solid #8c7a6b;
+    }
+
+    .table-medieval th, .table-medieval td {
+        border: 2px solid #4a3425;
+        padding: 10px;
+        text-align: left;
+        color: #50372c;
+        text-shadow: 1px 1px 2px #000;
+    }
+
+    .table-medieval th {
+        background-color: #6b4e37;
+        color: #ffd700;
+    }
+
+    .decorative-icon {
+        width: 50px;
+        height: 50px;
+        background-image: url('images/icon_texture.jpg');
+        display: inline-block;
+        margin-right: 10px;
+    }
+
+    .floating-text {
+    position: fixed;
+    font-size: 24px;
+    color: gold;
+    animation: floatUp 1s ease-out forwards;
+    pointer-events: none;
+    z-index: 1000;
+}
+
+@keyframes floatUp {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+}
+
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuid.min.js"></script>
 </head>
 <body>
 <div id="uuid-display" aria-live="polite"></div>
