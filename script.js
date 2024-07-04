@@ -142,7 +142,7 @@ function updateUI() {
 
 // Function to calculate total coins per click
 function getCoinsPerClick() {
-    return baseCoinsPerClick + knightCount * 2 + archerCount * 3 + wizardCount * 5 + paladinCount * 10;
+    return baseCoinsPerClick + knightCount * 1 + archerCount * 1+ wizardCount * 1 + paladinCount * 1;
 }
 
 function clickCastle(event) {
