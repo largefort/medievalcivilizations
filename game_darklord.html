@@ -375,13 +375,34 @@
       </div>
     </div>
     
-    <div class="tab-pane fade" id="conquer-tab" role="tabpanel" aria-labelledby="conquer-tab-tab">
+    <!-- Include debugger.js -->
+<script src="debugger.js" type="module"></script>
+
+<!-- Include script.js (assuming it's your game's main script) -->
+<script src="script.js" type="module"></script>
+
+<!-- Your existing HTML structure with debug tab and forms -->
+<div class="tab-pane fade" id="debug-tab" role="tabpanel" aria-labelledby="debug-tab-tab">
   <div class="text-center">
-    <h2>Conquer</h2>
-    <button class="btn btn-primary mt-3" onclick="findOpponent()">Find Opponent</button>
-    <div id="battle-result" class="mt-3"></div>
+    <h2>Debugging</h2>
+    
+    <!-- Debug Log Display -->
+    <div id="debug-log" style="height: 200px; overflow-y: scroll; border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;"></div>
+    
+    <!-- Bug and Error Report Form -->
+    <form id="bug-report-form">
+      <div class="form-group">
+        <label for="bug-description">Describe the issue or bug:</label>
+        <textarea class="form-control" id="bug-description" rows="3"></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit Bug Report</button>
+    </form>
+    
+    <!-- Note for players -->
+    <p style="margin-top: 10px;">Please email us at <a href="mailto:largefort@gmail.com">largefort@gmail.com</a> for bug-related inquiries.</p>
   </div>
 </div>
+
 
   <div class="nav nav-pills nav-fill fixed-bottom" role="tablist">
       <a class="nav-link active" data-bs-toggle="pill" href="#castle-tab" role="tab" aria-controls="castle-tab" aria-selected="true" onfocus="speakText(this)" tabindex="0">
@@ -396,8 +417,8 @@
       <a class="nav-link" data-bs-toggle="pill" href="#settings-tab" role="tab" aria-controls="settings-tab" aria-selected="false" onfocus="speakText(this)" tabindex="0">
         <i class="fas fa-gears" aria-hidden="true"></i> Settings
       </a>
-      <a class="nav-link" data-bs-toggle="pill" href="#conquer-tab" role="tab" aria-controls="conquer-tab" aria-selected="false" onfocus="speakText(this)" tabindex="0">
-        <i class="fas fa-crossed-swords" aria-hidden="true"></i> Conquer
+      <a class="nav-link" data-bs-toggle="pill" href="#debug-tab" role="tab" aria-controls="debug-tab" aria-selected="false" onfocus="speakText(this)" tabindex="0">
+        <i class="fas fa-ban-bug" aria-hidden="true"></i> Debug
       </a>
     </div>
     
