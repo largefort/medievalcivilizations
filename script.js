@@ -297,3 +297,62 @@ function updateDocumentTitle() {
 
 // Update the title every second
 setInterval(updateDocumentTitle, 1000);
+
+// Conquer functions
+
+function generateMedievalName() {
+    const names = ["Aldwin", "Beatrix", "Cedric", "Diana", "Edric", "Fiona", "Gavin", "Helena"];
+    const surnames = ["Blackwood", "Stormrider", "Ironfist", "Silverstream"];
+    const randomName = names[Math.floor(Math.random() * names.length)];
+    const randomSurname = surnames[Math.floor(Math.random() * surnames.length)];
+    return `${randomName} ${randomSurname}`;
+}
+
+const playerData = {
+    name: generateMedievalName(),
+    knights: knightCount,
+    archers: archerCount,
+    wizards: wizardCount,
+    paladins: paladinCount
+};
+
+const opponents = [
+    { name: generateMedievalName(), knights: 5, archers: 3, wizards: 2, paladins: 1 },
+    { name: generateMedievalName(), knights: 7, archers: 5, wizards: 4, paladins: 2 },
+    { name: generateMedievalName(), knights: 10, archers: 8, wizards: 6, paladins: 3 }
+];
+
+function findOpponent() {
+    const randomIndex = Math.floor(Math.random() * opponents.length);
+    return opponents[randomIndex];
+}
+
+function calculatePower(knights, archers, wizards, paladins) {
+    const knightPower = knights * 2;
+    const archerPower = archers * 1.5;
+    const wizardPower = wizards * 3;
+    const paladinPower = paladins * 4;
+    return knightPower + archerPower + wizardPower + paladinPower;
+}
+
+function conquer() {
+    const opponent = findOpponent();
+    const playerPower = calculatePower(playerData.knights, playerData.archers, playerData.wizards, playerData.paladins);
+    const opponentPower = calculatePower(opponent.knights, opponent.archers, opponent.wizards, opponent.paladins);
+
+    if (playerPower > opponentPower) {
+        alert(`You conquered ${opponent.name}'s castle!`);
+        coins += 100;  // Reward for conquering
+    } else {
+        alert(`You were defeated by ${opponent.name}.`);
+    }
+
+    saveGameData();
+    updateUI();
+}
+
+// Add a button for conquering
+const conquerButton = document.createElement("button");
+conquerButton.textContent = "Conquer";
+conquerButton.onclick = conquer;
+document.body.appendChild(conquerButton);
