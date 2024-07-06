@@ -297,3 +297,38 @@ function updateDocumentTitle() {
 
 // Update the title every second
 setInterval(updateDocumentTitle, 1000);
+
+function debuglogger
+// Define a function to log debug messages
+function debugLog(message) {
+  // Get current timestamp
+  let timestamp = new Date().toLocaleTimeString();
+  
+  // Create log entry
+  let logEntry = `<p><strong>[${timestamp}]</strong> ${message}</p>`;
+  
+  // Append log entry to debug log display
+  document.getElementById('debug-log').innerHTML += logEntry;
+  
+  // Optionally, you can also log these messages to console for debugging purposes
+  console.log(`[DEBUG] ${timestamp} - ${message}`);
+}
+
+// Example usage of debugLog function
+debugLog('Game initialized.');
+debugLog('Player clicked on the settings tab.');
+
+// Handle bug report form submission
+document.getElementById('bug-report-form').addEventListener('submit', function(event) {
+  event.preventDefault(); // Prevent default form submission
+  
+  // Get bug description from form
+  let bugDescription = document.getElementById('bug-description').value;
+  
+  // You can send this bug report via email, or handle it as needed
+  // For simplicity, we'll log it to console
+  console.log(`Bug Report: ${bugDescription}`);
+  
+  // Clear the bug description field after submission (optional)
+  document.getElementById('bug-description').value = '';
+});
