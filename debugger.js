@@ -1,6 +1,6 @@
 // Import script.js to gain access to its functions and variables
 // Replace 'script.js' with the actual path to your script file if necessary
-import * as GameScript from 'https://raw.githubusercontent.com/largefort/medievalcivilizations/main/script.js';
+import * as GameScript from 'script.js';
 
 // Function to initialize the debugger
 function initDebugger() {
