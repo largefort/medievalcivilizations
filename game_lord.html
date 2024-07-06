@@ -8,324 +8,314 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/rpgui@1.0.3/rpgui.min.css">
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="css/medievalstyles.css">
   <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
   <style>
     /* Import medieval style font */
-    @font-face {
-        font-family: 'MedievalFont';
-        src: url('medievalfont.woff') format('woff');
-    }
+ @font-face {
+     font-family: 'MedievalFont';
+     src: url('medievalfont.woff') format('woff');
+ }
 
-    html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-        position: relative;
-        background-image: url('images/parchment.jpg');
-        background-size: cover;
-        background-attachment: fixed;
-    }
+ html, body {
+     height: 100%;
+     margin: 0;
+     padding: 0;
+     position: relative;
+     background-image: url('images/parchment.jpg');
+     background-size: cover;
+     background-attachment: fixed;
+ }
 
-    body {
-        font-family: 'MedievalFont', serif;
-        color: #dcd0c0;
-        text-shadow: 1px 1px 2px #000;
-    }
+ body {
+     font-family: 'MedievalFont', serif;
+     color: #dcd0c0;
+     text-shadow: 1px 1px 2px #000;
+     animation: fadeIn 2s ease-in;
+ }
 
-    .container {
-        background-color: rgba(0, 0, 0, 0.7);
-        border: 10px double #8c7a6b;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
-        margin-top: 50px;
-        background-image: url('images/leather_texture.jpg');
-        filter: drop-shadow(0 0 10px #3e2a1b);
-    }
+ @keyframes fadeIn {
+     from { opacity: 0; }
+     to { opacity: 1; }
+ }
 
-    .nav-pills .nav-link {
-        font-size: 18px;
-        padding: 10px 10px;
-        background-color: #6b4e37;
-        border-radius: 10px;
-        color: #ffd700;
-        margin: 5px;
-        transition: background-color 0.3s, color 0.3s, transform 0.3s;
-        background-image: url('images/wood_texture.jpg');
-        text-shadow: 1px 1px 2px #000;
-        filter: drop-shadow(0 0 5px #50372c);
-    }
+ .container {
+     background-color: rgba(0, 0, 0, 0.7);
+     border: 10px double #8c7a6b;
+     padding: 20px;
+     border-radius: 10px;
+     box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+     margin-top: 50px;
+     background-image: url('images/leather_texture.jpg');
+     animation: slideIn 1s ease-in;
+ }
 
-    @media (max-width: 768px) {
-        .nav-pills .nav-link {
-            font-size: 16px;
-            padding: 8px 8px;
-        }
-    }
+ @keyframes slideIn {
+     from { transform: translateY(-100%); }
+     to { transform: translateY(0); }
+ }
 
-    @media (max-width: 480px) {
-        .nav-pills .nav-link {
-            font-size: 14px;
-            padding: 6px 6px;
-        }
-    }
+ .nav-pills .nav-link {
+     font-size: 18px;
+     padding: 10px 10px;
+     background-color: #6b4e37;
+     border-radius: 10px;
+     color: #ffd700;
+     margin: 5px;
+     transition: background-color 0.3s, color 0.3s, transform 0.3s;
+     background-image: url('images/wood_texture.jpg');
+     text-shadow: 1px 1px 2px #000;
+     animation: pulse 2s infinite;
+ }
 
-    .nav-pills .nav-link.active, .nav-pills .nav-link:hover {
-        background-color: #50372c;
-        color: #ffffff;
-        font-weight: bold;
-        transform: scale(1.05);
-    }
+ @keyframes pulse {
+     0%, 100% { transform: scale(1); }
+     50% { transform: scale(1.05); }
+ }
 
-    .upgrade {
-        background-image: url('images/parchment_texture.jpg');
-        color: #fffbeb;
-        border: 3px solid #4a3425;
-        cursor: pointer;
-        transition: background-color 0.3s, color 0.3s, transform 0.3s;
-        border-radius: 10px;
-        position: relative;
-        background-size: cover;
-        text-shadow: 1px 1px 2px #000;
-        filter: drop-shadow(0 0 10px #3e2a1b);
-    }
+ @media (max-width: 768px) {
+     .nav-pills .nav-link {
+         font-size: 16px;
+         padding: 8px 8px;
+     }
+ }
 
-    .upgrade:hover {
-        background-color: #3e2a1b;
-        color: #f4e4c3;
-        transform: scale(1.05);
-    }
+ @media (max-width: 480px) {
+     .nav-pills .nav-link {
+         font-size: 14px;
+         padding: 6px 6px;
+     }
+ }
 
-    .upgrade .purchase-count {
-        position: absolute;
-        bottom: 5px;
-        right: 10px;
-        font-size: 1.2em;
-        color: #ffd700;
-        text-shadow: 1px 1px 2px #000;
-    }
+ .nav-pills .nav-link.active, .nav-pills .nav-link:hover {
+     background-color: #50372c;
+     color: #ffffff;
+     font-weight: bold;
+     transform: scale(1.1);
+ }
 
-    .modal-content {
-        background-color: #261c1a;
-        color: #f7dfc4;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-        text-align: center;
-        background-image: url('images/parchment_texture.jpg');
-    }
+ .upgrade {
+     background-image: url('images/parchment_texture.jpg');
+     color: #fffbeb;
+     border: 3px solid #4a3425;
+     cursor: pointer;
+     transition: background-color 0.3s, color 0.3s, transform 0.3s;
+     border-radius: 10px;
+     position: relative;
+     background-size: cover;
+     text-shadow: 1px 1px 2px #000;
+     animation: glow 2s infinite alternate;
+ }
 
-    .castle-image {
-        border: 5px solid #543c2c;
-        border-radius: 10px;
-        max-width: 100%;
-        height: auto;
-        background-image: url('images/stone_texture.jpg');
-        filter: drop-shadow(0 0 10px #3e2a1b);
-    }
+ @keyframes glow {
+     from { box-shadow: 0 0 10px #ffd700; }
+     to { box-shadow: 0 0 20px #ffd700; }
+ }
 
-    .ad-banner {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 50px;
-        background-color: #543c2c;
-        color: #f7dfc4;
-        text-align: center;
-        padding: 10px 0;
-        box-sizing: border-box;
-        background-image: url('images/wood_texture.jpg');
-        text-shadow: 1px 1px 2px #000;
-    }
+ .upgrade:hover {
+     background-color: #3e2a1b;
+     color: #f4e4c3;
+     transform: scale(1.1);
+ }
 
-    #uuid-display {
-        position: fixed;
-        top: 10px;
-        left: 10px;
-        color: gold;
-        background-color: rgba(0, 0, 0, 0.5);
-        padding: 5px;
-        border-radius: 5px;
-        z-index: 1000;
-        text-shadow: 1px 1px 2px #000;
-        filter: drop-shadow(0 0 10px #3e2a1b);
-    }
+ .upgrade .purchase-count {
+     position: absolute;
+     bottom: 5px;
+     right: 10px;
+     font-size: 1.2em;
+     color: #ffd700;
+     text-shadow: 1px 1px 2px #000;
+ }
 
-    .medieval-note {
-        font-family: 'MedievalFont', serif;
-        color: #ffd700;
-        background-color: rgba(0, 0, 0, 0.7);
-        padding: 10px;
-        border: 2px solid #8c7a6b;
-        border-radius: 10px;
-        margin-top: 10px;
-        text-shadow: 1px 1px 2px #000;
-    }
+ .modal-content {
+     background-color: #261c1a;
+     color: #f7dfc4;
+     padding: 20px;
+     border-radius: 10px;
+     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+     text-align: center;
+     background-image: url('images/parchment_texture.jpg');
+     animation: appear 0.5s ease-in-out;
+ }
 
-    .nav-bottom {
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-        background-image: url('images/wood_texture.jpg');
-        border-top: 5px solid #8c7a6b;
-        padding: 10px 0;
-        box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.5);
-    }
+ @keyframes appear {
+     from { transform: scale(0); }
+     to { transform: scale(1); }
+ }
 
-    .nav-bottom .nav-link {
-        flex: 1;
-        text-align: center;
-        color: #ffd700;
-        text-decoration: none;
-        padding: 10px 0;
-        font-family: 'MedievalFont', serif;
-        text-shadow: 1px 1px 2px #000;
-    }
+ .castle-image {
+     border: 5px solid #543c2c;
+     border-radius: 10px;
+     max-width: 100%;
+     height: auto;
+     background-image: url('images/stone_texture.jpg');
+     transition: transform 0.3s;
+     cursor: pointer;
+ }
 
-    .nav-bottom .nav-link i {
-        display: block;
-        font-size: 24px;
-        margin-bottom: 5px;
-    }
+ .castle-image:active {
+     animation: clickAnimation 0.2s ease-in-out;
+ }
 
-    .nav-bottom .nav-link.active, .nav-bottom .nav-link:hover {
-        background-color: #50372c;
-        color: #ffffff;
-        transform: scale(1.05);
-    }
+ @keyframes clickAnimation {
+     0% { transform: scale(1); }
+     50% { transform: scale(0.9); }
+     100% { transform: scale(1); }
+ }
 
-    /* Additional medieval styles */
-    header {
-        background-image: url('images/wood_texture.jpg');
-        color: #ffd700;
-        text-align: center;
-        padding: 20px;
-        font-size: 2em;
-        border-bottom: 5px solid #8c7a6b;
-        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
-        text-shadow: 1px 1px 2px #000;
-        filter: drop-shadow(0 0 10px #3e2a1b);
-    }
+ .ad-banner {
+     position: absolute;
+     bottom: 0;
+     left: 0;
+     width: 100%;
+     height: 50px;
+     background-color: #543c2c;
+     color: #f7dfc4;
+     text-align: center;
+     padding: 10px 0;
+     box-sizing: border-box;
+     background-image: url('images/wood_texture.jpg');
+     text-shadow: 1px 1px 2px #000;
+     animation: bounce 3s infinite;
+ }
 
-    footer {
-        background-image: url('images/wood_texture.jpg');
-        color: #ffd700;
-        text-align: center;
-        padding: 20px;
-        font-size: 1.2em;
-        border-top: 5px solid #8c7a6b;
-        box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.5);
-        text-shadow: 1px 1px 2px #000;
-        position: absolute;
-        width: 100%;
-        bottom: 0;
-        filter: drop-shadow(0 0 10px #3e2a1b);
-    }
+ @keyframes bounce {
+     0%, 100% { transform: translateY(0); }
+     50% { transform: translateY(-10px); }
+ }
 
-    button.medieval-btn {
-        background-image: url('images/wood_texture.jpg');
-        color: #ffd700;
-        border: 3px solid #8c7a6b;
-        padding: 10px 20px;
-        border-radius: 10px;
-        font-family: 'MedievalFont', serif;
-        cursor: pointer;
-        transition: background-color 0.3s, color 0.3s, transform 0.3s;
-        text-shadow: 1px 1px 2px #000;
-        filter: drop-shadow(0 0 10px #3e2a1b);
-    }
+ #uuid-display {
+     position: fixed;
+     top: 10px;
+     left: 10px;
+     color: gold;
+     background-color: rgba(0, 0, 0, 0.5);
+     padding: 5px;
+     border-radius: 5px;
+     z-index: 1000;
+     text-shadow: 1px 1px 2px #000;
+     filter: drop-shadow(0 0 10px #3e2a1b);
+     animation: fadeIn 2s ease-in;
+ }
 
-    button.medieval-btn:hover {
-        background-color: #50372c;
-        color: #ffffff;
-        transform: scale(1.05);
-    }
+ .medieval-note {
+     font-family: 'MedievalFont', serif;
+     color: #ffd700;
+     background-color: rgba(0, 0, 0, 0.7);
+     padding: 10px;
+     border: 2px solid #8c7a6b;
+     border-radius: 10px;
+     margin-top: 10px;
+     text-shadow: 1px 1px 2px #000;
+     animation: flicker 1.5s infinite alternate;
+ }
 
-    .frame {
-        border: 10px solid #8c7a6b;
-        padding: 20px;
-        border-radius: 10px;
-        background-color: rgba(0, 0, 0, 0.7);
-        background-image: url('images/parchment_texture.jpg');
-        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
-        text-shadow: 1px 1px 2px #000;
-        filter: drop-shadow(0 0 10px #3e2a1b);
-        margin-bottom: 20px;
-    }
+ @keyframes flicker {
+     from { opacity: 1; }
+     to { opacity: 0.8; }
+ }
 
-    .scroll {
-        background-image: url('images/parchment_texture.jpg');
-        padding: 20px;
-        border: 3px solid #8c7a6b;
-        border-radius: 10px;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
-        margin: 20px 0;
-        text-shadow: 1px 1px 2px #000;
-        filter: drop-shadow(0 0 10px #3e2a1b);
-    }
+ .nav-bottom {
+     display: flex;
+     justify-content: space-around;
+     align-items: center;
+     background-image: url('images/wood_texture.jpg');
+     border-top: 5px solid #8c7a6b;
+     padding: 10px 0;
+     box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.5);
+     animation: slideUp 1s ease-in;
+ }
 
-    .banner {
-        background-image: url('images/wood_texture.jpg');
-        color: #ffd700;
-        text-align: center;
-        padding: 20px;
-        font-size: 1.5em;
-        border: 5px solid #8c7a6b;
-        border-radius: 10px;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
-        text-shadow: 1px 1px 2px #000;
-    }
+ @keyframes slideUp {
+     from { transform: translateY(100%); }
+     to { transform: translateY(0); }
+ }
 
-    .table-medieval {
-        width: 100%;
-        border-collapse: collapse;
-        background-image: url('images/parchment_texture.jpg');
-        border: 3px solid #8c7a6b;
-    }
+ .nav-bottom .nav-link {
+     flex: 1;
+     text-align: center;
+     color: #ffd700;
+     text-decoration: none;
+     padding: 10px 0;
+     font-family: 'MedievalFont', serif;
+     text-shadow: 1px 1px 2px #000;
+     transition: transform 0.3s;
+ }
 
-    .table-medieval th, .table-medieval td {
-        border: 2px solid #4a3425;
-        padding: 10px;
-        text-align: left;
-        color: #50372c;
-        text-shadow: 1px 1px 2px #000;
-    }
+ .nav-bottom .nav-link i {
+     display: block;
+     font-size: 24px;
+     margin-bottom: 5px;
+ }
 
-    .table-medieval th {
-        background-color: #6b4e37;
-        color: #ffd700;
-    }
+ .nav-bottom .nav-link.active, .nav-bottom .nav-link:hover {
+     background-color: #50372c;
+     color: #ffffff;
+     transform: scale(1.1);
+ }
 
-    .decorative-icon {
-        width: 50px;
-        height: 50px;
-        background-image: url('images/icon_texture.jpg');
-        display: inline-block;
-        margin-right: 10px;
-    }
+ .floating-text {
+     position: fixed;
+     font-size: 24px;
+     color: gold;
+     animation: floatUp 1s ease-out forwards;
+     pointer-events: none;
+     z-index: 1000;
+ }
 
-    .floating-text {
-    position: fixed;
-    font-size: 24px;
-    color: gold;
-    animation: floatUp 1s ease-out forwards;
-    pointer-events: none;
-    z-index: 1000;
-}
+ @keyframes floatUp {
+     0% {
+         opacity: 1;
+         transform: translateY(0);
+     }
+     100% {
+         opacity: 0;
+         transform: translateY(-50px);
+     }
+ }
 
-@keyframes floatUp {
-    0% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-    100% {
-        opacity: 0;
-        transform: translateY(-50px);
-    }
-}
+ /* Version Tab Styles */
+ #version-history-box {
+     background-color: rgba(0, 0, 0, 0.8);
+     border: 5px double #8c7a6b;
+     border-radius: 10px;
+     padding: 20px;
+     margin-top: 20px;
+     box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+     background-image: url('images/parchment_texture.jpg');
+     max-height: 50vh; /* Limit the height to 70% of the viewport height */
+     overflow-y: auto; /* Enable vertical scrolling */
+ }
 
+ #version-history-box h3 {
+     color: #ffd700;
+     text-align: center;
+     margin-bottom: 20px;
+     text-shadow: 1px 1px 2px #000;
+ }
+
+ .version-entry {
+     background-color: rgba(0, 0, 0, 0.7);
+     border: 2px solid #8c7a6b;
+     padding: 10px;
+     border-radius: 10px;
+     margin-bottom: 15px;
+     animation: fadeIn 1s ease-in-out;
+ }
+
+ .version-entry h4 {
+     color: #ffd700;
+     margin-bottom: 5px;
+     text-shadow: 1px 1px 2px #000;
+ }
+
+ .version-entry p {
+     margin-bottom: 0;
+     color: #f4e4c3;
+     text-shadow: 1px 1px 2px #000;
+ }
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuid.min.js"></script>
 </head>
@@ -345,6 +335,10 @@
           <div>Archer: <span id="archer-count"><i class="fas fa-bullseye" aria-hidden="true"></i> <span aria-live="polite">0</span></span></div>
           <div>Wizard: <span id="wizard-count"><i class="fas fa-hat-wizard" aria-hidden="true"></i> <span aria-live="polite">0</span></span></div>
           <div>Paladin: <span id="paladin-count"><i class="fas fa-shield-alt" aria-hidden="true"></i> <span aria-live="polite">0</span></span></div>
+          <div>Pikeman: <span id="pikeman-count"><i class="fas fa-fighter-jet" aria-hidden="true"></i> <span aria-live="polite">0</span></span></div>
+          <div>Crossbowman: <span id="crossbowman-count"><i class="fas fa-crosshairs" aria-hidden="true"></i> <span aria-live="polite">0</span></span></div>
+          <div>Catapult: <span id="catapult-count"><i class="fas fa-cog" aria-hidden="true"></i> <span aria-live="polite">0</span></span></div>
+          <div>Mongol Horseman: <span id="mongol-horseman-count"><i class="fas fa-horse" aria-hidden="true"></i> <span aria-live="polite">0</span></span></div>
         </div>
       </div>
     </div>
@@ -400,6 +394,38 @@
           <source src="upgradesound.mp3" type="audio/mp3">
           Your browser does not support the audio element.
         </audio>
+        <div class="upgrade" onclick="buyUpgrade('pikeman')" aria-label="Buy Pikeman upgrade for 15 coins" onfocus="speakText(this)" tabindex="0">
+          <i class="fas fa-fighter-jet" aria-hidden="true"></i> Pikeman (<span id="pikeman-cost">15</span> coins)
+          <div class="purchase-count" id="pikeman-purchase-count">0</div>
+        </div>
+        <audio id="pikeman-upgrade-sound">
+          <source src="upgradesound.mp3" type="audio/mp3">
+          Your browser does not support the audio element.
+        </audio>
+        <div class="upgrade" onclick="buyUpgrade('crossbowman')" aria-label="Buy Crossbowman upgrade for 30 coins" onfocus="speakText(this)" tabindex="0">
+          <i class="fas fa-crosshairs" aria-hidden="true"></i> Crossbowman (<span id="crossbowman-cost">30</span> coins)
+          <div class="purchase-count" id="crossbowman-purchase-count">0</div>
+        </div>
+        <audio id="crossbowman-upgrade-sound">
+          <source src="upgradesound.mp3" type="audio/mp3">
+          Your browser does not support the audio element.
+        </audio>
+        <div class="upgrade" onclick="buyUpgrade('catapult')" aria-label="Buy Catapult upgrade for 75 coins" onfocus="speakText(this)" tabindex="0">
+          <i class="fas fa-cog" aria-hidden="true"></i> Catapult (<span id="catapult-cost">75</span> coins)
+          <div class="purchase-count" id="catapult-purchase-count">0</div>
+        </div>
+        <audio id="catapult-upgrade-sound">
+          <source src="upgradesound.mp3" type="audio/mp3">
+          Your browser does not support the audio element.
+        </audio>
+        <div class="upgrade" onclick="buyUpgrade('mongolHorseman')" aria-label="Buy Mongol Horseman upgrade for 50 coins" onfocus="speakText(this)" tabindex="0">
+          <i class="fas fa-horse" aria-hidden="true"></i> Mongol Horseman (<span id="mongol-horseman-cost">50</span> coins)
+          <div class="purchase-count" id="mongol-horseman-purchase-count">0</div>
+        </div>
+        <audio id="mongol-horseman-upgrade-sound">
+          <source src="upgradesound.mp3" type="audio/mp3">
+          Your browser does not support the audio element.
+        </audio>
       </div>
     </div>
 
@@ -407,15 +433,15 @@
       <div class="text-center">
         <h2>Settings</h2>
         <div class="form-check">
-          <input type="checkbox" id="toggle-music" class="form-check-input" aria-label="Toggle background music" onfocus="speakText(this)" tabindex="0"> 
+          <input type="checkbox" id="toggle-music" class="form-check-input" aria-label="Toggle background music" onfocus="speakText(this)" tabindex="0">
           <label class="form-check-label" for="toggle-music"><i class="fas fa-volume-up"></i> Toggle Music</label>
         </div>
         <div class="form-check">
-          <input type="checkbox" id="toggle-sfx" class="form-check-input" aria-label="Toggle sound effects" onfocus="speakText(this)" tabindex="0"> 
+          <input type="checkbox" id="toggle-sfx" class="form-check-input" aria-label="Toggle sound effects" onfocus="speakText(this)" tabindex="0">
           <label class="form-check-label" for="toggle-sfx"><i class="fas fa-volume-up"></i> Toggle Sound Effects</label>
         </div>
         <div class="form-check">
-          <input type="checkbox" id="toggle-tts" class="form-check-input" aria-label="Toggle text-to-speech" onchange="toggleTTS()" onfocus="speakText(this)" tabindex="0"> 
+          <input type="checkbox" id="toggle-tts" class="form-check-input" aria-label="Toggle text-to-speech" onchange="toggleTTS()" onfocus="speakText(this)" tabindex="0">
           <label class="form-check-label" for="toggle-tts"><i class="fas fa-volume-up"></i> Toggle Text-to-Speech</label>
         </div>
         <div class="medieval-note">
@@ -425,6 +451,24 @@
         <a href="https://idev.games/game/medieval-civilizations" target="_blank" aria-label="Visit idev.games" onfocus="speakText(this)" tabindex="0">
           <img src="idev.png" alt="idev.games image" width="100">
         </a>
+
+        <!-- New buttons for export and load -->
+        <button id="export-btn" onclick="exportGame()">Export Game</button>
+        <button id="load-btn" onclick="loadGame()">Load Game</button>
+      </div>
+    </div>
+
+    <!-- Version Tab -->
+    <div class="tab-pane fade" id="version-tab" role="tabpanel" aria-labelledby="version-tab-tab">
+      <div class="text-center">
+        <h2>Version Information</h2>
+        <p>latest: 1.0.0</p>
+        <p>Last Updated: July 6, 2024</p>
+        <p>Developed by: Jafet Egill/Fjörðr Games</p>
+        <div id="version-history-box" class="mt-3 p-3 border">
+          <h3>Version History</h3>
+          <div id="version-history"></div>
+        </div>
       </div>
     </div>
 
@@ -441,99 +485,105 @@
       <a class="nav-link" data-bs-toggle="pill" href="#settings-tab" role="tab" aria-controls="settings-tab" aria-selected="false" onfocus="speakText(this)" tabindex="0">
         <i class="fas fa-gears" aria-hidden="true"></i> Settings
       </a>
+      <a class="nav-link" data-bs-toggle="pill" href="#version-tab" role="tab" aria-controls="version-tab" aria-selected="false" onfocus="speakText(this)" tabindex="0">
+        <i class="fas fa-info-circle" aria-hidden="true"></i> Version
+      </a>
     </div>
-    
-    <button id="fullscreen-button" style="display: none;" onclick="autoEnterFullscreen()" aria-label="Enter Fullscreen" onfocus="speakText(this)" tabindex="0">Enter Fullscreen</button>
+  </div>
+</div>
+</body>
 
-    <script>
-      function getOrGenerateUUID() {
-          let existingUUID = localStorage.getItem('deviceUUID');
-          if (!existingUUID) {
-              let newUUID = uuid.v4();
-              localStorage.setItem('deviceUUID', newUUID);
-              return newUUID;
-          }
-          return existingUUID;
+<button id="fullscreen-button" style="display: none;" onclick="autoEnterFullscreen()" aria-label="Enter Fullscreen" onfocus="speakText(this)" tabindex="0">Enter Fullscreen</button>
+
+<script>
+  function getOrGenerateUUID() {
+      let existingUUID = localStorage.getItem('deviceUUID');
+      if (!existingUUID) {
+          let newUUID = uuid.v4();
+          localStorage.setItem('deviceUUID', newUUID);
+          return newUUID;
       }
+      return existingUUID;
+  }
 
-      const deviceUUID = getOrGenerateUUID();
-      document.getElementById('uuid-display').innerText = `UUID: ${deviceUUID}`;
+  const deviceUUID = getOrGenerateUUID();
+  document.getElementById('uuid-display').innerText = `UUID: ${deviceUUID}`;
 
-      let isTTSOn = true;
+  let isTTSOn = true;
 
-      function speakText(element) {
-          if (!isTTSOn) return;
+  function speakText(element) {
+      if (!isTTSOn) return;
 
-          const text = element.getAttribute('aria-label') || element.innerText;
+      const text = element.getAttribute('aria-label') || element.innerText;
 
-          TTS.speak({
-              text: text,
-              locale: 'en-US',
-              rate: 1.0
-          }, function() {
-              console.log('Success');
-          }, function(reason) {
-              console.log('Error:', reason);
-          });
-      }
+      TTS.speak({
+          text: text,
+          locale: 'en-US',
+          rate: 1.0
+      }, function() {
+          console.log('Success');
+      }, function(reason) {
+          console.log('Error:', reason);
+      });
+  }
 
-      function toggleTTS() {
-          isTTSOn = !isTTSOn;
+  function toggleTTS() {
+      isTTSOn = !isTTSOn;
 
-          const status = isTTSOn ? 'enabled' : 'disabled';
-          TTS.speak({
-              text: `Text-to-speech has been ${status}`,
-              locale: 'en-US',
-              rate: 1.0
-          }, function() {
-              console.log('Success');
-          }, function(reason) {
-              console.log('Error:', reason);
-          });
-      }
+      const status = isTTSOn ? 'enabled' : 'disabled';
+      TTS.speak({
+          text: `Text-to-speech has been ${status}`,
+          locale: 'en-US',
+          rate: 1.0
+      }, function() {
+          console.log('Success');
+      }, function(reason) {
+          console.log('Error:', reason);
+      });
+  }
 
-      document.addEventListener('deviceready', function() {
-          document.querySelectorAll('[aria-label], .upgrade').forEach(element => {
-              element.addEventListener('click', () => speakText(element));
-          });
-      }, false);
+  document.addEventListener('deviceready', function() {
+      document.querySelectorAll('[aria-label], .upgrade').forEach(element => {
+          element.addEventListener('click', () => speakText(element));
+      });
+  }, false);
 
-      // Function to update the document title with gold coin count
-      function updateDocumentTitle() {
-          const coinCountElement = document.getElementById('counter');
-          const coinCountText = coinCountElement.textContent || coinCountElement.innerText;
-          const coinCount = coinCountText.replace(/[^0-9]/g, ''); // Extract only the number
-          document.title = `Gold Coins: ${coinCount}`;
-      }
+  // Function to update the document title with gold coin count
+  function updateDocumentTitle() {
+      const coinCountElement = document.getElementById('counter');
+      const coinCountText = coinCountElement.textContent || coinCountElement.innerText;
+      const coinCount = coinCountText.replace(/[^0-9]/g, ''); // Extract only the number
+      document.title = `Gold Coins: ${coinCount}`;
+  }
 
-      // Update the title every second
-      setInterval(updateDocumentTitle, 1000);
-    </script>
+  // Update the title every second
+  setInterval(updateDocumentTitle, 1000);
+</script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mobilizejs/0.9/mobilize.min.js" integrity="sha512-9kdU3/W11/VXZLHO4mfCSJ1XrZ3tfpgTNCfR/H8PO5GtZ7MZSD/zVcwRDct0f2dd58JD0IZlPi7MAMh4zEl1hg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdn.customgpt.ai/js/chat.js" defer=""></script>
-    <script defer="">window.onload = function () { CustomGPT.init({p_id: "36234", p_key: "2f0877491a3a5453e9810d4a97f4f94a"}); };</script>
-    <script src="script.js"></script>
-    <script src="js/uuid.js"></script>
-    <script src="js/bgm.js"></script>
-    <script src="js/index.js"></script>
-    <script src="GameAnalytics.js"></script>
-    <script src="GameAnalytics.min.js"></script>
-    <!-- GameAnalytics -->
-    <script>
-      (function(w,d,a,m){var s='script';var g='GameAnalytics';w[g]=w[g]||function(){(w[g].q=w[g].q||[]).push(arguments)},a=d.createElement(s),m=d.getElementsByTagName(s)[0];a.async=1;a.src='http://download.gameanalytics.com/js/GameAnalytics-[VERSION].min.js';m.parentNode.insertBefore(a,m)})(window,document);
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mobilizejs/0.9/mobilize.min.js" integrity="sha512-9kdU3/W11/VXZLHO4mfCSJ1XrZ3tfpgTNCfR/H8PO5GtZ7MZSD/zVcwRDct0f2dd58JD0IZlPi7MAMh4zEl1hg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="script.js"></script>
+<script src="versionhistory.js"></script>
+<script src="js/uuid.js"></script>
+<script src="js/bgm.js"></script>
+<script src="js/index.js"></script>
+<script src="js/index2.js"></script>
+<script src="GameAnalytics.js"></script>
+<script src="GameAnalytics.min.js"></script>
+<!-- GameAnalytics -->
+<script>
+  (function(w,d,a,m){var s='script';var g='GameAnalytics';w[g]=w[g]||function(){(w[g].q=w[g].q||[]).push(arguments)},a=d.createElement(s),m=d.getElementsByTagName(s)[0];a.async=1;a.src='http://download.gameanalytics.com/js/GameAnalytics-[VERSION].min.js';m.parentNode.insertBefore(a,m)})(window,document);
 
-      GameAnalytics("setEnabledInfoLog", true);
-      GameAnalytics("initialize", "611c98febc5c1d857efc67b0c431b979", "2a8656dbee715fa9ba31787c59dcf9802e233619");
-    </script>
-    <!-- End GameAnalytics -->
-    <audio id="medievaltheme" loop autoplay>
-      <source src="medievaldarklord.mp3" type="audio/mp3">
-      Your browser does not support the audio element.
-    </audio>
-    <audio id="click-sound" src="click-sound.mp3" type="audio/mp3"></audio>
+  GameAnalytics("setEnabledInfoLog", true);
+  GameAnalytics("initialize", "611c98febc5c1d857efc67b0c431b979", "2a8656dbee715fa9ba31787c59dcf9802e233619");
+</script>
+<!-- End GameAnalytics -->
+<audio id="medievaltheme" loop autoplay>
+  <source src="audio/medievallord.mp3" type="audio/mp3">
+  Your browser does not support the audio element.
+</audio>
+<audio id="click-sound" src="click-sound.mp3" type="audio/mp3"></audio>
 </body>
 </html>

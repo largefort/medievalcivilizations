@@ -1,2 +1,2 @@
-let woodcuttingLevel = 1;
-let miningLevel = 1;
+selectFolder(uri:string):Promise<string>
+selectFile(uri:string):Promise<string>

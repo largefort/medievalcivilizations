@@ -5,11 +5,15 @@ let wizardCount = 0;
 let woodcuttingLevel = 1;
 let miningLevel = 1;
 let paladinCount = 0;
+let pikemanCount = 0;
+let crossbowmanCount = 0;
+let catapultCount = 0;
+let mongolHorsemanCount = 0;
 let passiveIncome = 0;
 let db;
 let lastSaveTime = Date.now(); // Initialize lastSaveTime with the current time
-// Base coin value per click
-let baseCoinsPerClick = 1;
+let baseCoinsPerClick =1;
+
 
 // Add an HTML audio element for the upgrade sound
 document.write(`
@@ -21,15 +25,6 @@ document.write(`
 
 // Preload the click sound
 const clickSound = new Audio("click-sound.mp3");
-
-function disableFingerZooming() {
-    document.addEventListener('touchmove', function (event) {
-        if (event.scale !== 1) { event.preventDefault(); }
-    }, { passive: false });
-}
-
-disableFingerZooming();
-
 function initializeDB() {
     const request = indexedDB.open("MedievalClickerDB", 1);
 
@@ -59,6 +54,10 @@ function saveGameData() {
         woodcuttingLevel,
         miningLevel,
         paladinCount,
+        pikemanCount,
+        crossbowmanCount,
+        catapultCount,
+        mongolHorsemanCount,
         lastSaveTime: Date.now(), // Update the last save time
     };
 
@@ -82,6 +81,10 @@ function loadGameData() {
             woodcuttingLevel = savedState.woodcuttingLevel;
             miningLevel = savedState.miningLevel;
             paladinCount = savedState.paladinCount;
+            pikemanCount = savedState.pikemanCount;
+            crossbowmanCount = savedState.crossbowmanCount;
+            catapultCount = savedState.catapultCount;
+            mongolHorsemanCount = savedState.mongolHorsemanCount;
             lastSaveTime = savedState.lastSaveTime; // Update the last save time
 
             updateUI();
@@ -131,10 +134,18 @@ function updateUI() {
     document.getElementById("woodcutting-level").textContent = woodcuttingLevel;
     document.getElementById("mining-level").textContent = miningLevel;
     document.getElementById("paladin-count").textContent = paladinCount;
+    document.getElementById("pikeman-count").textContent = pikemanCount;
+    document.getElementById("crossbowman-count").textContent = crossbowmanCount;
+    document.getElementById("catapult-count").textContent = catapultCount;
+    document.getElementById("mongol-horseman-count").textContent = mongolHorsemanCount;
     document.getElementById("knight-purchase-count").textContent = knightCount;
     document.getElementById("archer-purchase-count").textContent = archerCount;
     document.getElementById("wizard-purchase-count").textContent = wizardCount;
     document.getElementById("paladin-purchase-count").textContent = paladinCount;
+    document.getElementById("pikeman-purchase-count").textContent = pikemanCount;
+    document.getElementById("crossbowman-purchase-count").textContent = crossbowmanCount;
+    document.getElementById("catapult-purchase-count").textContent = catapultCount;
+    document.getElementById("mongol-horseman-purchase-count").textContent = mongolHorsemanCount;
 
     updatePassiveIncome();
     updateUpgradeCosts();
@@ -142,7 +153,15 @@ function updateUI() {
 
 // Function to calculate total coins per click
 function getCoinsPerClick() {
-    return baseCoinsPerClick + knightCount * 2 + archerCount * 3 + wizardCount * 5 + paladinCount * 10;
+    return baseCoinsPerClick +
+           knightCount * 1 +
+           archerCount * 1 +
+           wizardCount * 1 +
+           paladinCount * 1 +
+           pikemanCount * 1 +
+           crossbowmanCount * 1 +
+           catapultCount * 1 +
+           mongolHorsemanCount * 1;
 }
 
 function clickCastle(event) {
@@ -206,6 +225,34 @@ function buyUpgrade(type) {
                 paladinCount++;
             }
             break;
+        case "pikeman":
+            cost = Math.floor(15 * Math.pow(1.15, pikemanCount)); // Exponential cost increase
+            if (coins >= cost) {
+                coins -= cost;
+                pikemanCount++;
+            }
+            break;
+        case "crossbowman":
+            cost = Math.floor(30 * Math.pow(1.15, crossbowmanCount)); // Exponential cost increase
+            if (coins >= cost) {
+                coins -= cost;
+                crossbowmanCount++;
+            }
+            break;
+        case "catapult":
+            cost = Math.floor(75 * Math.pow(1.15, catapultCount)); // Exponential cost increase
+            if (coins >= cost) {
+                coins -= cost;
+                catapultCount++;
+            }
+            break;
+        case "mongolHorseman":
+            cost = Math.floor(50 * Math.pow(1.15, mongolHorsemanCount)); // Exponential cost increase
+            if (coins >= cost) {
+                coins -= cost;
+                mongolHorsemanCount++;
+            }
+            break;
     }
 
     if (cost > 0) {
@@ -226,7 +273,12 @@ function updateUpgradeCosts() {
     document.getElementById("archer-cost").textContent = Math.floor(25 * Math.pow(1.15, archerCount));
     document.getElementById("wizard-cost").textContent = Math.floor(50 * Math.pow(1.15, wizardCount));
     document.getElementById("paladin-cost").textContent = Math.floor(100 * Math.pow(1.15, paladinCount));
+    document.getElementById("pikeman-cost").textContent = Math.floor(15 * Math.pow(1.15, pikemanCount));
+    document.getElementById("crossbowman-cost").textContent = Math.floor(30 * Math.pow(1.15, crossbowmanCount));
+    document.getElementById("catapult-cost").textContent = Math.floor(75 * Math.pow(1.15, catapultCount));
+    document.getElementById("mongol-horseman-cost").textContent = Math.floor(50 * Math.pow(1.15, mongolHorsemanCount));
 }
+
 
 function compactNumberFormat(num) {
     if (num < 1e3) return num;
@@ -250,13 +302,27 @@ function handleSkillingClick(skill) {
 }
 
 function updatePassiveIncome() {
-    // Calculate passive income based on knights, archers, wizards, and paladins
-    const knightIncomeRate = 1;   // Adjust the income rate for knights
-    const archerIncomeRate = 2;   // Adjust the income rate for archers
-    const wizardIncomeRate = 4;   // Adjust the income rate for wizards
-    const paladinIncomeRate = 8;  // Adjust the income rate for paladins
+    // Calculate passive income based on knights, archers, wizards, paladins, pikemen, crossbowmen, catapults, and mongol horsemen
+    const knightIncomeRate = 1;        // Adjust the income rate for knights
+    const archerIncomeRate = 2;        // Adjust the income rate for archers
+    const wizardIncomeRate = 4;        // Adjust the income rate for wizards
+    const paladinIncomeRate = 8;       // Adjust the income rate for paladins
+    const pikemanIncomeRate = 1.5;     // Adjust the income rate for pikemen
+    const crossbowmanIncomeRate = 3;   // Adjust the income rate for crossbowmen
+    const catapultIncomeRate = 5;      // Adjust the income rate for catapults
+    const mongolHorsemanIncomeRate = 6; // Adjust the income rate for mongol horsemen
 
-    const totalPassiveIncome = (knightCount * knightIncomeRate + archerCount * archerIncomeRate + wizardCount * wizardIncomeRate + paladinCount * paladinIncomeRate);
+    const totalPassiveIncome = (
+        knightCount * knightIncomeRate +
+        archerCount * archerIncomeRate +
+        wizardCount * wizardIncomeRate +
+        paladinCount * paladinIncomeRate +
+        pikemanCount * pikemanIncomeRate +
+        crossbowmanCount * crossbowmanIncomeRate +
+        catapultCount * catapultIncomeRate +
+        mongolHorsemanCount * mongolHorsemanIncomeRate
+    );
+
     passiveIncome = totalPassiveIncome;
 }
 
