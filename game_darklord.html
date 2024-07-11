@@ -429,34 +429,35 @@
       </div>
     </div>
 
-    <div class="tab-pane fade" id="settings-tab" role="tabpanel" aria-labelledby="settings-tab-tab">
-      <div class="text-center">
-        <h2>Settings</h2>
-        <div class="form-check">
-          <input type="checkbox" id="toggle-music" class="form-check-input" aria-label="Toggle background music" onfocus="speakText(this)" tabindex="0">
-          <label class="form-check-label" for="toggle-music"><i class="fas fa-volume-up"></i> Toggle Music</label>
-        </div>
-        <div class="form-check">
-          <input type="checkbox" id="toggle-sfx" class="form-check-input" aria-label="Toggle sound effects" onfocus="speakText(this)" tabindex="0">
-          <label class="form-check-label" for="toggle-sfx"><i class="fas fa-volume-up"></i> Toggle Sound Effects</label>
-        </div>
-        <div class="form-check">
-          <input type="checkbox" id="toggle-tts" class="form-check-input" aria-label="Toggle text-to-speech" onchange="toggleTTS()" onfocus="speakText(this)" tabindex="0">
-          <label class="form-check-label" for="toggle-tts"><i class="fas fa-volume-up"></i> Toggle Text-to-Speech</label>
-        </div>
-        <div class="medieval-note">
-          This switch is for people with disabilities. Ye may turn it on if ye so desire, but it is meant for those in need.
-        </div>
-        <!-- Add the PNG image from Crazy Games with clickable URL -->
-        <a href="https://idev.games/game/medieval-civilizations" target="_blank" aria-label="Visit idev.games" onfocus="speakText(this)" tabindex="0">
-          <img src="idev.png" alt="idev.games image" width="100">
-        </a>
-
-        <!-- New buttons for export and load -->
-        <button id="export-btn" onclick="exportGame()">Export Game</button>
-        <button id="load-btn" onclick="loadGame()">Load Game</button>
+     <div class="tab-pane fade" id="settings-tab" role="tabpanel" aria-labelledby="settings-tab-tab">
+    <div class="text-center">
+      <h2>Settings</h2>
+      <div class="form-check">
+        <input type="checkbox" id="toggle-music" class="form-check-input" aria-label="Toggle background music" onfocus="speakText(this)" tabindex="0">
+        <label class="form-check-label" for="toggle-music"><i class="fas fa-volume-up"></i> Toggle Music</label>
       </div>
+      <div class="form-check">
+        <input type="checkbox" id="toggle-sfx" class="form-check-input" aria-label="Toggle sound effects" onfocus="speakText(this)" tabindex="0">
+        <label class="form-check-label" for="toggle-sfx"><i class="fas fa-volume-up"></i> Toggle Sound Effects</label>
+      </div>
+      <div class="form-check">
+        <input type="checkbox" id="toggle-tts" class="form-check-input" aria-label="Toggle text-to-speech" onchange="toggleTTS()" onfocus="speakText(this)" tabindex="0">
+        <label class="form-check-label" for="toggle-tts"><i class="fas fa-volume-up"></i> Toggle Text-to-Speech</label>
+      </div>
+      <div class="medieval-note">
+        This switch is for people with disabilities. Ye may turn it on if ye so desire, but it is meant for those in need.
+      </div>
+      <!-- Add the PNG image from Crazy Games with clickable URL -->
+      <a href="https://idev.games/game/medieval-civilizations" target="_blank" aria-label="Visit idev.games" onfocus="speakText(this)" tabindex="0">
+        <img src="idev.png" alt="idev.games image" width="100">
+      </a>
+      <!-- New buttons for export and load -->
+      <button id="export-btn" onclick="exportGame()">Export Game</button>
+      <button id="load-btn" onclick="loadGame()">Load Game</button>
+      <!-- Hidden file input for loading -->
+      <input type="file" id="file-input" accept=".txt" style="display:none;" onchange="handleFileSelect(event)">
     </div>
+  </div>
 
     <!-- Version Tab -->
     <div class="tab-pane fade" id="version-tab" role="tabpanel" aria-labelledby="version-tab-tab">
