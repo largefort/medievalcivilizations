@@ -10,7 +10,6 @@ let crossbowmanCount = 0;
 let catapultCount = 0;
 let mongolHorsemanCount = 0;
 let passiveIncome = 0;
-let db;
 let lastSaveTime = Date.now(); // Initialize lastSaveTime with the current time
 let baseCoinsPerClick =1;
 
@@ -25,74 +24,6 @@ document.write(`
 
 // Preload the click sound
 const clickSound = new Audio("click-sound.mp3");
-function initializeDB() {
-    const request = indexedDB.open("MedievalClickerDB", 1);
-
-    request.onupgradeneeded = function (event) {
-        db = event.target.result;
-        if (!db.objectStoreNames.contains('gameState')) {
-            db.createObjectStore('gameState');
-        }
-    };
-
-    request.onsuccess = function (event) {
-        db = event.target.result;
-        loadGameData();
-    };
-
-    request.onerror = function (event) {
-        console.log("Error opening DB", event);
-    };
-}
-
-function saveGameData() {
-    const gameState = {
-        coins,
-        knightCount,
-        archerCount,
-        wizardCount,
-        woodcuttingLevel,
-        miningLevel,
-        paladinCount,
-        pikemanCount,
-        crossbowmanCount,
-        catapultCount,
-        mongolHorsemanCount,
-        lastSaveTime: Date.now(), // Update the last save time
-    };
-
-    const transaction = db.transaction(["gameState"], "readwrite");
-    const store = transaction.objectStore("gameState");
-    store.put(gameState, "currentGameState");
-}
-
-function loadGameData() {
-    const transaction = db.transaction(["gameState"], "readonly");
-    const store = transaction.objectStore("gameState");
-    const request = store.get("currentGameState");
-    request.onsuccess = function (event) {
-        if (request.result) {
-            const savedState = request.result;
-
-            coins = savedState.coins;
-            knightCount = savedState.knightCount;
-            archerCount = savedState.archerCount;
-            wizardCount = savedState.wizardCount;
-            woodcuttingLevel = savedState.woodcuttingLevel;
-            miningLevel = savedState.miningLevel;
-            paladinCount = savedState.paladinCount;
-            pikemanCount = savedState.pikemanCount;
-            crossbowmanCount = savedState.crossbowmanCount;
-            catapultCount = savedState.catapultCount;
-            mongolHorsemanCount = savedState.mongolHorsemanCount;
-            lastSaveTime = savedState.lastSaveTime; // Update the last save time
-
-            updateUI();
-        }
-    };
-}
-
-initializeDB();
 
 // Function to toggle music
 function toggleMusic() {
