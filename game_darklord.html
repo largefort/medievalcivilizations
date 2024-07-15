@@ -473,6 +473,15 @@
         </div>
       </div>
     </div>
+    
+    <!-- Adventures Tab -->
+<div class="tab-pane fade" id="adventures-tab" role="tabpanel" aria-labelledby="adventures-tab-tab">
+  <div class="text-center">
+    <h2>Adventures</h2>
+    <div id="adventure-list"></div>
+    <button onclick="generateAdventure()">Generate New Adventure</button>
+  </div>
+</div>
 
     <div class="nav nav-pills nav-fill fixed-bottom" role="tablist">
       <a class="nav-link active" data-bs-toggle="pill" href="#castle-tab" role="tab" aria-controls="castle-tab" aria-selected="true" onfocus="speakText(this)" tabindex="0">
@@ -490,6 +499,9 @@
       <a class="nav-link" data-bs-toggle="pill" href="#version-tab" role="tab" aria-controls="version-tab" aria-selected="false" onfocus="speakText(this)" tabindex="0">
         <i class="fas fa-info-circle" aria-hidden="true"></i> Version
       </a>
+      <a class="nav-link" data-bs-toggle="pill" href="#adventures-tab" role="tab" aria-controls="adventures-tab" aria-selected="false" onfocus="speakText(this)" tabindex="0">
+  <i class="fas fa-quest" aria-hidden="true"></i> Adventures
+</a>
     </div>
   </div>
 </div>
