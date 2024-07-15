@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', (event) => {
   const versionHistory = [
+   { version: "1.0.5", date: "July 15 2024", description: "medievalcivilizations.online is now using Gcore cdn service and the domain is now well protected and also the game now uses export and load game button that allows players to export their progress into medievalcivilizations.txt file that contains the exported progress converted into base64 strings " },
    { version: "1.0.4", date: "July 6, 2024", description: "removed Medieval AI because it caused some issue that made players annoyed when playing medievalcivilizations.online because the chatbot always popsup during launch" },
     { version: "1.0.3", date: "July 6, 2024", description: "i have implemented cost increase on each every medieval militant units per purchase increases cost by 15%" },
     { version: "1.0.2", date: "July 6, 2024", description: "updated script.js to implement the four new medieval military units to be part of the game" },
