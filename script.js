@@ -10,8 +10,9 @@ let crossbowmanCount = 0;
 let catapultCount = 0;
 let mongolHorsemanCount = 0;
 let passiveIncome = 0;
-let lastSaveTime = Date.now();
-let baseCoinsPerClick = 1;
+let lastSaveTime = Date.now(); // Initialize lastSaveTime with the current time
+let baseCoinsPerClick =1;
+
 
 // Add an HTML audio element for the upgrade sound
 document.write(`
@@ -40,10 +41,13 @@ function toggleSoundEffects() {
     const upgradeSoundAudio = document.getElementById("upgradeSound");
     const toggleSfxCheckbox = document.getElementById("toggle-sfx");
 
+    // Check the state of the toggle-sfx checkbox
     if (toggleSfxCheckbox.checked) {
+        // If the checkbox is checked, mute the sound effects
         clickSoundAudio.muted = true;
         upgradeSoundAudio.muted = true;
     } else {
+        // If the checkbox is not checked, unmute the sound effects
         clickSoundAudio.muted = false;
         upgradeSoundAudio.muted = false;
     }
@@ -97,20 +101,27 @@ function clickCastle(event) {
     saveGameData();
     updateUI();
 
+    // Play the preloaded click sound
     clickSound.play();
 
+    // Create floating text
     const floatingText = document.createElement('div');
     floatingText.className = 'floating-text';
     floatingText.innerText = `+${coinsGained}`;
 
-    floatingText.style.left = `${event.clientX}px`;
-    floatingText.style.top = `${event.clientY}px`;
+    // Position the floating text at the mouse cursor, adjusted for scroll
+    const pageX = event.pageX;
+    const pageY = event.pageY;
+    floatingText.style.left = `${event.clientX}px`
+    floatingText.style.top = `${event.clientY}px`
 
+    // Add the floating text to the body
     document.body.appendChild(floatingText);
 
+    // Remove the floating text after the animation completes
     setTimeout(() => {
         floatingText.remove();
-    }, 1000);
+    }, 1000); // Match this duration with the CSS animation duration
 }
 
 function buyUpgrade(type) {
@@ -118,56 +129,56 @@ function buyUpgrade(type) {
 
     switch (type) {
         case "knight":
-            cost = Math.floor(10 * Math.pow(1.15, knightCount));
+            cost = Math.floor(10 * Math.pow(1.15, knightCount)); // Exponential cost increase
             if (coins >= cost) {
                 coins -= cost;
                 knightCount++;
             }
             break;
         case "archer":
-            cost = Math.floor(25 * Math.pow(1.15, archerCount));
+            cost = Math.floor(25 * Math.pow(1.15, archerCount)); // Exponential cost increase
             if (coins >= cost) {
                 coins -= cost;
                 archerCount++;
             }
             break;
         case "wizard":
-            cost = Math.floor(50 * Math.pow(1.15, wizardCount));
+            cost = Math.floor(50 * Math.pow(1.15, wizardCount)); // Exponential cost increase
             if (coins >= cost) {
                 coins -= cost;
                 wizardCount++;
             }
             break;
         case "paladin":
-            cost = Math.floor(100 * Math.pow(1.15, paladinCount));
+            cost = Math.floor(100 * Math.pow(1.15, paladinCount)); // Exponential cost increase
             if (coins >= cost) {
                 coins -= cost;
                 paladinCount++;
             }
             break;
         case "pikeman":
-            cost = Math.floor(15 * Math.pow(1.15, pikemanCount));
+            cost = Math.floor(15 * Math.pow(1.15, pikemanCount)); // Exponential cost increase
             if (coins >= cost) {
                 coins -= cost;
                 pikemanCount++;
             }
             break;
         case "crossbowman":
-            cost = Math.floor(30 * Math.pow(1.15, crossbowmanCount));
+            cost = Math.floor(30 * Math.pow(1.15, crossbowmanCount)); // Exponential cost increase
             if (coins >= cost) {
                 coins -= cost;
                 crossbowmanCount++;
             }
             break;
         case "catapult":
-            cost = Math.floor(75 * Math.pow(1.15, catapultCount));
+            cost = Math.floor(75 * Math.pow(1.15, catapultCount)); // Exponential cost increase
             if (coins >= cost) {
                 coins -= cost;
                 catapultCount++;
             }
             break;
         case "mongolHorseman":
-            cost = Math.floor(50 * Math.pow(1.15, mongolHorsemanCount));
+            cost = Math.floor(50 * Math.pow(1.15, mongolHorsemanCount)); // Exponential cost increase
             if (coins >= cost) {
                 coins -= cost;
                 mongolHorsemanCount++;
@@ -176,6 +187,7 @@ function buyUpgrade(type) {
     }
 
     if (cost > 0) {
+        // Play the upgrade sound
         const upgradeSound = document.getElementById("upgradeSound");
         upgradeSound.play();
     }
@@ -184,6 +196,7 @@ function buyUpgrade(type) {
     updateUI();
 }
 
+// Ensure the castle image has the correct event listener
 document.getElementById('castle').addEventListener('click', clickCastle);
 
 function updateUpgradeCosts() {
@@ -196,6 +209,7 @@ function updateUpgradeCosts() {
     document.getElementById("catapult-cost").textContent = Math.floor(75 * Math.pow(1.15, catapultCount));
     document.getElementById("mongol-horseman-cost").textContent = Math.floor(50 * Math.pow(1.15, mongolHorsemanCount));
 }
+
 
 function compactNumberFormat(num) {
     if (num < 1e3) return num;
@@ -219,14 +233,15 @@ function handleSkillingClick(skill) {
 }
 
 function updatePassiveIncome() {
-    const knightIncomeRate = 1;
-    const archerIncomeRate = 2;
-    const wizardIncomeRate = 4;
-    const paladinIncomeRate = 8;
-    const pikemanIncomeRate = 1.5;
-    const crossbowmanIncomeRate = 3;
-    const catapultIncomeRate = 5;
-    const mongolHorsemanIncomeRate = 6;
+    // Calculate passive income based on knights, archers, wizards, paladins, pikemen, crossbowmen, catapults, and mongol horsemen
+    const knightIncomeRate = 1;        // Adjust the income rate for knights
+    const archerIncomeRate = 2;        // Adjust the income rate for archers
+    const wizardIncomeRate = 4;        // Adjust the income rate for wizards
+    const paladinIncomeRate = 8;       // Adjust the income rate for paladins
+    const pikemanIncomeRate = 1.5;     // Adjust the income rate for pikemen
+    const crossbowmanIncomeRate = 3;   // Adjust the income rate for crossbowmen
+    const catapultIncomeRate = 5;      // Adjust the income rate for catapults
+    const mongolHorsemanIncomeRate = 6; // Adjust the income rate for mongol horsemen
 
     const totalPassiveIncome = (
         knightCount * knightIncomeRate +
@@ -248,7 +263,7 @@ function earnPassiveIncome() {
     const offlinePassiveIncome = Math.floor(passiveIncome * (timeDifference / 1000));
 
     coins += offlinePassiveIncome;
-    lastSaveTime = currentTime;
+    lastSaveTime = currentTime; // Update the last save time
 
     saveGameData();
     updateUI();
@@ -256,73 +271,26 @@ function earnPassiveIncome() {
 
 setInterval(earnPassiveIncome, 1000);
 
+// Request fullscreen
 function requestFullscreen(element) {
     if (element.requestFullscreen) {
         element.requestFullscreen();
-    } else if (element.mozRequestFullScreen) {
+    } else if (element.mozRequestFullScreen) { // Firefox
         element.mozRequestFullScreen();
-    } else if (element.webkitRequestFullscreen) {
+    } else if (element.webkitRequestFullscreen) { // Chrome and Safari
         element.webkitRequestFullscreen();
-    } else if (element.msRequestFullscreen) {
+    } else if (element.msRequestFullscreen) { // Internet Explorer
         element.msRequestFullscreen();
     }
 }
 
+// Update the document title with gold coin count
 function updateDocumentTitle() {
     const coinCountElement = document.getElementById('counter');
     const coinCountText = coinCountElement.textContent || coinCountElement.innerText;
-    const coinCount = coinCountText.replace(/[^0-9]/g, '');
+    const coinCount = coinCountText.replace(/[^0-9]/g, ''); // Extract only the number
     document.title = `Gold Coins: ${coinCount}`;
 }
 
+// Update the title every second
 setInterval(updateDocumentTitle, 1000);
-
-// Save game data to localStorage
-function saveGameData() {
-    const gameData = {
-        coins,
-        knightCount,
-        archerCount,
-        wizardCount,
-        woodcuttingLevel,
-        miningLevel,
-        paladinCount,
-        pikemanCount,
-        crossbowmanCount,
-        catapultCount,
-        mongolHorsemanCount,
-        passiveIncome,
-        lastSaveTime: Date.now()
-    };
-    localStorage.setItem('gameData', JSON.stringify(gameData));
-}
-
-// Load game data from localStorage
-function loadGameData() {
-    const savedGameData = localStorage.getItem('gameData');
-    if (savedGameData) {
-        const gameData = JSON.parse(savedGameData);
-        coins = gameData.coins;
-        knightCount = gameData.knightCount;
-        archerCount = gameData.archerCount;
-        wizardCount = gameData.wizardCount;
-        woodcuttingLevel = gameData.woodcuttingLevel;
-        miningLevel = gameData.miningLevel;
-        paladinCount = gameData.paladinCount;
-        pikemanCount = gameData.pikemanCount;
-        crossbowmanCount = gameData.crossbowmanCount;
-        catapultCount = gameData.catapultCount;
-        mongolHorsemanCount = gameData.mongolHorsemanCount;
-        passiveIncome = gameData.passiveIncome;
-        lastSaveTime = gameData.lastSaveTime;
-
-        // Calculate the offline earnings
-        earnPassiveIncome();
-    }
-}
-
-// Load game data when the page is loaded
-window.addEventListener('load', loadGameData);
-
-// Save game data before the page is unloaded
-window.addEventListener('beforeunload', saveGameData);
