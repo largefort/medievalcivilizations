@@ -536,6 +536,8 @@
    <script>
     // IndexedDB setup and functions
     let db;
+    let autosaveInterval;
+
     function initializeDB() {
       const request = indexedDB.open("MedievalCivilizationsDB", 1);
 
@@ -545,6 +547,8 @@
 
       request.onsuccess = function(event) {
         db = event.target.result;
+        loadGameData();  // Load the game data when the DB is successfully opened
+        startAutoSave(); // Start the autosave interval
       };
 
       request.onupgradeneeded = function(event) {
@@ -602,7 +606,10 @@
       };
     }
 
-    // Function to export game state
+    function startAutoSave() {
+      autosaveInterval = setInterval(saveGameData, 1000); // Save game data every 1 second
+    }
+
     function exportGame() {
       loadGameData(function(gameState) {
         const gameStateString = JSON.stringify(gameState);
@@ -612,12 +619,10 @@
       });
     }
 
-    // Function to load game state
     function loadGame() {
       document.getElementById('file-input').click();
     }
 
-    // Handle file input change event
     function handleFileSelect(event) {
       const file = event.target.files[0];
       if (file) {
@@ -626,12 +631,12 @@
           const contents = e.target.result;
           const gameStateString = atob(contents);
           const gameState = JSON.parse(gameStateString);
-          
+
           // Save the imported game state to IndexedDB
           const transaction = db.transaction(["gameState"], "readwrite");
           const store = transaction.objectStore("gameState");
           store.put(gameState);
-          
+
           // Load the game state to update the UI
           loadGameData();
         };
