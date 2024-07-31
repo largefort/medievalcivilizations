@@ -235,13 +235,13 @@ function handleSkillingClick(skill) {
 function updatePassiveIncome() {
     // Calculate passive income based on knights, archers, wizards, paladins, pikemen, crossbowmen, catapults, and mongol horsemen
     const knightIncomeRate = 1;        // Adjust the income rate for knights
-    const archerIncomeRate = 2;        // Adjust the income rate for archers
-    const wizardIncomeRate = 4;        // Adjust the income rate for wizards
-    const paladinIncomeRate = 8;       // Adjust the income rate for paladins
-    const pikemanIncomeRate = 1.5;     // Adjust the income rate for pikemen
-    const crossbowmanIncomeRate = 3;   // Adjust the income rate for crossbowmen
-    const catapultIncomeRate = 5;      // Adjust the income rate for catapults
-    const mongolHorsemanIncomeRate = 6; // Adjust the income rate for mongol horsemen
+    const archerIncomeRate = 1.2;      // Adjust the income rate for archers
+    const wizardIncomeRate = 1.5;      // Adjust the income rate for wizards
+    const paladinIncomeRate = 2;       // Adjust the income rate for paladins
+    const pikemanIncomeRate = 0.8;     // Adjust the income rate for pikemen
+    const crossbowmanIncomeRate = 1.3; // Adjust the income rate for crossbowmen
+    const catapultIncomeRate = 2.5;    // Adjust the income rate for catapults
+    const mongolHorsemanIncomeRate = 3; // Adjust the income rate for mongol horsemen
 
     const totalPassiveIncome = (
         knightCount * knightIncomeRate +
