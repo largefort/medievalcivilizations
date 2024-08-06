@@ -256,25 +256,29 @@
      transform: scale(1.1);
  }
 
- .floating-text {
-     position: fixed;
-     font-size: 24px;
-     color: gold;
-     animation: floatUp 1s ease-out forwards;
-     pointer-events: none;
-     z-index: 1000;
- }
+ @import url('https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap');
 
- @keyframes floatUp {
-     0% {
-         opacity: 1;
-         transform: translateY(0);
-     }
-     100% {
-         opacity: 0;
-         transform: translateY(-50px);
-     }
- }
+.floating-text {
+    position: fixed;
+    font-size: 24px;
+    color: gold;
+    font-family: 'UnifrakturCook', cursive;
+    text-shadow: 2px 2px 4px #000000;
+    animation: floatUp 1s ease-out forwards;
+    pointer-events: none;
+    z-index: 1000;
+}
+
+@keyframes floatUp {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+}
 
  /* Version Tab Styles */
  #version-history-box {
