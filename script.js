@@ -1,4 +1,4 @@
-let coins = 0;
+let coins = 10;
 let knightCount = 0;
 let archerCount = 0;
 let wizardCount = 0;
@@ -11,7 +11,7 @@ let catapultCount = 0;
 let mongolHorsemanCount = 0;
 let passiveIncome = 0;
 let lastSaveTime = Date.now(); // Initialize lastSaveTime with the current time
-let baseCoinsPerClick =1;
+let baseCoinsPerClick =0;
 
 
 // Add an HTML audio element for the upgrade sound
