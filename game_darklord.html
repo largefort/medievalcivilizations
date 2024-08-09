@@ -650,7 +650,6 @@
     }
 
     initializeDB();
-  </script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
@@ -665,13 +664,28 @@
     <script src="GameAnalytics.js"></script>
     <script src="GameAnalytics.min.js"></script>
     <!-- GameAnalytics -->
-    <script>
-      (function(w,d,a,m){var s='script';var g='GameAnalytics';w[g]=w[g]||function(){(w[g].q=w[g].q||[]).push(arguments)},a=d.createElement(s),m=d.getElementsByTagName(s)[0];a.async=1;a.src='http://download.gameanalytics.com/js/GameAnalytics-[VERSION].min.js';m.parentNode.insertBefore(a,m)})(window,document);
+<!-- Yandex Games SDK -->
+<script>
+    (function(d) {
+        var s = d.createElement('script');
+        s.src = '/sdk.js';
+        s.async = true;
+        s.onload = initSDK;
+        d.body.append(s);
+    })(document);
+</script>
+  
+<!-- Yandex Games SDK -->
+<script>
+    (function(d) {
+        var s = d.createElement('script');
+        s.src = '/sdk.js';
+        s.async = true;
+        s.onload = initSDK;
+        d.body.append(s);
+    })(document);
+</script>
 
-      GameAnalytics("setEnabledInfoLog", true);
-      GameAnalytics("initialize", "611c98febc5c1d857efc67b0c431b979", "2a8656dbee715fa9ba31787c59dcf9802e233619");
-    </script>
-    <!-- End GameAnalytics -->
     <audio id="medievaltheme" loop autoplay>
       <source src="audio/the%20darklands.mp3" type="audio/mp3">
       Your browser does not support the audio element.
