@@ -361,7 +361,10 @@
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuid.min.js"></script>
 </head>
- <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+  <!-- Yandex Games SDK -->
+<script src="https://sdk.games.s3.yandex.net/sdk.js"></script>
+<script async src="/sdk.js" onload="initSDK()"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 <body>
 <div id="uuid-display" aria-live="polite"></div>
 <div class="container">
@@ -664,28 +667,6 @@
     <script src="GameAnalytics.js"></script>
     <script src="GameAnalytics.min.js"></script>
     <!-- GameAnalytics -->
-<!-- Yandex Games SDK -->
-<script>
-    (function(d) {
-        var s = d.createElement('script');
-        s.src = '/sdk.js';
-        s.async = true;
-        s.onload = initSDK;
-        d.body.append(s);
-    })(document);
-</script>
-  
-<!-- Yandex Games SDK -->
-<script>
-    (function(d) {
-        var s = d.createElement('script');
-        s.src = '/sdk.js';
-        s.async = true;
-        s.onload = initSDK;
-        d.body.append(s);
-    })(document);
-</script>
-
     <audio id="medievaltheme" loop autoplay>
       <source src="audio/the%20darklands.mp3" type="audio/mp3">
       Your browser does not support the audio element.
