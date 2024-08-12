@@ -357,6 +357,75 @@
   #file-input {
     display: none;
   }
+      .medieval-style {
+    font-family: 'MedievalSharp', cursive; /* Example medieval font */
+    background-color: #f4f4f4;
+    border: 2px solid #d4af37;
+    padding: 20px;
+    max-width: 500px;
+    margin: auto;
+  }
+
+  /* Modal styles */
+  .modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  }
+
+  .modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+  }
+
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .form-group {
+    margin-bottom: 15px;
+  }
+
+  .form-group label {
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  .form-group input[type="email"],
+  .form-group textarea,
+  .form-group input[type="file"] {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+  }
+
+  #bugReportForm button[type="submit"] {
+    background-color: #d4af37;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+  }
 </style>
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuid.min.js"></script>
@@ -475,34 +544,61 @@
     </div>
 
      <div class="tab-pane fade" id="settings-tab" role="tabpanel" aria-labelledby="settings-tab-tab">
-    <div class="text-center">
-      <h2>Settings</h2>
-      <div class="form-check">
-        <input type="checkbox" id="toggle-music" class="form-check-input" aria-label="Toggle background music" onfocus="speakText(this)" tabindex="0">
-        <label class="form-check-label" for="toggle-music"><i class="fas fa-volume-up"></i> Toggle Music</label>
-      </div>
-      <div class="form-check">
-        <input type="checkbox" id="toggle-sfx" class="form-check-input" aria-label="Toggle sound effects" onfocus="speakText(this)" tabindex="0">
-        <label class="form-check-label" for="toggle-sfx"><i class="fas fa-volume-up"></i> Toggle Sound Effects</label>
-      </div>
-      <div class="form-check">
-        <input type="checkbox" id="toggle-tts" class="form-check-input" aria-label="Toggle text-to-speech" onchange="toggleTTS()" onfocus="speakText(this)" tabindex="0">
-        <label class="form-check-label" for="toggle-tts"><i class="fas fa-volume-up"></i> Toggle Text-to-Speech</label>
-      </div>
-      <div class="medieval-note">
-        This switch is for people with disabilities. Ye may turn it on if ye so desire, but it is meant for those in need.
-      </div>
-      <!-- Add the PNG image from Crazy Games with clickable URL -->
-      <a href="https://idev.games/game/medieval-civilizations" target="_blank" aria-label="Visit idev.games" onfocus="speakText(this)" tabindex="0">
-        <img src="idev.png" alt="idev.games image" width="100">
-      </a>
-      <!-- New buttons for export and load -->
-      <button id="export-btn" onclick="exportGame()">Export Game</button>
-      <button id="load-btn" onclick="loadGame()">Load Game</button>
-      <!-- Hidden file input for loading -->
-      <input type="file" id="file-input" accept=".txt" style="display:none;" onchange="handleFileSelect(event)">
+  <div class="text-center">
+    <h2>Settings</h2>
+    <div class="form-check">
+      <input type="checkbox" id="toggle-music" class="form-check-input" aria-label="Toggle background music" onfocus="speakText(this)" tabindex="0">
+      <label class="form-check-label" for="toggle-music"><i class="fas fa-volume-up"></i> Toggle Music</label>
     </div>
+    <div class="form-check">
+      <input type="checkbox" id="toggle-sfx" class="form-check-input" aria-label="Toggle sound effects" onfocus="speakText(this)" tabindex="0">
+      <label class="form-check-label" for="toggle-sfx"><i class="fas fa-volume-up"></i> Toggle Sound Effects</label>
+    </div>
+    <div class="form-check">
+      <input type="checkbox" id="toggle-tts" class="form-check-input" aria-label="Toggle text-to-speech" onchange="toggleTTS()" onfocus="speakText(this)" tabindex="0">
+      <label class="form-check-label" for="toggle-tts"><i class="fas fa-volume-up"></i> Toggle Text-to-Speech</label>
+    </div>
+    <div class="medieval-note">
+      This switch is for people with disabilities. Ye may turn it on if ye so desire, but it is meant for those in need.
+    </div>
+    <!-- Add the PNG image from Crazy Games with clickable URL -->
+    <a href="https://idev.games/game/medieval-civilizations" target="_blank" aria-label="Visit idev.games" onfocus="speakText(this)" tabindex="0">
+      <img src="idev.png" alt="idev.games image" width="100">
+    </a>
+    <!-- New buttons for export and load -->
+    <button id="export-btn" onclick="exportGame()">Export Game</button>
+    <button id="load-btn" onclick="loadGame()">Load Game</button>
+    <!-- Hidden file input for loading -->
+    <input type="file" id="file-input" accept=".txt" style="display:none;" onchange="handleFileSelect(event)">
+    
+    <!-- Bug Report Button -->
+    <button id="bug-report-btn" onclick="openBugReportModal()">Report a Bug</button>
+
+    <!-- Bug Report Modal -->
+    <div id="bugReportModal" class="modal">
+      <div class="modal-content medieval-style">
+        <span class="close" onclick="closeBugReportModal()">&times;</span>
+        <h2>Report a Bug</h2>
+        <form id="bugReportForm" onsubmit="submitBugReport(event)">
+          <div class="form-group">
+            <label for="player-email">Thine Email Address:</label>
+            <input type="email" id="player-email" name="email" required aria-required="true">
+          </div>
+          <div class="form-group">
+            <label for="bug-description">Describe the Bug:</label>
+            <textarea id="bug-description" name="description" rows="4" required aria-required="true"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="bug-screenshot">Attach Evidence (Screenshot):</label>
+            <input type="file" id="bug-screenshot" name="screenshot" accept="image/*" required aria-required="true">
+          </div>
+          <button type="submit">Submit Report</button>
+        </form>
+      </div>
+    </div>
+
   </div>
+</div>
 
     <!-- Version Tab -->
     <div class="tab-pane fade" id="version-tab" role="tabpanel" aria-labelledby="version-tab-tab">
@@ -653,6 +749,56 @@
 
     initializeDB();
   </script>
+  
+  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+<script>
+  (function(){
+    emailjs.init("PqCKbUHJrBvx-He3M"); // Replace with your EmailJS user ID
+  })();
+
+  function submitBugReport(event) {
+    event.preventDefault();
+
+    var email = document.getElementById("player-email").value;
+    var description = document.getElementById("bug-description").value;
+    var screenshot = document.getElementById("bug-screenshot").files[0];
+
+    if (!email || !description || !screenshot) {
+      alert("All fields are required!");
+      return;
+    }
+
+    // Prepare the email template parameters
+    var templateParams = {
+      player_email: email,
+      description: description,
+      your_email: 'largefort@gmail.com'
+    };
+
+    // Send the bug report to yourself
+    emailjs.send('your_service_id', 'bug_report_notification', templateParams)
+      .then(function(response) {
+        console.log('Bug report sent successfully to you!', response.status, response.text);
+        
+        // Send the auto-reply to the player
+        emailjs.send('service_sd825hy', 'bug_report_auto_reply', templateParams)
+          .then(function(response) {
+            console.log('Auto-reply sent successfully to the player!', response.status, response.text);
+            alert("Bug report submitted successfully! A confirmation email has been sent to you.");
+          }, function(error) {
+            console.log('Failed to send auto-reply...', error);
+          });
+        
+      }, function(error) {
+        console.log('Failed to send bug report...', error);
+        alert("Failed to submit bug report. Please try again later.");
+      });
+
+    // Close the modal
+    closeBugReportModal();
+  }
+</script>
+
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/4.0.0-beta.2/jquery.min.js" integrity="sha512-JobWAqYk5CSjWuVV3mxgS+MmccJqkrBaDhk8SKS1BW+71dJ9gzascwzW85UwGhxiSyR7Pxhu50k+Nl3+o5I49A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
