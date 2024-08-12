@@ -596,10 +596,7 @@
         </form>
       </div>
     </div>
-
-  </div>
-</div>
-
+    
     <!-- Version Tab -->
     <div class="tab-pane fade" id="version-tab" role="tabpanel" aria-labelledby="version-tab-tab">
       <div class="text-center">
@@ -750,11 +747,19 @@
     initializeDB();
   </script>
   
-  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+<script src="https://cdn.emailjs.com/dist/email.min.js"></script>
 <script>
   (function(){
-    emailjs.init("PqCKbUHJrBvx-He3M"); // Replace with your EmailJS user ID
+    emailjs.init("PqCKbUHJrBvx-He3M"); // Initialize EmailJS with your user ID
   })();
+
+  function openBugReportModal() {
+    document.getElementById("bugReportModal").style.display = "block";
+  }
+
+  function closeBugReportModal() {
+    document.getElementById("bugReportModal").style.display = "none";
+  }
 
   function submitBugReport(event) {
     event.preventDefault();
@@ -775,28 +780,31 @@
       your_email: 'largefort@gmail.com'
     };
 
-    // Send the bug report to yourself
-    emailjs.send('your_service_id', 'bug_report_notification', templateParams)
+    // Send the bug report email to you
+    emailjs.send('service_sd825hy', 'template_tv4nz75', templateParams)
       .then(function(response) {
-        console.log('Bug report sent successfully to you!', response.status, response.text);
-        
-        // Send the auto-reply to the player
-        emailjs.send('service_sd825hy', 'bug_report_auto_reply', templateParams)
+        console.log('SUCCESS!', response.status, response.text);
+
+        // Send auto-reply to the player
+        emailjs.send('service_sd825hy', 'template_o6a4vxc', templateParams)
           .then(function(response) {
-            console.log('Auto-reply sent successfully to the player!', response.status, response.text);
+            console.log('Auto-reply sent successfully!', response.status, response.text);
             alert("Bug report submitted successfully! A confirmation email has been sent to you.");
           }, function(error) {
-            console.log('Failed to send auto-reply...', error);
+            console.log('Auto-reply FAILED...', error);
           });
-        
+
       }, function(error) {
-        console.log('Failed to send bug report...', error);
+        console.log('FAILED...', error);
         alert("Failed to submit bug report. Please try again later.");
       });
 
     // Close the modal
     closeBugReportModal();
   }
+
+  // Event listener for the bug report button
+  document.getElementById("bug-report-btn").addEventListener("click", openBugReportModal);
 </script>
 
     
