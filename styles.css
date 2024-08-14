@@ -6,11 +6,6 @@
     user-select: none; /* Standard */
 }
 
-/* Disable scrolling */
-html, body {
-    overflow: hidden; /* Disable scrolling */
-}
-
 /* User Interface Upgrade for Medieval Clicker Game */
 
 /* Style the button with a medieval theme */
