@@ -11,8 +11,7 @@ let catapultCount = 0;
 let mongolHorsemanCount = 0;
 let passiveIncome = 0;
 let lastSaveTime = Date.now(); // Initialize lastSaveTime with the current time
-let baseCoinsPerClick =0;
-
+let baseCoinsPerClick = 0;
 
 // Add an HTML audio element for the upgrade sound
 document.write(`
@@ -57,6 +56,35 @@ function toggleSoundEffects() {
 document.getElementById("toggle-music").addEventListener("change", toggleMusic);
 document.getElementById("toggle-sfx").addEventListener("change", toggleSoundEffects);
 
+function updateStatsUI() {
+    document.getElementById("stat-coins").textContent = compactNumberFormat(coins);
+    document.getElementById("stat-knights").textContent = knightCount;
+    document.getElementById("stat-archers").textContent = archerCount;
+    document.getElementById("stat-wizards").textContent = wizardCount;
+    document.getElementById("stat-paladins").textContent = paladinCount;
+    document.getElementById("stat-pikemen").textContent = pikemanCount;
+    document.getElementById("stat-crossbowmen").textContent = crossbowmanCount;
+    document.getElementById("stat-catapults").textContent = catapultCount;
+    document.getElementById("stat-mongol-horsemen").textContent = mongolHorsemanCount;
+    document.getElementById("stat-woodcutting").textContent = woodcuttingLevel;
+    document.getElementById("stat-mining").textContent = miningLevel;
+    document.getElementById("stat-passive-income").textContent = compactNumberFormat(passiveIncome);
+
+    // Calculate offline earnings since last save
+    const currentTime = Date.now();
+    const timeDifference = currentTime - lastSaveTime;
+    const offlinePassiveIncome = Math.floor(passiveIncome * (timeDifference / 1000));
+    document.getElementById("stat-offline-earnings").textContent = compactNumberFormat(offlinePassiveIncome);
+
+    // Update date and time
+    const now = new Date();
+    document.getElementById("stat-date").textContent = now.getDate();
+    document.getElementById("stat-time").textContent = now.toLocaleTimeString();
+    document.getElementById("stat-month").textContent = now.toLocaleString('default', { month: 'long' });
+    document.getElementById("stat-year").textContent = now.getFullYear();
+    document.getElementById("stat-seconds").textContent = now.getSeconds();
+}
+
 function updateUI() {
     document.getElementById("counter").textContent = `Gold coins: ${compactNumberFormat(coins)}`;
     document.getElementById("knight-count").textContent = knightCount;
@@ -80,6 +108,7 @@ function updateUI() {
 
     updatePassiveIncome();
     updateUpgradeCosts();
+    updateStatsUI(); // Call the new function to update the stats tab
 }
 
 // Function to calculate total coins per click
@@ -210,38 +239,15 @@ function updateUpgradeCosts() {
     document.getElementById("mongol-horseman-cost").textContent = Math.floor(50 * Math.pow(1.15, mongolHorsemanCount));
 }
 
-
-function compactNumberFormat(num) {
-    if (num < 1e3) return num;
-    if (num >= 1e3 && num < 1e6) return +(num / 1e3).toFixed(1) + "K";
-    if (num >= 1e6 && num < 1e9) return +(num / 1e6).toFixed(1) + "M";
-    if (num >= 1e9 && num < 1e12) return +(num / 1e9).toFixed(1) + "B";
-    return +(num / 1e12).toFixed(1) + "T";
-}
-
-function handleSkillingClick(skill) {
-    switch (skill) {
-        case "woodcutting":
-            woodcuttingLevel++;
-            break;
-        case "mining":
-            miningLevel++;
-            break;
-    }
-    saveGameData();
-    updateUI();
-}
-
 function updatePassiveIncome() {
-    // Calculate passive income based on knights, archers, wizards, paladins, pikemen, crossbowmen, catapults, and mongol horsemen
-    const knightIncomeRate = 1;        // Adjust the income rate for knights
-    const archerIncomeRate = 1.2;      // Adjust the income rate for archers
-    const wizardIncomeRate = 1.5;      // Adjust the income rate for wizards
-    const paladinIncomeRate = 2;       // Adjust the income rate for paladins
-    const pikemanIncomeRate = 0.8;     // Adjust the income rate for pikemen
-    const crossbowmanIncomeRate = 1.3; // Adjust the income rate for crossbowmen
-    const catapultIncomeRate = 2.5;    // Adjust the income rate for catapults
-    const mongolHorsemanIncomeRate = 3; // Adjust the income rate for mongol horsemen
+    const knightIncomeRate = 1;
+    const archerIncomeRate = 1.2;
+    const wizardIncomeRate = 1.5;
+    const paladinIncomeRate = 2;
+    const pikemanIncomeRate = 0.8;
+    const crossbowmanIncomeRate = 1.3;
+    const catapultIncomeRate = 2.5;
+    const mongolHorsemanIncomeRate = 3;
 
     const totalPassiveIncome = (
         knightCount * knightIncomeRate +
@@ -263,34 +269,147 @@ function earnPassiveIncome() {
     const offlinePassiveIncome = Math.floor(passiveIncome * (timeDifference / 1000));
 
     coins += offlinePassiveIncome;
-    lastSaveTime = currentTime; // Update the last save time
+    lastSaveTime = currentTime;
 
     saveGameData();
     updateUI();
 }
 
-setInterval(earnPassiveIncome, 1000);
+function saveGameData() {
+    const gameData = {
+        coins,
+        knightCount,
+        archerCount,
+        wizardCount,
+        paladinCount,
+        pikemanCount,
+        crossbowmanCount,
+        catapultCount,
+        mongolHorsemanCount,
+        woodcuttingLevel,
+        miningLevel,
+        lastSaveTime: Date.now(),
+        passiveIncome,
+    };
 
-// Request fullscreen
-function requestFullscreen(element) {
-    if (element.requestFullscreen) {
-        element.requestFullscreen();
-    } else if (element.mozRequestFullScreen) { // Firefox
-        element.mozRequestFullScreen();
-    } else if (element.webkitRequestFullscreen) { // Chrome and Safari
-        element.webkitRequestFullscreen();
-    } else if (element.msRequestFullscreen) { // Internet Explorer
-        element.msRequestFullscreen();
+    localStorage.setItem("gameData", JSON.stringify(gameData));
+}
+
+function loadGameData() {
+    const savedData = localStorage.getItem("gameData");
+
+    if (savedData) {
+        const gameData = JSON.parse(savedData);
+
+        coins = gameData.coins || 10;
+        knightCount = gameData.knightCount || 0;
+        archerCount = gameData.archerCount || 0;
+        wizardCount = gameData.wizardCount || 0;
+        paladinCount = gameData.paladinCount || 0;
+        pikemanCount = gameData.pikemanCount || 0;
+        crossbowmanCount = gameData.crossbowmanCount || 0;
+        catapultCount = gameData.catapultCount || 0;
+        mongolHorsemanCount = gameData.mongolHorsemanCount || 0;
+        woodcuttingLevel = gameData.woodcuttingLevel || 1;
+        miningLevel = gameData.miningLevel || 1;
+        lastSaveTime = gameData.lastSaveTime || Date.now();
+        passiveIncome = gameData.passiveIncome || 0;
+
+        // Calculate offline earnings since last save
+        const currentTime = Date.now();
+        const timeDifference = currentTime - lastSaveTime;
+        const offlinePassiveIncome = Math.floor(passiveIncome * (timeDifference / 1000));
+        coins += offlinePassiveIncome;
     }
+
+    updateUI();
 }
 
-// Update the document title with gold coin count
-function updateDocumentTitle() {
-    const coinCountElement = document.getElementById('counter');
-    const coinCountText = coinCountElement.textContent || coinCountElement.innerText;
-    const coinCount = coinCountText.replace(/[^0-9]/g, ''); // Extract only the number
-    document.title = `Gold Coins: ${coinCount}`;
+function compactNumberFormat(num) {
+    const scales = [
+        { value: 1e3, symbol: "K" },        // Thousand
+        { value: 1e6, symbol: "M" },        // Million
+        { value: 1e9, symbol: "B" },        // Billion
+        { value: 1e12, symbol: "T" },       // Trillion
+        { value: 1e15, symbol: "Qa" },      // Quadrillion
+        { value: 1e18, symbol: "Qi" },      // Quintillion
+        { value: 1e21, symbol: "Sx" },      // Sextillion
+        { value: 1e24, symbol: "Sp" },      // Septillion
+        { value: 1e27, symbol: "Oc" },      // Octillion
+        { value: 1e30, symbol: "No" },      // Nonillion
+        { value: 1e33, symbol: "Dc" },      // Decillion
+        { value: 1e36, symbol: "Ud" },      // Undecillion
+        { value: 1e39, symbol: "Dd" },      // Duodecillion
+        { value: 1e42, symbol: "Td" },      // Tredecillion
+        { value: 1e45, symbol: "Qad" },     // Quattuordecillion
+        { value: 1e48, symbol: "Qid" },     // Quindecillion
+        { value: 1e51, symbol: "Sxd" },     // Sexdecillion
+        { value: 1e54, symbol: "Spd" },     // Septendecillion
+        { value: 1e57, symbol: "Ocd" },     // Octodecillion
+        { value: 1e60, symbol: "Nod" },     // Novemdecillion
+        { value: 1e63, symbol: "Vg" },      // Vigintillion
+        { value: 1e66, symbol: "Uvg" },     // Unvigintillion
+        { value: 1e69, symbol: "Dvg" },     // Duovigintillion
+        { value: 1e72, symbol: "Tvg" },     // Trevigintillion
+        { value: 1e75, symbol: "Qavg" },    // Quattuorvigintillion
+        { value: 1e78, symbol: "Qivg" },    // Quinvigintillion
+        { value: 1e81, symbol: "Sxvg" },    // Sexvigintillion
+        { value: 1e84, symbol: "Spvg" },    // Septenvigintillion
+        { value: 1e87, symbol: "Ocvg" },    // Octovigintillion
+        { value: 1e90, symbol: "Novg" },    // Novemvigintillion
+        { value: 1e93, symbol: "Tr" },      // Trigintillion
+        { value: 1e96, symbol: "Utr" },     // Untrigintillion
+        { value: 1e99, symbol: "Dtr" },     // Duotrigintillion
+        { value: 1e102, symbol: "Ttr" },    // Tretrigintillion
+        { value: 1e105, symbol: "Qatr" },   // Quattuortrigintillion
+        { value: 1e108, symbol: "Qitr" },   // Quintrigintillion
+        { value: 1e111, symbol: "Sxtr" },   // Sextrigintillion
+        { value: 1e114, symbol: "Sptr" },   // Septentrigintillion
+        { value: 1e117, symbol: "Octr" },   // Octotrigintillion
+        { value: 1e120, symbol: "Notr" },   // Novemtrigintillion
+        { value: 1e123, symbol: "Qtg" },    // Quattuordecillion
+        { value: 1e126, symbol: "Uqtg" },   // Unquattuordecillion
+        { value: 1e129, symbol: "Dqtg" },   // Duoquattuordecillion
+        { value: 1e132, symbol: "Tqtg" },   // Trequattuordecillion
+        { value: 1e135, symbol: "Qaqtg" },  // Quattuorquattuordecillion
+        { value: 1e138, symbol: "Qiqtg" },  // Quinquaquattuordecillion
+        { value: 1e141, symbol: "Sxqtg" },  // Sexquaquattuordecillion
+        { value: 1e144, symbol: "Spqtg" },  // Septenquattuordecillion
+        { value: 1e147, symbol: "Ocqtg" },  // Octoquattuordecillion
+        { value: 1e150, symbol: "Noqtg" },  // Novemquattuordecillion
+        { value: 1e153, symbol: "Qit" },    // Quinquadilllion
+        { value: 1e156, symbol: "Uqit" },   // Unquinquadilllion
+        { value: 1e159, symbol: "Dqit" },   // Duoquinquadilllion
+        { value: 1e162, symbol: "Tqit" },   // Trequinquadilllion
+        { value: 1e165, symbol: "Qaqit" },  // Quattuorquinquadilllion
+        { value: 1e168, symbol: "Qiqit" },  // Quinquaquinquadilllion
+        { value: 1e171, symbol: "Sxqit" },  // Sexquinquadilllion
+        { value: 1e174, symbol: "Spqit" },  // Septenquinquadilllion
+        { value: 1e177, symbol: "Ocqit" },  // Octoquinquadilllion
+        { value: 1e180, symbol: "Noqit" },  // Novemquinquadilllion
+        { value: 1e183, symbol: "Ct" },     // Centillion
+        { value: 1e186, symbol: "Uct" },    // Uncentillion
+        { value: 1e189, symbol: "Dct" },    // Duocentillion
+        { value: 1e192, symbol: "Tct" },    // Trecentillion
+        { value: 1e195, symbol: "Qact" },   // Quattuorcentillion
+        { value: 1e198, symbol: "Qict" },   // Quinquacentillion
+        { value: 1e201, symbol: "Sxct" },   // Sexcentillion
+        { value: 1e204, symbol: "Spct" },   // Septencentillion
+        { value: 1e207, symbol: "Occt" },   // Octocentillion
+        { value: 1e210, symbol: "Noct" },   // Novemcentillion
+        // You can continue to add more scales as needed
+    ];
+
+    for (let i = scales.length - 1; i >= 0; i--) {
+        if (num >= scales[i].value) {
+            return +(num / scales[i].value).toFixed(1) + scales[i].symbol;
+        }
+    }
+    return num.toString(); // Return as string if no formatting is needed
 }
 
-// Update the title every second
-setInterval(updateDocumentTitle, 1000);
+// Load game data and start the game
+window.onload = function() {
+    loadGameData();
+    setInterval(earnPassiveIncome, 1000);
+};
