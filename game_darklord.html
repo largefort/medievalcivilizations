@@ -570,49 +570,37 @@
     <button id="load-btn" onclick="loadGame()">Load Game</button>
     <!-- Hidden file input for loading -->
     <input type="file" id="file-input" accept=".txt" style="display:none;" onchange="handleFileSelect(event)">
-    
-    <!-- Bug Report Button -->
-    <button id="bug-report-btn" onclick="openBugReportModal()">Report a Bug</button>
-
-    <!-- Bug Report Modal -->
-    <div id="bugReportModal" class="modal">
-      <div class="modal-content medieval-style">
-        <span class="close" onclick="closeBugReportModal()">&times;</span>
-        <h2>Report a Bug</h2>
-        <form id="bugReportForm" onsubmit="submitBugReport(event)">
-          <div class="form-group">
-            <label for="player-email">Thine Email Address:</label>
-            <input type="email" id="player-email" name="email" required aria-required="true">
-          </div>
-          <div class="form-group">
-            <label for="bug-description">Describe the Bug:</label>
-            <textarea id="bug-description" name="description" rows="4" required aria-required="true"></textarea>
-          </div>
-          <div class="form-group">
-            <label for="bug-screenshot">Attach Evidence (Screenshot):</label>
-            <input type="file" id="bug-screenshot" name="screenshot" accept="image/*" required aria-required="true">
-          </div>
-          <button type="submit">Submit Report</button>
-        </form>
-      </div>
-    </div>
 
   </div>
 </div>
     
-    <!-- Version Tab -->
-    <div class="tab-pane fade" id="version-tab" role="tabpanel" aria-labelledby="version-tab-tab">
-      <div class="text-center">
-        <h2>Version Information</h2>
-        <p>latest: 1.0.0</p>
-        <p>Last Updated: July 6, 2024</p>
-        <p>Developed by: Jafet Egill/Fjörðr Games</p>
-        <div id="version-history-box" class="mt-3 p-3 border">
-          <h3>Version History</h3>
-          <div id="version-history"></div>
-        </div>
-      </div>
+    <!-- Stats Tab -->
+<div class="tab-pane fade" id="stats-tab" role="tabpanel" aria-labelledby="stats-tab-tab">
+  <div class="text-center">
+    <h2>Player Stats</h2>
+    <div id="stats-box" class="mt-3 p-3 border">
+      <h3>Current Stats</h3>
+      <p>Coins: <span id="stat-coins"></span></p>
+      <p>Knights: <span id="stat-knights"></span></p>
+      <p>Archers: <span id="stat-archers"></span></p>
+      <p>Wizards: <span id="stat-wizards"></span></p>
+      <p>Paladins: <span id="stat-paladins"></span></p>
+      <p>Pikemen: <span id="stat-pikemen"></span></p>
+      <p>Crossbowmen: <span id="stat-crossbowmen"></span></p>
+      <p>Catapults: <span id="stat-catapults"></span></p>
+      <p>Mongol Horsemen: <span id="stat-mongol-horsemen"></span></p>
+      <p>Woodcutting Level: <span id="stat-woodcutting"></span></p>
+      <p>Mining Level: <span id="stat-mining"></span></p>
+      <p>Passive Income per Second: <span id="stat-passive-income"></span></p>
+      <p>Offline Earnings (since last save): <span id="stat-offline-earnings"></span></p>
+      <p>Date: <span id="stat-date"></span></p>
+      <p>Time: <span id="stat-time"></span></p>
+      <p>Month: <span id="stat-month"></span></p>
+      <p>Year: <span id="stat-year"></span></p>
+      <p>Seconds: <span id="stat-seconds"></span></p>
     </div>
+  </div>
+</div>
 
     <div class="nav nav-pills nav-fill fixed-bottom" role="tablist">
       <a class="nav-link active" data-bs-toggle="pill" href="#castle-tab" role="tab" aria-controls="castle-tab" aria-selected="true" onfocus="speakText(this)" tabindex="0">
@@ -627,8 +615,8 @@
       <a class="nav-link" data-bs-toggle="pill" href="#settings-tab" role="tab" aria-controls="settings-tab" aria-selected="false" onfocus="speakText(this)" tabindex="0">
         <i class="fas fa-gears" aria-hidden="true"></i> Settings
       </a>
-      <a class="nav-link" data-bs-toggle="pill" href="#version-tab" role="tab" aria-controls="version-tab" aria-selected="false" onfocus="speakText(this)" tabindex="0">
-        <i class="fas fa-info-circle" aria-hidden="true"></i> Version
+         <a class="nav-link" data-bs-toggle="pill" href="#stats-tab" role="tab" aria-controls="stats-tab" aria-selected="false" onfocus="speakText(this)" tabindex="0">
+        <i class="fas fa-info-circle" aria-hidden="true"></i> statistics
       </a>
     </div>
   </div>
