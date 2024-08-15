@@ -6,6 +6,18 @@
     user-select: none; /* Standard */
 }
 
+/* Disable scrolling on the entire page */
+html, body {
+    overflow: hidden; /* Disable scrolling globally */
+}
+
+/* Enable scrolling in the stats tab */
+#stats-tab {
+    overflow-y: auto; /* Allow vertical scrolling */
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+    max-height: 100vh; /* Ensure it doesn't exceed the viewport height */
+}
+
 /* User Interface Upgrade for Medieval Clicker Game */
 
 /* Style the button with a medieval theme */
