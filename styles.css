@@ -11,11 +11,25 @@ html, body {
     overflow: hidden; /* Disable scrolling globally */
 }
 
-/* Enable scrolling in the stats tab */
+/* Enable scrolling in the stats tab with max-height and controlled scrolling */
 #stats-tab {
     overflow-y: auto; /* Allow vertical scrolling */
     overflow-x: hidden; /* Prevent horizontal scrolling */
-    max-height: 100vh; /* Ensure it doesn't exceed the viewport height */
+    max-height: 110vh; /* Set max height to 80% of the viewport height */
+    padding-right: 20px; /* Add padding to avoid scrollbar overlap */
+    scrollbar-width: thin; /* Make scrollbar thinner for Firefox */
+    -ms-overflow-style: none; /* Hide scrollbar in IE */
+}
+
+/* Hide scrollbar for WebKit browsers */
+#stats-tab::-webkit-scrollbar {
+    width: 8px; /* Set scrollbar width */
+    background-color: transparent; /* Make scrollbar track transparent */
+}
+
+#stats-tab::-webkit-scrollbar-thumb {
+    background-color: #5a3921; /* Scrollbar thumb color */
+    border-radius: 10px; /* Rounded scrollbar thumb */
 }
 
 /* User Interface Upgrade for Medieval Clicker Game */
