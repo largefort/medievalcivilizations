@@ -85,7 +85,6 @@ function updateStatsUI() {
     document.getElementById("stat-speedrun-timer").textContent = 
         `${hours}h ${minutes}m ${seconds}s`;
 }
-
 function updateUI() {
     document.getElementById("counter").textContent = `Gold coins: ${compactNumberFormat(coins)}`;
     document.getElementById("knight-count").textContent = knightCount;
