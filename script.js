@@ -57,7 +57,14 @@ function toggleSoundEffects() {
 document.getElementById("toggle-music").addEventListener("change", toggleMusic);
 document.getElementById("toggle-sfx").addEventListener("change", toggleSoundEffects);
 
+// Initialize gameStartTime once when the game starts
+let gameStartTime = Date.now();
+
+// Function to update stats and timer
 function updateStatsUI() {
+    const currentTime = Date.now();
+
+    // Update stats
     document.getElementById("stat-coins").textContent = compactNumberFormat(coins);
     document.getElementById("stat-knights").textContent = knightCount;
     document.getElementById("stat-archers").textContent = archerCount;
@@ -72,19 +79,25 @@ function updateStatsUI() {
     document.getElementById("stat-passive-income").textContent = compactNumberFormat(passiveIncome);
 
     // Calculate offline earnings since last save
-    const currentTime = Date.now();
     const timeDifference = currentTime - lastSaveTime;
     const offlinePassiveIncome = Math.floor(passiveIncome * (timeDifference / 1000));
     document.getElementById("stat-offline-earnings").textContent = compactNumberFormat(offlinePassiveIncome);
 
     // Calculate and update the speed run timer
-    const timePlayed = Math.floor((currentTime - gameStartTime) / 1000);
+    const timePlayed = Math.floor((currentTime - gameStartTime) / 1000); // Time played in seconds
     const hours = Math.floor(timePlayed / 3600);
     const minutes = Math.floor((timePlayed % 3600) / 60);
     const seconds = timePlayed % 60;
-    document.getElementById("stat-speedrun-timer").textContent = 
-        `${hours}h ${minutes}m ${seconds}s`;
+    
+    // Format the speed run timer
+    const formattedTime = `${hours}h ${minutes}m ${seconds}s`;
+    document.getElementById("stat-speedrun-timer").textContent = formattedTime;
 }
+
+// Update stats every second
+setInterval(updateStatsUI, 1000);
+
+
 function updateUI() {
     document.getElementById("counter").textContent = `Gold coins: ${compactNumberFormat(coins)}`;
     document.getElementById("knight-count").textContent = knightCount;
@@ -105,10 +118,11 @@ function updateUI() {
     document.getElementById("crossbowman-purchase-count").textContent = crossbowmanCount;
     document.getElementById("catapult-purchase-count").textContent = catapultCount;
     document.getElementById("mongol-horseman-purchase-count").textContent = mongolHorsemanCount;
+
     updatePassiveIncome();
     updateUpgradeCosts();
-    updateStatsUI(); // Call the new function to update the stats tab
 }
+
 // Function to calculate total coins per click
 function getCoinsPerClick() {
     return baseCoinsPerClick +
@@ -235,6 +249,15 @@ function updateUpgradeCosts() {
     document.getElementById("crossbowman-cost").textContent = Math.floor(30 * Math.pow(1.15, crossbowmanCount));
     document.getElementById("catapult-cost").textContent = Math.floor(75 * Math.pow(1.15, catapultCount));
     document.getElementById("mongol-horseman-cost").textContent = Math.floor(50 * Math.pow(1.15, mongolHorsemanCount));
+}
+
+
+function compactNumberFormat(num) {
+    if (num < 1e3) return num;
+    if (num >= 1e3 && num < 1e6) return +(num / 1e3).toFixed(1) + "K";
+    if (num >= 1e6 && num < 1e9) return +(num / 1e6).toFixed(1) + "M";
+    if (num >= 1e9 && num < 1e12) return +(num / 1e9).toFixed(1) + "B";
+    return +(num / 1e12).toFixed(1) + "T";
 }
 
 function handleSkillingClick(skill) {
