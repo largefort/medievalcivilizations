@@ -66,14 +66,6 @@ function updateStatsUI() {
 
     // Update stats
     document.getElementById("stat-coins").textContent = compactNumberFormat(coins);
-    document.getElementById("stat-knights").textContent = knightCount;
-    document.getElementById("stat-archers").textContent = archerCount;
-    document.getElementById("stat-wizards").textContent = wizardCount;
-    document.getElementById("stat-paladins").textContent = paladinCount;
-    document.getElementById("stat-pikemen").textContent = pikemanCount;
-    document.getElementById("stat-crossbowmen").textContent = crossbowmanCount;
-    document.getElementById("stat-catapults").textContent = catapultCount;
-    document.getElementById("stat-mongol-horsemen").textContent = mongolHorsemanCount;
     document.getElementById("stat-woodcutting").textContent = woodcuttingLevel;
     document.getElementById("stat-mining").textContent = miningLevel;
     document.getElementById("stat-passive-income").textContent = compactNumberFormat(passiveIncome);
