@@ -119,5 +119,5 @@ body.medieval {
 
 /* Custom Cursor */
 body {
-    cursor: url('cursor.cur'), auto;
+    cursor: url('cursor.cur'), default;
 }
