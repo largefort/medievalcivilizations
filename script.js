@@ -57,6 +57,35 @@ function toggleSoundEffects() {
 document.getElementById("toggle-music").addEventListener("change", toggleMusic);
 document.getElementById("toggle-sfx").addEventListener("change", toggleSoundEffects);
 
+function updateStatsUI() {
+    document.getElementById("stat-coins").textContent = compactNumberFormat(coins);
+    document.getElementById("stat-knights").textContent = knightCount;
+    document.getElementById("stat-archers").textContent = archerCount;
+    document.getElementById("stat-wizards").textContent = wizardCount;
+    document.getElementById("stat-paladins").textContent = paladinCount;
+    document.getElementById("stat-pikemen").textContent = pikemanCount;
+    document.getElementById("stat-crossbowmen").textContent = crossbowmanCount;
+    document.getElementById("stat-catapults").textContent = catapultCount;
+    document.getElementById("stat-mongol-horsemen").textContent = mongolHorsemanCount;
+    document.getElementById("stat-woodcutting").textContent = woodcuttingLevel;
+    document.getElementById("stat-mining").textContent = miningLevel;
+    document.getElementById("stat-passive-income").textContent = compactNumberFormat(passiveIncome);
+
+    // Calculate offline earnings since last save
+    const currentTime = Date.now();
+    const timeDifference = currentTime - lastSaveTime;
+    const offlinePassiveIncome = Math.floor(passiveIncome * (timeDifference / 1000));
+    document.getElementById("stat-offline-earnings").textContent = compactNumberFormat(offlinePassiveIncome);
+
+    // Update date and time
+    const now = new Date();
+    document.getElementById("stat-date").textContent = now.getDate();
+    document.getElementById("stat-time").textContent = now.toLocaleTimeString();
+    document.getElementById("stat-month").textContent = now.toLocaleString('default', { month: 'long' });
+    document.getElementById("stat-year").textContent = now.getFullYear();
+    document.getElementById("stat-seconds").textContent = now.getSeconds();
+}
+
 function updateUI() {
     document.getElementById("counter").textContent = `Gold coins: ${compactNumberFormat(coins)}`;
     document.getElementById("knight-count").textContent = knightCount;
@@ -77,11 +106,10 @@ function updateUI() {
     document.getElementById("crossbowman-purchase-count").textContent = crossbowmanCount;
     document.getElementById("catapult-purchase-count").textContent = catapultCount;
     document.getElementById("mongol-horseman-purchase-count").textContent = mongolHorsemanCount;
-
     updatePassiveIncome();
     updateUpgradeCosts();
+    updateStatsUI(); // Call the new function to update the stats tab
 }
-
 // Function to calculate total coins per click
 function getCoinsPerClick() {
     return baseCoinsPerClick +
