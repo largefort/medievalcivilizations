@@ -77,15 +77,14 @@ function updateStatsUI() {
     const offlinePassiveIncome = Math.floor(passiveIncome * (timeDifference / 1000));
     document.getElementById("stat-offline-earnings").textContent = compactNumberFormat(offlinePassiveIncome);
 
-    // Update date and time
-    const now = new Date();
-    document.getElementById("stat-date").textContent = now.getDate();
-    document.getElementById("stat-time").textContent = now.toLocaleTimeString();
-    document.getElementById("stat-month").textContent = now.toLocaleString('default', { month: 'long' });
-    document.getElementById("stat-year").textContent = now.getFullYear();
-    document.getElementById("stat-seconds").textContent = now.getSeconds();
+    // Calculate and update the speed run timer
+    const timePlayed = Math.floor((currentTime - gameStartTime) / 1000);
+    const hours = Math.floor(timePlayed / 3600);
+    const minutes = Math.floor((timePlayed % 3600) / 60);
+    const seconds = timePlayed % 60;
+    document.getElementById("stat-speedrun-timer").textContent = 
+        `${hours}h ${minutes}m ${seconds}s`;
 }
-
 function updateUI() {
     document.getElementById("counter").textContent = `Gold coins: ${compactNumberFormat(coins)}`;
     document.getElementById("knight-count").textContent = knightCount;
