@@ -58,7 +58,6 @@ document.getElementById("toggle-music").addEventListener("change", toggleMusic);
 document.getElementById("toggle-sfx").addEventListener("change", toggleSoundEffects);
 
 function updateStatsUI() {
-    document.getElementById("stat-speedrun-timer").textContent = `${hours}h ${minutes}m ${seconds}s`;
     document.getElementById("stat-coins").textContent = compactNumberFormat(coins);
     document.getElementById("stat-knights").textContent = knightCount;
     document.getElementById("stat-archers").textContent = archerCount;
