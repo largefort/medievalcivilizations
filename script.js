@@ -70,6 +70,10 @@ function updateStatsUI() {
     document.getElementById("stat-mining").textContent = miningLevel;
     document.getElementById("stat-passive-income").textContent = compactNumberFormat(passiveIncome);
 
+    // Calculate total units purchased
+    const totalUnits = knightCount + archerCount + wizardCount + paladinCount + pikemanCount + crossbowmanCount + catapultCount + mongolHorsemanCount;
+    document.getElementById("stat-units").textContent = totalUnits;
+
     // Calculate offline earnings since last save
     const timeDifference = currentTime - lastSaveTime;
     const offlinePassiveIncome = Math.floor(passiveIncome * (timeDifference / 1000));
