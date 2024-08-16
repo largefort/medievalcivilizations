@@ -13,258 +13,256 @@
   <link rel="stylesheet" href="css/medievalstyles.css">
   <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
   <style>
-    /* Import medieval style font */
- @font-face {
-     font-family: 'MedievalFont';
-     src: url('medievalfont.woff') format('woff');
- }
+/* Import medieval style font */
+@font-face {
+    font-family: 'MedievalFont';
+    src: url('medievalfont.woff') format('woff');
+}
 
- html, body {
-     height: 100%;
-     margin: 0;
-     padding: 0;
-     position: relative;
-     background-image: url('images/dark_parchment.jpg');
-     background-size: cover;
-     background-attachment: fixed;
- }
+/* Global Styles */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    background-image: url('images/dark_parchment.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+    font-family: 'MedievalFont', serif;
+    color: #dcd0c0;
+    text-shadow: 1px 1px 2px #000;
+    animation: fadeIn 2s ease-in;
+}
 
- body {
-     font-family: 'MedievalFont', serif;
-     color: #dcd0c0;
-     text-shadow: 1px 1px 2px #000;
-     animation: fadeIn 2s ease-in;
- }
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
 
- @keyframes fadeIn {
-     from { opacity: 0; }
-     to { opacity: 1; }
- }
+/* Container styling */
+.container {
+    background-color: rgba(0, 0, 0, 0.7);
+    border: 10px double #8c7a6b;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+    margin-top: 50px;
+    background-image: url('images/leather_texture.jpg');
+    animation: slideIn 1s ease-in;
+}
 
- .container {
-     background-color: rgba(0, 0, 0, 0.7);
-     border: 10px double #8c7a6b;
-     padding: 20px;
-     border-radius: 10px;
-     box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
-     margin-top: 50px;
-     background-image: url('images/leather_texture.jpg');
-     animation: slideIn 1s ease-in;
- }
+@keyframes slideIn {
+    from { transform: translateY(-100%); }
+    to { transform: translateY(0); }
+}
 
- @keyframes slideIn {
-     from { transform: translateY(-100%); }
-     to { transform: translateY(0); }
- }
+/* Navigation Pills */
+.nav-pills .nav-link {
+    font-size: 18px;
+    padding: 10px 15px;
+    background-color: #6b4e37;
+    border-radius: 10px;
+    color: #ffd700;
+    margin: 5px;
+    background-image: url('images/wood_texture.jpg');
+    text-shadow: 1px 1px 2px #000;
+    transition: background-color 0.3s, color 0.3s, transform 0.3s;
+    animation: pulse 2s infinite;
+}
 
- .nav-pills .nav-link {
-     font-size: 18px;
-     padding: 10px 10px;
-     background-color: #6b4e37;
-     border-radius: 10px;
-     color: #ffd700;
-     margin: 5px;
-     transition: background-color 0.3s, color 0.3s, transform 0.3s;
-     background-image: url('images/wood_texture.jpg');
-     text-shadow: 1px 1px 2px #000;
-     animation: pulse 2s infinite;
- }
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
 
- @keyframes pulse {
-     0%, 100% { transform: scale(1); }
-     50% { transform: scale(1.05); }
- }
+@media (max-width: 768px) {
+    .nav-pills .nav-link {
+        font-size: 16px;
+        padding: 8px 10px;
+    }
+}
 
- @media (max-width: 768px) {
-     .nav-pills .nav-link {
-         font-size: 16px;
-         padding: 8px 8px;
-     }
- }
+@media (max-width: 480px) {
+    .nav-pills .nav-link {
+        font-size: 14px;
+        padding: 6px 8px;
+    }
+}
 
- @media (max-width: 480px) {
-     .nav-pills .nav-link {
-         font-size: 14px;
-         padding: 6px 6px;
-     }
- }
+.nav-pills .nav-link.active, .nav-pills .nav-link:hover {
+    background-color: #50372c;
+    color: #ffffff;
+    font-weight: bold;
+    transform: scale(1.1);
+}
 
- .nav-pills .nav-link.active, .nav-pills .nav-link:hover {
-     background-color: #50372c;
-     color: #ffffff;
-     font-weight: bold;
-     transform: scale(1.1);
- }
+/* Upgrade button styles */
+.upgrade {
+    background-image: url('images/parchment_texture.jpg');
+    color: #fffbeb;
+    border: 3px solid #4a3425;
+    cursor: pointer;
+    border-radius: 10px;
+    padding: 10px 15px;
+    transition: background-color 0.3s, color 0.3s, transform 0.3s;
+    text-shadow: 1px 1px 2px #000;
+    animation: glow 2s infinite alternate;
+}
 
- .upgrade {
-     background-image: url('images/parchment_texture.jpg');
-     color: #fffbeb;
-     border: 3px solid #4a3425;
-     cursor: pointer;
-     transition: background-color 0.3s, color 0.3s, transform 0.3s;
-     border-radius: 10px;
-     position: relative;
-     background-size: cover;
-     text-shadow: 1px 1px 2px #000;
-     animation: glow 2s infinite alternate;
- }
+@keyframes glow {
+    from { box-shadow: 0 0 10px #ffd700; }
+    to { box-shadow: 0 0 20px #ffd700; }
+}
 
- @keyframes glow {
-     from { box-shadow: 0 0 10px #ffd700; }
-     to { box-shadow: 0 0 20px #ffd700; }
- }
+.upgrade:hover {
+    background-color: #3e2a1b;
+    color: #f4e4c3;
+    transform: scale(1.1);
+}
 
- .upgrade:hover {
-     background-color: #3e2a1b;
-     color: #f4e4c3;
-     transform: scale(1.1);
- }
+.upgrade .purchase-count {
+    position: absolute;
+    bottom: 5px;
+    right: 10px;
+    font-size: 1.2em;
+    color: #ffd700;
+    text-shadow: 1px 1px 2px #000;
+}
 
- .upgrade .purchase-count {
-     position: absolute;
-     bottom: 5px;
-     right: 10px;
-     font-size: 1.2em;
-     color: #ffd700;
-     text-shadow: 1px 1px 2px #000;
- }
+/* Modal content styles */
+.modal-content {
+    background-color: #261c1a;
+    color: #f7dfc4;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    background-image: url('images/parchment_texture.jpg');
+    animation: appear 0.5s ease-in-out;
+}
 
- .modal-content {
-     background-color: #261c1a;
-     color: #f7dfc4;
-     padding: 20px;
-     border-radius: 10px;
-     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-     text-align: center;
-     background-image: url('images/parchment_texture.jpg');
-     animation: appear 0.5s ease-in-out;
- }
+@keyframes appear {
+    from { transform: scale(0); }
+    to { transform: scale(1); }
+}
 
- @keyframes appear {
-     from { transform: scale(0); }
-     to { transform: scale(1); }
- }
+/* Castle image styling */
+.castle-image {
+    border: 5px solid #543c2c;
+    border-radius: 10px;
+    max-width: 100%;
+    height: auto;
+    background-image: url('images/stone_texture.jpg');
+    transition: transform 0.3s;
+    cursor: pointer;
+}
 
- .castle-image {
-     border: 5px solid #543c2c;
-     border-radius: 10px;
-     max-width: 100%;
-     height: auto;
-     background-image: url('images/stone_texture.jpg');
-     transition: transform 0.3s;
-     cursor: pointer;
- }
+.castle-image:active {
+    animation: clickAnimation 0.2s ease-in-out;
+}
 
- .castle-image:active {
-     animation: clickAnimation 0.2s ease-in-out;
- }
+@keyframes clickAnimation {
+    0% { transform: scale(1); }
+    50% { transform: scale(0.9); }
+    100% { transform: scale(1); }
+}
 
- @keyframes clickAnimation {
-     0% { transform: scale(1); }
-     50% { transform: scale(0.9); }
-     100% { transform: scale(1); }
- }
+/* Ad banner styling */
+.ad-banner {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    background-color: #543c2c;
+    color: #f7dfc4;
+    text-align: center;
+    padding: 10px 0;
+    box-sizing: border-box;
+    background-image: url('images/wood_texture.jpg');
+    text-shadow: 1px 1px 2px #000;
+    animation: bounce 3s infinite;
+}
 
- .ad-banner {
-     position: absolute;
-     bottom: 0;
-     left: 0;
-     width: 100%;
-     height: 50px;
-     background-color: #543c2c;
-     color: #f7dfc4;
-     text-align: center;
-     padding: 10px 0;
-     box-sizing: border-box;
-     background-image: url('images/wood_texture.jpg');
-     text-shadow: 1px 1px 2px #000;
-     animation: bounce 3s infinite;
- }
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
 
- @keyframes bounce {
-     0%, 100% { transform: translateY(0); }
-     50% { transform: translateY(-10px); }
- }
+#uuid-display {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    color: gold;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 5px;
+    border-radius: 5px;
+    z-index: 1000;
+    text-shadow: 1px 1px 2px #000;
+    filter: drop-shadow(0 0 10px #3e2a1b);
+    animation: fadeIn 2s ease-in;
+}
 
- #uuid-display {
-     position: fixed;
-     top: 10px;
-     left: 10px;
-     color: gold;
-     background-color: rgba(0, 0, 0, 0.5);
-     padding: 5px;
-     border-radius: 5px;
-     z-index: 1000;
-     text-shadow: 1px 1px 2px #000;
-     filter: drop-shadow(0 0 10px #3e2a1b);
-     animation: fadeIn 2s ease-in;
- }
+/* Medieval note styling */
+.medieval-note {
+    font-family: 'MedievalFont', serif;
+    color: #ffd700;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 10px;
+    border: 2px solid #8c7a6b;
+    border-radius: 10px;
+    margin-top: 10px;
+    text-shadow: 1px 1px 2px #000;
+    animation: flicker 1.5s infinite alternate;
+}
 
- .medieval-note {
-     font-family: 'MedievalFont', serif;
-     color: #ffd700;
-     background-color: rgba(0, 0, 0, 0.7);
-     padding: 10px;
-     border: 2px solid #8c7a6b;
-     border-radius: 10px;
-     margin-top: 10px;
-     text-shadow: 1px 1px 2px #000;
-     animation: flicker 1.5s infinite alternate;
- }
+@keyframes flicker {
+    from { opacity: 1; }
+    to { opacity: 0.8; }
+}
 
- @keyframes flicker {
-     from { opacity: 1; }
-     to { opacity: 0.8; }
- }
+/* Bottom Navigation Bar */
+.nav-bottom {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-image: url('images/wood_texture.jpg');
+    border-top: 5px solid #8c7a6b;
+    padding: 15px 0;
+    box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.7);
+    animation: slideUp 1s ease-in;
+}
 
- .nav-bottom {
-     display: flex;
-     justify-content: space-around;
-     align-items: center;
-     background-image: url('images/wood_texture.jpg');
-     border-top: 5px solid #8c7a6b;
-     padding: 10px 0;
-     box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.5);
-     animation: slideUp 1s ease-in;
- }
+@keyframes slideUp {
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
+}
 
- @keyframes slideUp {
-     from { transform: translateY(100%); }
-     to { transform: translateY(0); }
- }
+.nav-bottom .nav-link {
+    flex: 1;
+    text-align: center;
+    color: #ffd700;
+    text-decoration: none;
+    padding: 15px 0;
+    font-family: 'MedievalFont', serif;
+    font-size: 18px;
+    text-shadow: 2px 2px 4px #000;
+    transition: transform 0.3s, background-color 0.3s;
+}
 
- .nav-bottom .nav-link {
-     flex: 1;
-     text-align: center;
-     color: #ffd700;
-     text-decoration: none;
-     padding: 10px 0;
-     font-family: 'MedievalFont', serif;
-     text-shadow: 1px 1px 2px #000;
-     transition: transform 0.3s;
- }
+.nav-bottom .nav-link.active, .nav-bottom .nav-link:hover {
+    background-color: #50372c;
+    color: #ffffff;
+    transform: scale(1.2);
+}
 
- .nav-bottom .nav-link i {
-     display: block;
-     font-size: 24px;
-     margin-bottom: 5px;
- }
-
- .nav-bottom .nav-link.active, .nav-bottom .nav-link:hover {
-     background-color: #50372c;
-     color: #ffffff;
-     transform: scale(1.1);
- }
-
- @import url('https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap');
-
+/* Floating Text Animation and Styles */
 .floating-text {
     position: fixed;
     font-size: 24px;
     color: gold;
     font-family: 'UnifrakturCook', cursive;
     text-shadow: 2px 2px 4px #000000;
-    animation: floatUp 1s ease-out forwards;
+    animation: floatUp 1s ease-out forwards, floatFade 3s ease-in-out infinite alternate;
     pointer-events: none;
     z-index: 1000;
 }
@@ -280,55 +278,68 @@
     }
 }
 
- /* Version Tab Styles */
- #version-history-box {
-     background-color: rgba(0, 0, 0, 0.8);
-     border: 5px double #8c7a6b;
-     border-radius: 10px;
-     padding: 20px;
-     margin-top: 20px;
-     box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
-     background-image: url('images/parchment_texture.jpg');
-     max-height: 50vh; /* Limit the height to 70% of the viewport height */
-     overflow-y: auto; /* Enable vertical scrolling */
- }
+@keyframes floatFade {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    50% {
+        opacity: 0.6;
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(-10px);
+    }
+}
 
- #version-history-box h3 {
-     color: #ffd700;
-     text-align: center;
-     margin-bottom: 20px;
-     text-shadow: 1px 1px 2px #000;
- }
+/* Vignette Effect Overlay */
+.vignette-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background: radial-gradient(circle, transparent, rgba(0, 0, 0, 0.7));
+    z-index: 10;
+    opacity: 0.8;
+}
 
- .version-entry {
-     background-color: rgba(0, 0, 0, 0.7);
-     border: 2px solid #8c7a6b;
-     padding: 10px;
-     border-radius: 10px;
-     margin-bottom: 15px;
-     animation: fadeIn 1s ease-in-out;
- }
+/* Loading Spinner */
+.loading-spinner {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    font-size: 24px;
+    color: #ffd700;
+    text-align: center;
+    animation: spin 2s linear infinite;
+}
 
- .version-entry h4 {
-     color: #ffd700;
-     margin-bottom: 5px;
-     text-shadow: 1px 1px 2px #000;
- }
+@keyframes spin {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+}
 
- .version-entry p {
-     margin-bottom: 0;
-     color: #f4e4c3;
-     text-shadow: 1px 1px 2px #000;
- }
-    <style>
-  /* Apply the medieval font to the whole body */
-  body {
-    font-family: 'Uncial Antiqua', cursive;
-  }
+/* Background blur effect during loading */
+.loading-blur {
+    filter: blur(5px);
+    transition: filter 0.5s ease;
+}
 
-  /* Medieval button styles */
-  button {
-    font-family: 'Uncial Antiqua', cursive;
+/* Loading percentage */
+.loading-percentage {
+    margin-top: 10px;
+    font-size: 16px;
+    color: #ffd700;
+    text-shadow: 1px 1px 2px #000;
+}
+
+/* Medieval button styles */
+button {
+    font-family: 'MedievalFont', cursive;
     background-color: #c19a6b; /* Light brown color */
     color: #fff;
     border: 2px solid #8b4513; /* Darker brown border */
@@ -339,93 +350,94 @@
     box-shadow: 0 4px #8b4513; /* Shadow for a 3D effect */
     text-shadow: 1px 1px 2px #000; /* Slight text shadow for depth */
     transition: all 0.3s ease;
-  }
+}
 
-  button:hover {
+button:hover {
     background-color: #a98255; /* Slightly darker on hover */
     box-shadow: 0 2px #8b4513;
     transform: translateY(2px); /* Simulates button press */
-  }
+}
 
-  button:active {
+button:active {
     background-color: #8b4513; /* Even darker when active */
     box-shadow: 0 1px #8b4513;
     transform: translateY(4px);
-  }
+}
 
-  /* Hidden file input should not be visible */
-  #file-input {
-    display: none;
-  }
-      .medieval-style {
-    font-family: 'MedievalSharp', cursive; /* Example medieval font */
-    background-color: #f4f4f4;
-    border: 2px solid #d4af37;
-    padding: 20px;
-    max-width: 500px;
-    margin: auto;
-  }
-
-  /* Modal styles */
-  .modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-  }
-
-  .modal-content {
-    background-color: #fefefe;
-    margin: 15% auto; /* 15% from the top and centered */
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
-  }
-
-  .close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-  }
-
-  .close:hover,
-  .close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-  }
-
-  .form-group {
-    margin-bottom: 15px;
-  }
-
-  .form-group label {
-    display: block;
-    margin-bottom: 5px;
-  }
-
-  .form-group input[type="email"],
-  .form-group textarea,
-  .form-group input[type="file"] {
-    width: 100%;
-    padding: 8px;
-    box-sizing: border-box;
-  }
-
-  #bugReportForm button[type="submit"] {
+/* Styles for the hidden Graph button (shown on mobile under certain conditions) */
+#graph-btn {
     background-color: #d4af37;
     color: white;
     padding: 10px 15px;
     border: none;
     cursor: pointer;
-  }
+    border-radius: 10px;
+    margin-top: 15px;
+    font-family: 'MedievalFont', serif;
+    font-size: 18px;
+    box-shadow: 0 4px #8b4513;
+    text-shadow: 1px 1px 2px #000;
+    transition: all 0.3s ease;
+    display: none; /* Hidden by default */
+}
+
+#graph-btn:hover {
+    background-color: #b89730;
+    box-shadow: 0 2px #8b4513;
+    transform: translateY(2px);
+}
+
+#graph-btn:active {
+    background-color: #8b4513;
+    box-shadow: 0 1px #8b4513;
+    transform: translateY(4px);
+}
+
+/* Version history box styling */
+#version-history-box {
+    background-color: rgba(0, 0, 0, 0.8);
+    border: 5px double #8c7a6b;
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 20px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    background-image: url('images/parchment_texture.jpg');
+    max-height: 50vh;
+    overflow-y: auto;
+}
+
+#version-history-box h3 {
+    color: #ffd700;
+    text-align: center;
+    margin-bottom: 20px;
+    text-shadow: 1px 1px 2px #000;
+}
+
+.version-entry {
+    background-color: rgba(0, 0, 0, 0.7);
+    border: 2px solid #8c7a6b;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    animation: fadeIn 1s ease-in-out;
+}
+
+.version-entry h4 {
+    color: #ffd700;
+    margin-bottom: 5px;
+    text-shadow: 1px 1px 2px #000;
+}
+
+.version-entry p {
+    margin-bottom: 0;
+    color: #f4e4c3;
+    text-shadow: 1px 1px 2px #000;
+}
+
+/* Hide file input */
+#file-input {
+    display: none;
+}
 </style>
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuid.min.js"></script>
@@ -543,7 +555,7 @@
       </div>
     </div>
 
-    <div class="tab-pane fade" id="settings-tab" role="tabpanel" aria-labelledby="settings-tab-tab">
+   <div class="tab-pane fade" id="settings-tab" role="tabpanel" aria-labelledby="settings-tab-tab">
   <div class="text-center">
     <h2>Settings</h2>
     <div class="form-check">
@@ -570,7 +582,9 @@
     <button id="load-btn" onclick="loadGame()">Load Game</button>
     <!-- Hidden file input for loading -->
     <input type="file" id="file-input" accept=".txt" style="display:none;" onchange="handleFileSelect(event)">
-
+    
+    <!-- Hidden Graph Button -->
+    <button id="graph-btn" style="display:none;" onclick="toggleGraphVisibility()">Show Graph</button>
   </div>
 </div>
     
