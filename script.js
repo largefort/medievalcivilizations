@@ -57,8 +57,14 @@ function toggleSoundEffects() {
 document.getElementById("toggle-music").addEventListener("change", toggleMusic);
 document.getElementById("toggle-sfx").addEventListener("change", toggleSoundEffects);
 
-// Initialize gameStartTime once when the game starts
-let gameStartTime = Date.now();
+// Initialize gameStartTime, check localStorage first
+let gameStartTime = localStorage.getItem('gameStartTime');
+
+if (!gameStartTime) {
+    // If no start time is found in localStorage, set it to the current time
+    gameStartTime = Date.now();
+    localStorage.setItem('gameStartTime', gameStartTime);
+}
 
 // Function to update stats and timer
 function updateStatsUI() {
@@ -90,8 +96,17 @@ function updateStatsUI() {
     document.getElementById("stat-speedrun-timer").textContent = formattedTime;
 }
 
+// Save the current game state including start time whenever necessary
+function saveGameState() {
+    localStorage.setItem('gameStartTime', gameStartTime);
+    // Save other game state data if needed
+}
+
+// Call saveGameState function periodically or when the game is about to close
+window.addEventListener('beforeunload', saveGameState);
+
 // Update stats every second
-setInterval(updateStatsUI, 1000);
+setInterval(updateStatsUI, 1000)
 
 
 function updateUI() {
