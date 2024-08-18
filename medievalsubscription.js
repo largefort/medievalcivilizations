@@ -1,55 +1,54 @@
-const paymentsClient = new google.payments.api.PaymentsClient({ environment: 'TEST' });
+let isSubscribed = false; // Variable to track subscription status
 
-function onGooglePayLoaded() {
-  const paymentDataRequest = getGooglePaymentDataRequest();
-  paymentsClient.isReadyToPay(paymentDataRequest)
-    .then(function(response) {
-      if (response.result) {
-        createAndAddButton();
-      }
-    })
-    .catch(function(err) {
-      console.error(err);
-    });
+function initializeSubscription() {
+  loadSubscriptionStatus();
 }
 
-function getGooglePaymentDataRequest() {
-  const paymentDataRequest = Object.assign({}, baseRequest);
-  paymentDataRequest.allowedPaymentMethods = [baseCardPaymentMethod];
-  paymentDataRequest.transactionInfo = getTransactionInfo();
-  paymentDataRequest.merchantInfo = {
-    merchantId: 'BCR2DN4TS6WMXTAI',
-    merchantName: 'Medieval+'
-  };
-  return paymentDataRequest;
-}
+function loadSubscriptionStatus() {
+  const transaction = db.transaction(["gameState"], "readonly");
+  const store = transaction.objectStore("gameState");
+  const request = store.get("currentGameState");
 
-function getTransactionInfo() {
-  return {
-    totalPriceStatus: 'FINAL',
-    totalPrice: '5.99',
-    currencyCode: 'USD',
+  request.onsuccess = function(event) {
+    if (request.result) {
+      isSubscribed = request.result.isSubscribed || false;
+    }
   };
 }
 
-function createAndAddButton() {
-  const button = paymentsClient.createButton({
-    onClick: onGooglePaymentButtonClicked,
-  });
-  document.getElementById('container').appendChild(button);
+function saveSubscriptionStatus() {
+  const transaction = db.transaction(["gameState"], "readwrite");
+  const store = transaction.objectStore("gameState");
+
+  const gameState = {
+    id: "currentGameState",
+    isSubscribed: isSubscribed
+  };
+
+  store.put(gameState);
 }
 
-function onGooglePaymentButtonClicked() {
-  const paymentDataRequest = getGooglePaymentDataRequest();
-  paymentsClient.loadPaymentData(paymentDataRequest)
-    .then(function(paymentData) {
-      processPayment(paymentData);
-    })
-    .catch(function(err) {
-      console.error(err);
-    });
+function checkSubscription() {
+  if (!isSubscribed) {
+    openSubscriptionModal();
+    return false;
+  }
+  return true;
 }
 
-function processPayment(paymentData) {
-  unlockFeatures(); // Calls unlockFeatures from medievalsubscription.js
+function unlockFeatures() {
+  isSubscribed = true;
+  saveSubscriptionStatus();
+  closeSubscriptionModal();
+  alert("Subscription successful! All features are now unlocked.");
 }
+
+function openSubscriptionModal() {
+  document.getElementById("subscriptionModal").style.display = "block";
+}
+
+function closeSubscriptionModal() {
+  document.getElementById("subscriptionModal").style.display = "none";
+}
+
+initializeSubscription();
