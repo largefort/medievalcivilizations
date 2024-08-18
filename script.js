@@ -92,7 +92,7 @@ function updateStatsUI() {
     const seconds = timePlayed % 60;
     
     // Format the speed run timer
-    const formattedTime = `${hours}h ${minutes}m ${seconds}s`;
+    const formattedTime = `${days}d ${hours}h ${minutes}m ${seconds}s`;
     document.getElementById("stat-speedrun-timer").textContent = formattedTime;
 }
 
