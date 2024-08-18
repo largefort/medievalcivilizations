@@ -433,6 +433,9 @@
   <!-- Yandex Games SDK -->
 <script src="https://sdk.games.s3.yandex.net/sdk.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+  <script async
+  src="https://pay.google.com/gp/p/js/pay.js"
+  onload="onGooglePayLoaded()"></script>
 <body>
 <div id="uuid-display" aria-live="polite"></div>
 <div class="container">
@@ -611,6 +614,7 @@
   </div>
 </div>
 </body>
+
 
     <button id="fullscreen-button" style="display: none;" onclick="autoEnterFullscreen()" aria-label="Enter Fullscreen" onfocus="speakText(this)" tabindex="0">Enter Fullscreen</button>
   <script>
@@ -803,6 +807,9 @@
     <script src="js/index2.js"></script>
     <script src="GameAnalytics.js"></script>
     <script src="GameAnalytics.min.js"></script>
+  <script src="medievalsubscription.js"></script>
+  <script src="paymentprocess.js"></script>
+  <script src="lockedfeatures.js"></script>
     <!-- GameAnalytics -->
     <audio id="medievaltheme" loop autoplay>
       <source src="audio/the%20darklands.mp3" type="audio/mp3">
@@ -810,4 +817,14 @@
     </audio>
     <audio id="click-sound" src="click-sound.mp3" type="audio/mp3"></audio>
     </body>
+  <!-- Subscription Modal -->
+<div id="subscriptionModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeSubscriptionModal()">&times;</span>
+    <h2>Subscribe to Medieval+</h2>
+    <p>Unlock all gameplay features for just $5.99 per month!</p>
+    <div id="container"></div> <!-- Google Pay button will appear here -->
+  </div>
+</div>
+</body>
 </html>
