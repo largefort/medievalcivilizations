@@ -2,6 +2,7 @@ let isSubscribed = false; // Variable to track subscription status
 
 function initializeSubscription() {
   loadSubscriptionStatus();
+  updateSubscriptionUI();
 }
 
 function loadSubscriptionStatus() {
@@ -28,27 +29,29 @@ function saveSubscriptionStatus() {
   store.put(gameState);
 }
 
-function checkSubscription() {
-  if (!isSubscribed) {
-    openSubscriptionModal();
-    return false;
+function startSubscription() {
+  if (isSubscribed) {
+    alert("You are already subscribed to Medieval+!");
+    return;
   }
-  return true;
+
+  // Trigger the payment process
+  startPaymentProcess();
 }
 
 function unlockFeatures() {
   isSubscribed = true;
   saveSubscriptionStatus();
-  closeSubscriptionModal();
+  updateSubscriptionUI();
   alert("Subscription successful! All features are now unlocked.");
 }
 
-function openSubscriptionModal() {
-  document.getElementById("subscriptionModal").style.display = "block";
-}
-
-function closeSubscriptionModal() {
-  document.getElementById("subscriptionModal").style.display = "none";
+function updateSubscriptionUI() {
+  const subscribeButton = document.getElementById("subscribe-button");
+  if (isSubscribed) {
+    subscribeButton.textContent = "Subscribed to Medieval+";
+    subscribeButton.disabled = true;
+  }
 }
 
 initializeSubscription();
