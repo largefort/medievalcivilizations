@@ -1,5 +1,29 @@
+// Define the base request object
+const baseRequest = {
+  apiVersion: 2,
+  apiVersionMinor: 0
+};
+
+// Define the card payment method object
+const baseCardPaymentMethod = {
+  type: 'CARD',
+  parameters: {
+    allowedAuthMethods: ['PAN_ONLY', 'CRYPTOGRAM_3DS'],
+    allowedCardNetworks: ['MASTERCARD', 'VISA']
+  },
+  tokenizationSpecification: {
+    type: 'PAYMENT_GATEWAY',
+    parameters: {
+      gateway: 'example', // Replace 'example' with your payment gateway
+      gatewayMerchantId: 'exampleGatewayMerchantId' // Replace with your merchant ID
+    }
+  }
+};
+
+// Initialize the Google Pay API client
 const paymentsClient = new google.payments.api.PaymentsClient({ environment: 'TEST' });
 
+// This function is called when the Google Pay API script is loaded
 function onGooglePayLoaded() {
   const paymentDataRequest = getGooglePaymentDataRequest();
   paymentsClient.isReadyToPay(paymentDataRequest)
@@ -13,6 +37,7 @@ function onGooglePayLoaded() {
     });
 }
 
+// This function creates the Google Payment Data Request
 function getGooglePaymentDataRequest() {
   const paymentDataRequest = Object.assign({}, baseRequest);
   paymentDataRequest.allowedPaymentMethods = [baseCardPaymentMethod];
@@ -24,6 +49,7 @@ function getGooglePaymentDataRequest() {
   return paymentDataRequest;
 }
 
+// This function returns the transaction info
 function getTransactionInfo() {
   return {
     totalPriceStatus: 'FINAL',
@@ -32,7 +58,16 @@ function getTransactionInfo() {
   };
 }
 
-function startPaymentProcess() {
+// This function creates and adds the Google Pay button to the UI
+function createAndAddButton() {
+  const button = paymentsClient.createButton({
+    onClick: onGooglePaymentButtonClicked,
+  });
+  document.getElementById('container').appendChild(button);
+}
+
+// This function handles the button click and processes the payment
+function onGooglePaymentButtonClicked() {
   const paymentDataRequest = getGooglePaymentDataRequest();
   paymentsClient.loadPaymentData(paymentDataRequest)
     .then(function(paymentData) {
@@ -43,6 +78,7 @@ function startPaymentProcess() {
     });
 }
 
+// This function processes the payment and unlocks features
 function processPayment(paymentData) {
   unlockFeatures(); // Calls unlockFeatures from medievalsubscription.js
 }
