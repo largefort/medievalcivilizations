@@ -18,7 +18,7 @@ function getGooglePaymentDataRequest() {
   paymentDataRequest.allowedPaymentMethods = [baseCardPaymentMethod];
   paymentDataRequest.transactionInfo = getTransactionInfo();
   paymentDataRequest.merchantInfo = {
-    merchantId: 'YOUR_MERCHANT_ID',
+    merchantId: 'BCR2DN4TS6WMXTAI',
     merchantName: 'Medieval+'
   };
   return paymentDataRequest;
