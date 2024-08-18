@@ -97,22 +97,74 @@ function buyUpgrade(upgradeType) {
     updateUI();
 }
 function updateUI() {
-    document.getElementById("counter").textContent = `Gold coins: ${compactNumberFormat(coins)}`;
-    document.getElementById("knight-count").textContent = knightCount;
-    document.getElementById("archer-count").textContent = archerCount;
-    document.getElementById("wizard-count").textContent = wizardCount;
-    document.getElementById("woodcutting-level").textContent = woodcuttingLevel;
-    document.getElementById("mining-level").textContent = miningLevel;
-    document.getElementById("paladin-count").textContent = paladinCount;
-    document.getElementById("pikeman-count").textContent = pikemanCount;
-    document.getElementById("crossbowman-count").textContent = crossbowmanCount;
-    document.getElementById("catapult-count").textContent = catapultCount;
-    document.getElementById("mongol-horseman-count").textContent = mongolHorsemanCount;
-    document.getElementById("knight-purchase-count").textContent = knightCount;
-    document.getElementById("archer-purchase-count").textContent = archerCount;
-    document.getElementById("wizard-purchase-count").textContent = wizardCount;
-    document.getElementById("paladin-purchase-count").textContent = paladinCount;
-    document.getElementById("pikeman-purchase-count").textContent = pikemanCount;
-    document.getElementById("crossbowman-purchase-count").textContent = crossbowmanCount;
-    document.getElementById("catapult-purchase-count").textContent = catapultCount;
-    document.getElementById("mongol-horseman-purchase-count").textContent = mongolHorsemanCount;
+  // Update the gold coins counter
+  document.getElementById("counter").textContent = `Gold coins: ${coins}`;
+
+  // Update the unit counts
+  document.getElementById('knight-count').querySelector('span').textContent = knightCount;
+  document.getElementById('archer-count').querySelector('span').textContent = archerCount;
+  document.getElementById('wizard-count').querySelector('span').textContent = wizardCount;
+  document.getElementById('paladin-count').querySelector('span').textContent = paladinCount;
+  document.getElementById('pikeman-count').querySelector('span').textContent = pikemanCount;
+  document.getElementById('crossbowman-count').querySelector('span').textContent = crossbowmanCount;
+  document.getElementById('catapult-count').querySelector('span').textContent = catapultCount;
+  document.getElementById('mongol-horseman-count').querySelector('span').textContent = mongolHorsemanCount;
+
+  // Update the skill levels
+  document.getElementById('woodcutting-level').textContent = woodcuttingLevel;
+  document.getElementById('mining-level').textContent = miningLevel;
+
+  // Update the costs of upgrades in the shop
+  document.getElementById('knight-cost').textContent = 10 + knightCount * 5;
+  document.getElementById('archer-cost').textContent = 25 + archerCount * 10;
+  document.getElementById('wizard-cost').textContent = 50 + wizardCount * 20;
+  document.getElementById('paladin-cost').textContent = 100 + paladinCount * 50;
+  document.getElementById('pikeman-cost').textContent = 15 + pikemanCount * 5;
+  document.getElementById('crossbowman-cost').textContent = 30 + crossbowmanCount * 10;
+  document.getElementById('catapult-cost').textContent = 75 + catapultCount * 20;
+  document.getElementById('mongol-horseman-cost').textContent = 50 + mongolHorsemanCount * 10;
+
+  // Handle UI changes based on subscription status
+  const subscribeButton = document.getElementById("subscribe-button");
+  if (isSubscribed) {
+    subscribeButton.textContent = "Subscribed to Medieval+";
+    subscribeButton.disabled = true;
+
+    // Unlock features if the user is subscribed
+    enableFeatures();
+  } else {
+    subscribeButton.textContent = "Subscribe Now";
+    subscribeButton.disabled = false;
+
+    // Lock features if the user is not subscribed
+    disableFeatures();
+  }
+}
+
+// Enable all features (for subscribers)
+function enableFeatures() {
+  document.querySelectorAll('.upgrade').forEach(upgrade => {
+    upgrade.classList.remove('locked');
+    upgrade.classList.add('enabled');
+  });
+
+  document.getElementById('toggle-music').disabled = false;
+  document.getElementById('toggle-sfx').disabled = false;
+  document.getElementById('toggle-tts').disabled = false;
+  document.getElementById('export-btn').disabled = false;
+  document.getElementById('load-btn').disabled = false;
+}
+
+// Disable all features (for non-subscribers)
+function disableFeatures() {
+  document.querySelectorAll('.upgrade').forEach(upgrade => {
+    upgrade.classList.remove('enabled');
+    upgrade.classList.add('locked');
+  });
+
+  document.getElementById('toggle-music').disabled = true;
+  document.getElementById('toggle-sfx').disabled = true;
+  document.getElementById('toggle-tts').disabled = true;
+  document.getElementById('export-btn').disabled = true;
+  document.getElementById('load-btn').disabled = true;
+}
