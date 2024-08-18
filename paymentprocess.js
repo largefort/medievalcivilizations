@@ -32,14 +32,7 @@ function getTransactionInfo() {
   };
 }
 
-function createAndAddButton() {
-  const button = paymentsClient.createButton({
-    onClick: onGooglePaymentButtonClicked,
-  });
-  document.getElementById('container').appendChild(button);
-}
-
-function onGooglePaymentButtonClicked() {
+function startPaymentProcess() {
   const paymentDataRequest = getGooglePaymentDataRequest();
   paymentsClient.loadPaymentData(paymentDataRequest)
     .then(function(paymentData) {
