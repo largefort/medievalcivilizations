@@ -1,4 +1,5 @@
 /*global cordova, module*/
+
 module.exports=(function(){
 	function callPromise(name){
 		return function(...params){

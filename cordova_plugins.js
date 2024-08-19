@@ -1,19 +1,35 @@
 cordova.define('cordova/plugin_list', function(require, exports, module) {
   module.exports = [
     {
-      "id": "cordova-plugin-tts.tts",
-      "file": "plugins/cordova-plugin-tts/www/tts.js",
-      "pluginId": "cordova-plugin-tts",
+      "id": "cordova-plugin-android-permissions.Permissions",
+      "file": "plugins/cordova-plugin-android-permissions/www/permissions.js",
+      "pluginId": "cordova-plugin-android-permissions",
       "clobbers": [
-        "TTS"
+        "cordova.plugins.permissions"
       ]
     },
     {
-      "id": "com.jafetegill.gameperformance.GamePerformance",
-      "file": "plugins/com.jafetegill.gameperformance/www/GamePerformance.js",
-      "pluginId": "com.jafetegill.gameperformance",
+      "id": "cordova-plugin-device.device",
+      "file": "plugins/cordova-plugin-device/www/device.js",
+      "pluginId": "cordova-plugin-device",
       "clobbers": [
-        "cordova.plugins.GamePerformance"
+        "device"
+      ]
+    },
+    {
+      "id": "cordova-plugin-dialogs.notification",
+      "file": "plugins/cordova-plugin-dialogs/www/notification.js",
+      "pluginId": "cordova-plugin-dialogs",
+      "merges": [
+        "navigator.notification"
+      ]
+    },
+    {
+      "id": "cordova-plugin-dialogs.notification_android",
+      "file": "plugins/cordova-plugin-dialogs/www/android/notification.js",
+      "pluginId": "cordova-plugin-dialogs",
+      "merges": [
+        "navigator.notification"
       ]
     },
     {
@@ -198,19 +214,74 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
       "runs": true
     },
     {
+      "id": "cordova-plugin-filechooser.FileChooser",
+      "file": "plugins/cordova-plugin-filechooser/www/fileChooser.js",
+      "pluginId": "cordova-plugin-filechooser",
+      "clobbers": [
+        "fileChooser"
+      ]
+    },
+    {
+      "id": "cordova-plugin-ionic-webview.IonicWebView",
+      "file": "plugins/cordova-plugin-ionic-webview/src/www/util.js",
+      "pluginId": "cordova-plugin-ionic-webview",
+      "clobbers": [
+        "Ionic.WebView"
+      ]
+    },
+    {
+      "id": "cordova-plugin-permission.Permission",
+      "file": "plugins/cordova-plugin-permission/www/index.js",
+      "pluginId": "cordova-plugin-permission",
+      "clobbers": [
+        "window.plugins.Permission"
+      ]
+    },
+    {
+      "id": "cordova-plugin-permission.tests",
+      "file": "plugins/cordova-plugin-permission/tests/index.spec.js",
+      "pluginId": "cordova-plugin-permission"
+    },
+    {
       "id": "cordova-plugin-saf-mediastore.safMediastore",
       "file": "plugins/cordova-plugin-saf-mediastore/www/safMediastore.js",
       "pluginId": "cordova-plugin-saf-mediastore",
       "clobbers": [
         "cordova.plugins.safMediastore"
       ]
+    },
+    {
+      "id": "cordova-plugin-save-dialog.SaveDialog",
+      "file": "plugins/cordova-plugin-save-dialog/www/android/SaveDialog.js",
+      "pluginId": "cordova-plugin-save-dialog",
+      "clobbers": [
+        "cordova.plugins.saveDialog"
+      ]
+    },
+    {
+      "id": "cordova-plugin-save-dialog.BlobKeeper",
+      "file": "plugins/cordova-plugin-save-dialog/www/android/BlobKeeper.js",
+      "pluginId": "cordova-plugin-save-dialog"
+    },
+    {
+      "id": "cordova-plugin-tts.tts",
+      "file": "plugins/cordova-plugin-tts/www/tts.js",
+      "pluginId": "cordova-plugin-tts",
+      "clobbers": [
+        "TTS"
+      ]
     }
   ];
   module.exports.metadata = {
-    "cordova-plugin-tts": "0.2.3",
-    "com.jafetegill.gameperformance": "0.1.1",
+    "cordova-plugin-android-permissions": "1.1.5",
+    "cordova-plugin-device": "3.0.0",
+    "cordova-plugin-dialogs": "2.0.2",
     "cordova-plugin-file": "8.1.0",
-    "cordova-plugin-fastclick": "1.0.0",
-    "cordova-plugin-saf-mediastore": "0.7.0"
+    "cordova-plugin-filechooser": "1.2.0",
+    "cordova-plugin-ionic-webview": "5.0.0",
+    "cordova-plugin-permission": "0.1.0",
+    "cordova-plugin-saf-mediastore": "0.7.0",
+    "cordova-plugin-save-dialog": "2.0.1",
+    "cordova-plugin-tts": "0.2.3"
   };
 });

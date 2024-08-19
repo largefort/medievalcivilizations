@@ -11,8 +11,7 @@ let catapultCount = 0;
 let mongolHorsemanCount = 0;
 let passiveIncome = 0;
 let lastSaveTime = Date.now(); // Initialize lastSaveTime with the current time
-let baseCoinsPerClick =0;
-
+let baseCoinsPerClick = 0;
 
 // Add an HTML audio element for the upgrade sound
 document.write(`
@@ -24,6 +23,52 @@ document.write(`
 
 // Preload the click sound
 const clickSound = new Audio("click-sound.mp3");
+
+// Load game data from localStorage if available
+function loadGameFromLocalStorage() {
+    const savedGameData = localStorage.getItem('medievalCivilizationsGameData');
+    if (savedGameData) {
+        const gameData = JSON.parse(savedGameData);
+        coins = gameData.coins || coins;
+        knightCount = gameData.knightCount || knightCount;
+        archerCount = gameData.archerCount || archerCount;
+        wizardCount = gameData.wizardCount || wizardCount;
+        woodcuttingLevel = gameData.woodcuttingLevel || woodcuttingLevel;
+        miningLevel = gameData.miningLevel || miningLevel;
+        paladinCount = gameData.paladinCount || paladinCount;
+        pikemanCount = gameData.pikemanCount || pikemanCount;
+        crossbowmanCount = gameData.crossbowmanCount || crossbowmanCount;
+        catapultCount = gameData.catapultCount || catapultCount;
+        mongolHorsemanCount = gameData.mongolHorsemanCount || mongolHorsemanCount;
+        passiveIncome = gameData.passiveIncome || passiveIncome;
+        lastSaveTime = gameData.lastSaveTime || lastSaveTime;
+        baseCoinsPerClick = gameData.baseCoinsPerClick || baseCoinsPerClick;
+    }
+}
+
+// Save game data to localStorage
+function saveGameToLocalStorage() {
+    const gameData = {
+        coins: coins,
+        knightCount: knightCount,
+        archerCount: archerCount,
+        wizardCount: wizardCount,
+        woodcuttingLevel: woodcuttingLevel,
+        miningLevel: miningLevel,
+        paladinCount: paladinCount,
+        pikemanCount: pikemanCount,
+        crossbowmanCount: crossbowmanCount,
+        catapultCount: catapultCount,
+        mongolHorsemanCount: mongolHorsemanCount,
+        passiveIncome: passiveIncome,
+        lastSaveTime: lastSaveTime,
+        baseCoinsPerClick: baseCoinsPerClick
+    };
+    localStorage.setItem('medievalCivilizationsGameData', JSON.stringify(gameData));
+}
+
+// Load game data on startup
+loadGameFromLocalStorage();
 
 // Function to toggle music
 function toggleMusic() {
@@ -90,9 +135,9 @@ function updateStatsUI() {
     const hours = Math.floor(timePlayed / 3600);
     const minutes = Math.floor((timePlayed % 3600) / 60);
     const seconds = timePlayed % 60;
-    
+
     // Format the speed run timer
-    const formattedTime = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+    const formattedTime = `${hours}h ${minutes}m ${seconds}s`;
     document.getElementById("stat-speedrun-timer").textContent = formattedTime;
 }
 
@@ -107,7 +152,6 @@ window.addEventListener('beforeunload', saveGameState);
 
 // Update stats every second
 setInterval(updateStatsUI, 1000)
-
 
 function updateUI() {
     document.getElementById("counter").textContent = `Gold coins: ${compactNumberFormat(coins)}`;
@@ -150,7 +194,6 @@ function getCoinsPerClick() {
 function clickCastle(event) {
     const coinsGained = getCoinsPerClick();
     coins += coinsGained;
-    saveGameData();
     updateUI();
 
     // Play the preloaded click sound
@@ -162,10 +205,8 @@ function clickCastle(event) {
     floatingText.innerText = `+${coinsGained}`;
 
     // Position the floating text at the mouse cursor, adjusted for scroll
-    const pageX = event.pageX;
-    const pageY = event.pageY;
-    floatingText.style.left = `${event.clientX}px`
-    floatingText.style.top = `${event.clientY}px`
+    floatingText.style.left = `${event.clientX}px`;
+    floatingText.style.top = `${event.clientY}px`;
 
     // Add the floating text to the body
     document.body.appendChild(floatingText);
@@ -244,7 +285,6 @@ function buyUpgrade(type) {
         upgradeSound.play();
     }
 
-    saveGameData();
     updateUI();
 }
 
@@ -261,7 +301,6 @@ function updateUpgradeCosts() {
     document.getElementById("catapult-cost").textContent = Math.floor(75 * Math.pow(1.15, catapultCount));
     document.getElementById("mongol-horseman-cost").textContent = Math.floor(50 * Math.pow(1.15, mongolHorsemanCount));
 }
-
 
 function compactNumberFormat(num) {
     if (num < 1e3) return num;
@@ -280,7 +319,6 @@ function handleSkillingClick(skill) {
             miningLevel++;
             break;
     }
-    saveGameData();
     updateUI();
 }
 
@@ -317,11 +355,14 @@ function earnPassiveIncome() {
     coins += offlinePassiveIncome;
     lastSaveTime = currentTime; // Update the last save time
 
-    saveGameData();
     updateUI();
 }
 
+// Earn passive income every second
 setInterval(earnPassiveIncome, 1000);
+
+// Automatically save game state every second
+setInterval(saveGameToLocalStorage, 1000);
 
 // Request fullscreen
 function requestFullscreen(element) {
