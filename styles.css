@@ -6,11 +6,6 @@
     user-select: none; /* Standard */
 }
 
-/* Disable scrolling on the entire page */
-html, body {
-    overflow: hidden; /* Disable scrolling globally */
-}
-
 /* Enable scrolling in the stats tab with max-height and controlled scrolling */
 #stats-tab {
     overflow-y: auto; /* Allow vertical scrolling */
