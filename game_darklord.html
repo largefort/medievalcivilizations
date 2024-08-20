@@ -57,45 +57,44 @@
      to { transform: translateY(0); }
  }
 
-/* Navigation Pills */
-.nav-pills .nav-link {
-    font-size: 18px;
-    padding: 10px 15px;
-    background-color: #6b4e37;
-    border-radius: 10px;
-    color: #ffd700;
-    margin: 5px;
-    background-image: url('images/wood_texture.jpg');
-    text-shadow: 1px 1px 2px #000;
-    transition: background-color 0.3s, color 0.3s, transform 0.3s;
-    animation: pulse 2s infinite;
-}
+ .nav-pills .nav-link {
+     font-size: 18px;
+     padding: 10px 10px;
+     background-color: #6b4e37;
+     border-radius: 10px;
+     color: #ffd700;
+     margin: 5px;
+     transition: background-color 0.3s, color 0.3s, transform 0.3s;
+     background-image: url('images/wood_texture.jpg');
+     text-shadow: 1px 1px 2px #000;
+     animation: pulse 2s infinite;
+ }
 
-@keyframes pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-}
+ @keyframes pulse {
+     0%, 100% { transform: scale(1); }
+     50% { transform: scale(1.05); }
+ }
 
-@media (max-width: 768px) {
-    .nav-pills .nav-link {
-        font-size: 16px;
-        padding: 8px 10px;
-    }
-}
+ @media (max-width: 768px) {
+     .nav-pills .nav-link {
+         font-size: 16px;
+         padding: 8px 8px;
+     }
+ }
 
-@media (max-width: 480px) {
-    .nav-pills .nav-link {
-        font-size: 14px;
-        padding: 6px 8px;
-    }
-}
+ @media (max-width: 480px) {
+     .nav-pills .nav-link {
+         font-size: 14px;
+         padding: 6px 6px;
+     }
+ }
 
-.nav-pills .nav-link.active, .nav-pills .nav-link:hover {
-    background-color: #50372c;
-    color: #ffffff;
-    font-weight: bold;
-    transform: scale(1.1);
-}
+ .nav-pills .nav-link.active, .nav-pills .nav-link:hover {
+     background-color: #50372c;
+     color: #ffffff;
+     font-weight: bold;
+     transform: scale(1.1);
+ }
 
  .upgrade {
      background-image: url('images/parchment_texture.jpg');
@@ -567,11 +566,10 @@
       <img src="idev.png" alt="idev.games image" width="100">
     </a>
     <!-- New buttons for export and load -->
-    <button id="export-btn">Export Game</button>
-    <button id="load-btn">Load Game</button>
+    <button id="export-btn" onclick="exportGame()">Export Game</button>
+    <button id="load-btn" onclick="loadGame()">Load Game</button>
     <!-- Hidden file input for loading -->
     <input type="file" id="file-input" accept=".txt" style="display:none;" onchange="handleFileSelect(event)">
-
   </div>
 </div>
     
@@ -592,6 +590,20 @@
   </div>
 </div>
 
+    <!-- Version Tab -->
+    <div class="tab-pane fade" id="version-tab" role="tabpanel" aria-labelledby="version-tab-tab">
+      <div class="text-center">
+        <h2>Updates Information</h2>
+        <p>latest: 1.0.0</p>
+        <p>Last Updated: August 20, 2024</p>
+        <p>Developed by: Jafet Egill/Fjörðr Games</p>
+        <div id="version-history-box" class="mt-3 p-3 border">
+          <h3>Update History</h3>
+          <div id="version-history"></div>
+        </div>
+      </div>
+    </div>
+
     <div class="nav nav-pills nav-fill fixed-bottom" role="tablist">
       <a class="nav-link active" data-bs-toggle="pill" href="#castle-tab" role="tab" aria-controls="castle-tab" aria-selected="true" onfocus="speakText(this)" tabindex="0">
         <i class="fas fa-chess-rook" aria-hidden="true"></i> Castle
@@ -608,6 +620,9 @@
          <a class="nav-link" data-bs-toggle="pill" href="#stats-tab" role="tab" aria-controls="stats-tab" aria-selected="false" onfocus="speakText(this)" tabindex="0">
         <i class="fas fa-info-circle" aria-hidden="true"></i> statistics
       </a>
+      <a class="nav-link" data-bs-toggle="pill" href="#version-tab" role="tab" aria-controls="version-tab" aria-selected="false" onfocus="speakText(this)" tabindex="0">
+        <i class="fas fa-info-circle" aria-hidden="true"></i> Updates
+      </a>
     </div>
   </div>
 </div>
@@ -616,7 +631,68 @@
     <button id="fullscreen-button" style="display: none;" onclick="autoEnterFullscreen()" aria-label="Enter Fullscreen" onfocus="speakText(this)" tabindex="0">Enter Fullscreen</button>
 
 <script>
+  function getOrGenerateUUID() {
+      let existingUUID = localStorage.getItem('deviceUUID');
+      if (!existingUUID) {
+          let newUUID = uuid.v4();
+          localStorage.setItem('deviceUUID', newUUID);
+          return newUUID;
+      }
+      return existingUUID;
+  }
 
+  const deviceUUID = getOrGenerateUUID();
+  document.getElementById('uuid-display').innerText = `UUID: ${deviceUUID}`;
+
+  let isTTSOn = true;
+
+  function speakText(element) {
+      if (!isTTSOn) return;
+
+      const text = element.getAttribute('aria-label') || element.innerText;
+
+      TTS.speak({
+          text: text,
+          locale: 'en-US',
+          rate: 1.0
+      }, function() {
+          console.log('Success');
+      }, function(reason) {
+          console.log('Error:', reason);
+      });
+  }
+
+  function toggleTTS() {
+      isTTSOn = !isTTSOn;
+
+      const status = isTTSOn ? 'enabled' : 'disabled';
+      TTS.speak({
+          text: `Text-to-speech has been ${status}`,
+          locale: 'en-US',
+          rate: 1.0
+      }, function() {
+          console.log('Success');
+      }, function(reason) {
+          console.log('Error:', reason);
+      });
+  }
+
+  document.addEventListener('deviceready', function() {
+      document.querySelectorAll('[aria-label], .upgrade').forEach(element => {
+          element.addEventListener('click', () => speakText(element));
+      });
+  }, false);
+
+  // Function to update the document title with gold coin count
+  function updateDocumentTitle() {
+      const coinCountElement = document.getElementById('counter');
+      const coinCountText = coinCountElement.textContent || coinCountElement.innerText;
+      const coinCount = coinCountText.replace(/[^0-9]/g, ''); // Extract only the number
+      document.title = `Gold Coins: ${coinCount}`;
+  }
+
+  // Update the title every second
+  setInterval(updateDocumentTitle, 1000);
 </script>
 
     
@@ -626,18 +702,20 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mobilizejs/0.9/mobilize.min.js" integrity="sha512-9kdU3/W11/VXZLHO4mfCSJ1XrZ3tfpgTNCfR/H8PO5GtZ7MZSD/zVcwRDct0f2dd58JD0IZlPi7MAMh4zEl1hg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="script.js"></script>
     <script src="js/exportandload.js"></script>
+    <script src="js/index.js"></script>
     <script src="FileSaver.js"></script>
     <script src="plugins/cordova-plugin-saf-mediastore/www/safMediastore.js"></script>
     <script src="notations.js"></script>
     <script src="versionhistory.js"></script>
     <script src="js/uuid.js"></script>
     <script src="js/bgm.js"></script>
+    <script src="js/index.js"></script>
     <script src="js/index2.js"></script>
     <script src="GameAnalytics.js"></script>
     <script src="GameAnalytics.min.js"></script>
     <!-- GameAnalytics -->
     <audio id="medievaltheme" loop autoplay>
-      <source src="audio/the%20darklands.mp3" type="audio/mp3">
+      <source src="audio/medievaldarklord.mp3" type="audio/mp3">
       Your browser does not support the audio element.
     </audio>
     <audio id="click-sound" src="click-sound.mp3" type="audio/mp3"></audio>

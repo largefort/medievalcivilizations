@@ -57,45 +57,44 @@
      to { transform: translateY(0); }
  }
 
-/* Navigation Pills */
-.nav-pills .nav-link {
-    font-size: 18px;
-    padding: 10px 15px;
-    background-color: #6b4e37;
-    border-radius: 10px;
-    color: #ffd700;
-    margin: 5px;
-    background-image: url('images/wood_texture.jpg');
-    text-shadow: 1px 1px 2px #000;
-    transition: background-color 0.3s, color 0.3s, transform 0.3s;
-    animation: pulse 2s infinite;
-}
+ .nav-pills .nav-link {
+     font-size: 18px;
+     padding: 10px 10px;
+     background-color: #6b4e37;
+     border-radius: 10px;
+     color: #ffd700;
+     margin: 5px;
+     transition: background-color 0.3s, color 0.3s, transform 0.3s;
+     background-image: url('images/wood_texture.jpg');
+     text-shadow: 1px 1px 2px #000;
+     animation: pulse 2s infinite;
+ }
 
-@keyframes pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-}
+ @keyframes pulse {
+     0%, 100% { transform: scale(1); }
+     50% { transform: scale(1.05); }
+ }
 
-@media (max-width: 768px) {
-    .nav-pills .nav-link {
-        font-size: 16px;
-        padding: 8px 10px;
-    }
-}
+ @media (max-width: 768px) {
+     .nav-pills .nav-link {
+         font-size: 16px;
+         padding: 8px 8px;
+     }
+ }
 
-@media (max-width: 480px) {
-    .nav-pills .nav-link {
-        font-size: 14px;
-        padding: 6px 8px;
-    }
-}
+ @media (max-width: 480px) {
+     .nav-pills .nav-link {
+         font-size: 14px;
+         padding: 6px 6px;
+     }
+ }
 
-.nav-pills .nav-link.active, .nav-pills .nav-link:hover {
-    background-color: #50372c;
-    color: #ffffff;
-    font-weight: bold;
-    transform: scale(1.1);
-}
+ .nav-pills .nav-link.active, .nav-pills .nav-link:hover {
+     background-color: #50372c;
+     color: #ffffff;
+     font-weight: bold;
+     transform: scale(1.1);
+ }
 
  .upgrade {
      background-image: url('images/parchment_texture.jpg');
@@ -504,12 +503,12 @@
     <!-- Version Tab -->
     <div class="tab-pane fade" id="version-tab" role="tabpanel" aria-labelledby="version-tab-tab">
       <div class="text-center">
-        <h2>Version Information</h2>
+        <h2>Updates Information</h2>
         <p>latest: 1.0.0</p>
-        <p>Last Updated: July 6, 2024</p>
+        <p>Last Updated: August 20, 2024</p>
         <p>Developed by: Jafet Egill/Fjörðr Games</p>
         <div id="version-history-box" class="mt-3 p-3 border">
-          <h3>Version History</h3>
+          <h3>Update History</h3>
           <div id="version-history"></div>
         </div>
       </div>
