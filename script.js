@@ -105,9 +105,6 @@ document.getElementById("toggle-sfx").addEventListener("change", toggleSoundEffe
 // Initialize gameStartTime, check localStorage first
 let gameStartTime = localStorage.getItem('gameStartTime');
 
-// Initialize totalCoinsProduced
-let totalCoinsProduced = parseInt(localStorage.getItem('totalCoinsProduced')) || 0;
-
 if (!gameStartTime) {
     // If no start time is found in localStorage, set it to the current time
     gameStartTime = Date.now();
@@ -123,9 +120,6 @@ function updateStatsUI() {
     document.getElementById("stat-woodcutting").textContent = woodcuttingLevel;
     document.getElementById("stat-mining").textContent = miningLevel;
     document.getElementById("stat-passive-income").textContent = compactNumberFormat(passiveIncome);
-    
-    // Update total coins produced
-    document.getElementById("stat-total-coins").textContent = compactNumberFormat(totalCoinsProduced);
 
     // Calculate total units purchased
     const totalUnits = knightCount + archerCount + wizardCount + paladinCount + pikemanCount + crossbowmanCount + catapultCount + mongolHorsemanCount;
@@ -147,18 +141,9 @@ function updateStatsUI() {
     document.getElementById("stat-speedrun-timer").textContent = formattedTime;
 }
 
-// Function to add coins and update totalCoinsProduced
-function addCoins(amount) {
-    coins += amount;
-    totalCoinsProduced += amount;
-    localStorage.setItem('totalCoinsProduced', totalCoinsProduced);
-    updateStatsUI();
-}
-
-// Save the current game state including start time and total coins produced whenever necessary
+// Save the current game state including start time whenever necessary
 function saveGameState() {
     localStorage.setItem('gameStartTime', gameStartTime);
-    localStorage.setItem('totalCoinsProduced', totalCoinsProduced);
     // Save other game state data if needed
 }
 
@@ -166,7 +151,7 @@ function saveGameState() {
 window.addEventListener('beforeunload', saveGameState);
 
 // Update stats every second
-setInterval(updateStatsUI, 1000);
+setInterval(updateStatsUI, 1000)
 
 function updateUI() {
     document.getElementById("counter").textContent = `Gold coins: ${compactNumberFormat(coins)}`;
