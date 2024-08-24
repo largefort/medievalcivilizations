@@ -192,29 +192,54 @@ function getCoinsPerClick() {
 }
 
 function clickCastle(event) {
-    const coinsGained = getCoinsPerClick();
-    coins += coinsGained;
-    updateUI();
+    // Check if it's a touch event or a mouse event
+    let clientX, clientY;
 
-    // Play the preloaded click sound
-    clickSound.play();
+    if (event.type === 'touchstart' || event.type === 'touchend' || event.type === 'touchmove') {
+        // Touch event: use the first touch point
+        clientX = event.touches[0].clientX || event.changedTouches[0].clientX;
+        clientY = event.touches[0].clientY || event.changedTouches[0].clientY;
+    } else if (event.type === 'mousedown' || event.type === 'click' || event.type === 'mousemove') {
+        // Mouse event
+        clientX = event.clientX;
+        clientY = event.clientY;
+    }
 
-    // Create floating text
-    const floatingText = document.createElement('div');
-    floatingText.className = 'floating-text';
-    floatingText.innerText = `+${coinsGained}`;
+    if (typeof clientX === 'number' && typeof clientY === 'number') {
+        const coinsGained = getCoinsPerClick();
+        coins += coinsGained;
+        updateUI();
 
-    // Position the floating text at the mouse cursor, adjusted for scroll
-    floatingText.style.left = `${event.clientX}px`;
-    floatingText.style.top = `${event.clientY}px`;
+        // Play the preloaded click sound
+        clickSound.play();
 
-    // Add the floating text to the body
-    document.body.appendChild(floatingText);
+        // Create floating text
+        const floatingText = document.createElement('div');
+        floatingText.className = 'floating-text';
+        floatingText.innerText = `+${coinsGained}`;
 
-    // Remove the floating text after the animation completes
-    setTimeout(() => {
-        floatingText.remove();
-    }, 1000); // Match this duration with the CSS animation duration
+        // Append to the body before calculating the width/height
+        document.body.appendChild(floatingText);
+
+        // Calculate the dimensions of the floating text
+        const floatingTextRect = floatingText.getBoundingClientRect();
+        const floatingTextWidth = floatingTextRect.width;
+        const floatingTextHeight = floatingTextRect.height;
+
+        // Position the floating text centered on the mouse or touch point, adjusted for scroll
+        const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+        floatingText.style.left = `${clientX + scrollLeft - floatingTextWidth / 2}px`;
+        floatingText.style.top = `${clientY + scrollTop - floatingTextHeight / 2}px`;
+
+        // Remove the floating text after the animation completes
+        setTimeout(() => {
+            floatingText.remove();
+        }, 1000); // Match this duration with the CSS animation duration
+    } else {
+        console.error('The event object does not contain valid clientX and clientY properties.');
+    }
 }
 
 function buyUpgrade(type) {
