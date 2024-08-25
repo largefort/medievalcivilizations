@@ -14,437 +14,363 @@
   <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
   <style>
     /* Import medieval style font */
- @font-face {
-     font-family: 'MedievalFont';
-     src: url('medievalfont.woff') format('woff');
- }
-
- html, body {
-     height: 100%;
-     margin: 0;
-     padding: 0;
-     position: relative;
-     background-image: url('images/dark_parchment.jpg');
-     background-size: cover;
-     background-attachment: fixed;
- }
-
- body {
-     font-family: 'MedievalFont', serif;
-     color: #dcd0c0;
-     text-shadow: 1px 1px 2px #000;
-     animation: fadeIn 2s ease-in;
- }
-
- @keyframes fadeIn {
-     from { opacity: 0; }
-     to { opacity: 1; }
- }
-
- .container {
-     background-color: rgba(0, 0, 0, 0.7);
-     border: 10px double #8c7a6b;
-     padding: 20px;
-     border-radius: 10px;
-     box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
-     margin-top: 50px;
-     background-image: url('images/leather_texture.jpg');
-     animation: slideIn 1s ease-in;
- }
-
- @keyframes slideIn {
-     from { transform: translateY(-100%); }
-     to { transform: translateY(0); }
- }
-
- .nav-pills .nav-link {
-     font-size: 18px;
-     padding: 10px 10px;
-     background-color: #6b4e37;
-     border-radius: 10px;
-     color: #ffd700;
-     margin: 5px;
-     transition: background-color 0.3s, color 0.3s, transform 0.3s;
-     background-image: url('images/wood_texture.jpg');
-     text-shadow: 1px 1px 2px #000;
-     animation: pulse 2s infinite;
- }
-
- @keyframes pulse {
-     0%, 100% { transform: scale(1); }
-     50% { transform: scale(1.05); }
- }
-
- @media (max-width: 768px) {
-     .nav-pills .nav-link {
-         font-size: 16px;
-         padding: 8px 8px;
-     }
- }
-
- @media (max-width: 480px) {
-     .nav-pills .nav-link {
-         font-size: 14px;
-         padding: 6px 6px;
-     }
- }
-
- .nav-pills .nav-link.active, .nav-pills .nav-link:hover {
-     background-color: #50372c;
-     color: #ffffff;
-     font-weight: bold;
-     transform: scale(1.1);
- }
-
- .upgrade {
-     background-image: url('images/parchment_texture.jpg');
-     color: #fffbeb;
-     border: 3px solid #4a3425;
-     cursor: pointer;
-     transition: background-color 0.3s, color 0.3s, transform 0.3s;
-     border-radius: 10px;
-     position: relative;
-     background-size: cover;
-     text-shadow: 1px 1px 2px #000;
-     animation: glow 2s infinite alternate;
- }
-
- @keyframes glow {
-     from { box-shadow: 0 0 10px #ffd700; }
-     to { box-shadow: 0 0 20px #ffd700; }
- }
-
- .upgrade:hover {
-     background-color: #3e2a1b;
-     color: #f4e4c3;
-     transform: scale(1.1);
- }
-
- .upgrade .purchase-count {
-     position: absolute;
-     bottom: 5px;
-     right: 10px;
-     font-size: 1.2em;
-     color: #ffd700;
-     text-shadow: 1px 1px 2px #000;
- }
-
- .modal-content {
-     background-color: #261c1a;
-     color: #f7dfc4;
-     padding: 20px;
-     border-radius: 10px;
-     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-     text-align: center;
-     background-image: url('images/parchment_texture.jpg');
-     animation: appear 0.5s ease-in-out;
- }
-
- @keyframes appear {
-     from { transform: scale(0); }
-     to { transform: scale(1); }
- }
-
- .castle-image {
-     border: 5px solid #543c2c;
-     border-radius: 10px;
-     max-width: 100%;
-     height: auto;
-     background-image: url('images/stone_texture.jpg');
-     transition: transform 0.3s;
-     cursor: pointer;
- }
-
- .castle-image:active {
-     animation: clickAnimation 0.2s ease-in-out;
- }
-
- @keyframes clickAnimation {
-     0% { transform: scale(1); }
-     50% { transform: scale(0.9); }
-     100% { transform: scale(1); }
- }
-
- .ad-banner {
-     position: absolute;
-     bottom: 0;
-     left: 0;
-     width: 100%;
-     height: 50px;
-     background-color: #543c2c;
-     color: #f7dfc4;
-     text-align: center;
-     padding: 10px 0;
-     box-sizing: border-box;
-     background-image: url('images/wood_texture.jpg');
-     text-shadow: 1px 1px 2px #000;
-     animation: bounce 3s infinite;
- }
-
- @keyframes bounce {
-     0%, 100% { transform: translateY(0); }
-     50% { transform: translateY(-10px); }
- }
-
- #uuid-display {
-     position: fixed;
-     top: 10px;
-     left: 10px;
-     color: gold;
-     background-color: rgba(0, 0, 0, 0.5);
-     padding: 5px;
-     border-radius: 5px;
-     z-index: 1000;
-     text-shadow: 1px 1px 2px #000;
-     filter: drop-shadow(0 0 10px #3e2a1b);
-     animation: fadeIn 2s ease-in;
- }
-
- .medieval-note {
-     font-family: 'MedievalFont', serif;
-     color: #ffd700;
-     background-color: rgba(0, 0, 0, 0.7);
-     padding: 10px;
-     border: 2px solid #8c7a6b;
-     border-radius: 10px;
-     margin-top: 10px;
-     text-shadow: 1px 1px 2px #000;
-     animation: flicker 1.5s infinite alternate;
- }
-
- @keyframes flicker {
-     from { opacity: 1; }
-     to { opacity: 0.8; }
- }
-
- .nav-bottom {
-     display: flex;
-     justify-content: space-around;
-     align-items: center;
-     background-image: url('images/wood_texture.jpg');
-     border-top: 5px solid #8c7a6b;
-     padding: 10px 0;
-     box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.5);
-     animation: slideUp 1s ease-in;
- }
-
- @keyframes slideUp {
-     from { transform: translateY(100%); }
-     to { transform: translateY(0); }
- }
-
- .nav-bottom .nav-link {
-     flex: 1;
-     text-align: center;
-     color: #ffd700;
-     text-decoration: none;
-     padding: 10px 0;
-     font-family: 'MedievalFont', serif;
-     text-shadow: 1px 1px 2px #000;
-     transition: transform 0.3s;
- }
-
- .nav-bottom .nav-link i {
-     display: block;
-     font-size: 24px;
-     margin-bottom: 5px;
- }
-
- .nav-bottom .nav-link.active, .nav-bottom .nav-link:hover {
-     background-color: #50372c;
-     color: #ffffff;
-     transform: scale(1.1);
- }
-
- @import url('https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap');
-
-.floating-text {
-    position: fixed;
-    font-size: 24px;
-    color: gold;
-    font-family: 'UnifrakturCook', cursive;
-    text-shadow: 2px 2px 4px #000000;
-    animation: floatUp 1s ease-out forwards;
-    pointer-events: none;
-    z-index: 1000;
-}
-
-@keyframes floatUp {
-    0% {
-        opacity: 1;
-        transform: translateY(0);
+    @font-face {
+        font-family: 'MedievalFont';
+        src: url('medievalfont.woff') format('woff');
     }
-    100% {
-        opacity: 0;
-        transform: translateY(-50px);
+
+    html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        position: relative;
+        background-image: url('images/dark_parchment.jpg');
+        background-size: cover;
+        background-attachment: fixed;
     }
-}
 
- /* Version Tab Styles */
- #version-history-box {
-     background-color: rgba(0, 0, 0, 0.8);
-     border: 5px double #8c7a6b;
-     border-radius: 10px;
-     padding: 20px;
-     margin-top: 20px;
-     box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
-     background-image: url('images/parchment_texture.jpg');
-     max-height: 50vh; /* Limit the height to 70% of the viewport height */
-     overflow-y: auto; /* Enable vertical scrolling */
- }
+    body {
+        font-family: 'MedievalFont', serif;
+        color: #dcd0c0;
+        text-shadow: 1px 1px 2px #000;
+        animation: fadeIn 2s ease-in;
+    }
 
- #version-history-box h3 {
-     color: #ffd700;
-     text-align: center;
-     margin-bottom: 20px;
-     text-shadow: 1px 1px 2px #000;
- }
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
 
- .version-entry {
-     background-color: rgba(0, 0, 0, 0.7);
-     border: 2px solid #8c7a6b;
-     padding: 10px;
-     border-radius: 10px;
-     margin-bottom: 15px;
-     animation: fadeIn 1s ease-in-out;
- }
+    .container {
+        background-color: rgba(0, 0, 0, 0.7);
+        border: 10px double #8c7a6b;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+        margin-top: 50px;
+        background-image: url('images/leather_texture.jpg');
+        animation: slideIn 1s ease-in;
+    }
 
- .version-entry h4 {
-     color: #ffd700;
-     margin-bottom: 5px;
-     text-shadow: 1px 1px 2px #000;
- }
+    @keyframes slideIn {
+        from { transform: translateY(-100%); }
+        to { transform: translateY(0); }
+    }
 
- .version-entry p {
-     margin-bottom: 0;
-     color: #f4e4c3;
-     text-shadow: 1px 1px 2px #000;
- }
-    <style>
-  /* Apply the medieval font to the whole body */
-  body {
-    font-family: 'Uncial Antiqua', cursive;
-  }
+    .nav-pills .nav-link {
+        font-size: 18px;
+        padding: 10px 10px;
+        background-color: #6b4e37;
+        border-radius: 10px;
+        color: #ffd700;
+        margin: 5px;
+        transition: background-color 0.3s, color 0.3s, transform 0.3s;
+        background-image: url('images/wood_texture.jpg');
+        text-shadow: 1px 1px 2px #000;
+        animation: pulse 2s infinite;
+    }
 
-  /* Medieval button styles */
-  button {
-    font-family: 'Uncial Antiqua', cursive;
-    background-color: #c19a6b; /* Light brown color */
-    color: #fff;
-    border: 2px solid #8b4513; /* Darker brown border */
-    border-radius: 10px;
-    padding: 10px 20px;
-    font-size: 18px;
-    cursor: pointer;
-    box-shadow: 0 4px #8b4513; /* Shadow for a 3D effect */
-    text-shadow: 1px 1px 2px #000; /* Slight text shadow for depth */
-    transition: all 0.3s ease;
-  }
+    @keyframes pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+    }
 
-  button:hover {
-    background-color: #a98255; /* Slightly darker on hover */
-    box-shadow: 0 2px #8b4513;
-    transform: translateY(2px); /* Simulates button press */
-  }
+    @media (max-width: 768px) {
+        .nav-pills .nav-link {
+            font-size: 16px;
+            padding: 8px 8px;
+        }
+    }
 
-  button:active {
-    background-color: #8b4513; /* Even darker when active */
-    box-shadow: 0 1px #8b4513;
-    transform: translateY(4px);
-  }
+    @media (max-width: 480px) {
+        .nav-pills .nav-link {
+            font-size: 14px;
+            padding: 6px 6px;
+        }
+    }
 
-  /* Hidden file input should not be visible */
-  #file-input {
-    display: none;
-  }
-      .medieval-style {
-    font-family: 'MedievalSharp', cursive; /* Example medieval font */
-    background-color: #f4f4f4;
-    border: 2px solid #d4af37;
-    padding: 20px;
-    max-width: 500px;
-    margin: auto;
-  }
+    .nav-pills .nav-link.active, .nav-pills .nav-link:hover {
+        background-color: #50372c;
+        color: #ffffff;
+        font-weight: bold;
+        transform: scale(1.1);
+    }
 
-  /* Modal styles */
-  .modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-  }
+    .upgrade {
+        background-image: url('images/parchment_texture.jpg');
+        color: #fffbeb;
+        border: 3px solid #4a3425;
+        cursor: pointer;
+        transition: background-color 0.3s, color 0.3s, transform 0.3s;
+        border-radius: 10px;
+        position: relative;
+        background-size: cover;
+        text-shadow: 1px 1px 2px #000;
+        animation: glow 2s infinite alternate;
+    }
 
-  .modal-content {
-    background-color: #fefefe;
-    margin: 15% auto; /* 15% from the top and centered */
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
-  }
+    @keyframes glow {
+        from { box-shadow: 0 0 10px #ffd700; }
+        to { box-shadow: 0 0 20px #ffd700; }
+    }
 
-  .close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-  }
+    .upgrade:hover {
+        background-color: #3e2a1b;
+        color: #f4e4c3;
+        transform: scale(1.1);
+    }
 
-  .close:hover,
-  .close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-  }
+    .upgrade .purchase-count {
+        position: absolute;
+        bottom: 5px;
+        right: 10px;
+        font-size: 1.2em;
+        color: #ffd700;
+        text-shadow: 1px 1px 2px #000;
+    }
 
-  .form-group {
-    margin-bottom: 15px;
-  }
+    .modal-content {
+        background-color: #261c1a;
+        color: #f7dfc4;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        text-align: center;
+        background-image: url('images/parchment_texture.jpg');
+        animation: appear 0.5s ease-in-out;
+    }
 
-  .form-group label {
-    display: block;
-    margin-bottom: 5px;
-  }
+    @keyframes appear {
+        from { transform: scale(0); }
+        to { transform: scale(1); }
+    }
 
-  .form-group input[type="email"],
-  .form-group textarea,
-  .form-group input[type="file"] {
-    width: 100%;
-    padding: 8px;
-    box-sizing: border-box;
-  }
+    .castle-image {
+        border: 5px solid #543c2c;
+        border-radius: 10px;
+        max-width: 100%;
+        height: auto;
+        background-image: url('images/stone_texture.jpg');
+        transition: transform 0.3s;
+        cursor: pointer;
+    }
 
-  #bugReportForm button[type="submit"] {
-    background-color: #d4af37;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    cursor: pointer;
-  }
-</style>
+    .castle-image:active {
+        animation: clickAnimation 0.2s ease-in-out;
+    }
+
+    @keyframes clickAnimation {
+        0% { transform: scale(1); }
+        50% { transform: scale(0.9); }
+        100% { transform: scale(1); }
+    }
+
+    .ad-banner {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 50px;
+        background-color: #543c2c;
+        color: #f7dfc4;
+        text-align: center;
+        padding: 10px 0;
+        box-sizing: border-box;
+        background-image: url('images/wood_texture.jpg');
+        text-shadow: 1px 1px 2px #000;
+        animation: bounce 3s infinite;
+    }
+
+    @keyframes bounce {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+    }
+
+    #uuid-display {
+        position: fixed;
+        top: 10px;
+        left: 10px;
+        color: gold;
+        background-color: rgba(0, 0, 0, 0.5);
+        padding: 5px;
+        border-radius: 5px;
+        z-index: 1000;
+        text-shadow: 1px 1px 2px #000;
+        filter: drop-shadow(0 0 10px #3e2a1b);
+        animation: fadeIn 2s ease-in;
+    }
+
+    .medieval-note {
+        font-family: 'MedievalFont', serif;
+        color: #ffd700;
+        background-color: rgba(0, 0, 0, 0.7);
+        padding: 10px;
+        border: 2px solid #8c7a6b;
+        border-radius: 10px;
+        margin-top: 10px;
+        text-shadow: 1px 1px 2px #000;
+        animation: flicker 1.5s infinite alternate;
+    }
+
+    @keyframes flicker {
+        from { opacity: 1; }
+        to { opacity: 0.8; }
+    }
+
+    .nav-bottom {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        background-image: url('images/wood_texture.jpg');
+        border-top: 5px solid #8c7a6b;
+        padding: 10px 0;
+        box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.5);
+        animation: slideUp 1s ease-in;
+    }
+
+    @keyframes slideUp {
+        from { transform: translateY(100%); }
+        to { transform: translateY(0); }
+    }
+
+    .nav-bottom .nav-link {
+        flex: 1;
+        text-align: center;
+        color: #ffd700;
+        text-decoration: none;
+        padding: 10px 0;
+        font-family: 'MedievalFont', serif;
+        text-shadow: 1px 1px 2px #000;
+        transition: transform 0.3s;
+    }
+
+    .nav-bottom .nav-link i {
+        display: block;
+        font-size: 24px;
+        margin-bottom: 5px;
+    }
+
+    .nav-bottom .nav-link.active, .nav-bottom .nav-link:hover {
+        background-color: #50372c;
+        color: #ffffff;
+        transform: scale(1.1);
+    }
+
+    @import url('https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap');
+
+    .floating-text {
+        position: fixed;
+        font-size: 24px;
+        color: gold;
+        font-family: 'UnifrakturCook', cursive;
+        text-shadow: 2px 2px 4px #000000;
+        animation: floatUp 1s ease-out forwards;
+        pointer-events: none;
+        z-index: 1000;
+    }
+
+    @keyframes floatUp {
+        0% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        100% {
+            opacity: 0;
+            transform: translateY(-50px);
+        }
+    }
+
+    /* Version Tab Styles */
+    #version-history-box {
+        background-color: rgba(0, 0, 0, 0.8);
+        border: 5px double #8c7a6b;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 20px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+        background-image: url('images/parchment_texture.jpg');
+        max-height: 50vh;
+        overflow-y: auto;
+    }
+
+    #version-history-box h3 {
+        color: #ffd700;
+        text-align: center;
+        margin-bottom: 20px;
+        text-shadow: 1px 1px 2px #000;
+    }
+
+    .version-entry {
+        background-color: rgba(0, 0, 0, 0.7);
+        border: 2px solid #8c7a6b;
+        padding: 10px;
+        border-radius: 10px;
+        margin-bottom: 15px;
+        animation: fadeIn 1s ease-in-out;
+    }
+
+    .version-entry h4 {
+        color: #ffd700;
+        margin-bottom: 5px;
+        text-shadow: 1px 1px 2px #000;
+    }
+
+    .version-entry p {
+        margin-bottom: 0;
+        color: #f4e4c3;
+        text-shadow: 1px 1px 2px #000;
+    }
+
+    /* Golden Denier Styles */
+    .golden-denier {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        cursor: pointer;
+        z-index: 1000;
+        background-color: rgba(255, 215, 0, 0.8);
+        border-radius: 50%;
+        padding: 10px;
+        box-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
+    }
+
+    .boosts-container {
+        position: fixed;
+        top: 10px;
+        left: 10px;
+        z-index: 1001;
+        display: flex;
+        gap: 10px;
+    }
+
+    .boost-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: gold;
+        border: 2px solid #d4af37;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+    }
+
+    .boost-timer {
+        position: absolute;
+        bottom: -10px;
+        right: -10px;
+        background-color: black;
+        color: white;
+        border-radius: 50%;
+        padding: 5px;
+        font-size: 12px;
+    }
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuid.min.js"></script>
 </head>
-  <!-- Yandex Games SDK -->
-<script src="https://sdk.games.s3.yandex.net/sdk.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 <body>
-</head>
-  <!-- Golden Denier Popup -->
-<div id="golden-denier-popup" class="golden-denier animate__animated animate__pulse" onclick="claimGoldenDenier()" style="display: none;">
-  <img src="images/golden_denier.png" alt="Golden Denier" width="50" height="50">
-</div>
-
-<!-- Boosts Section -->
-<div id="boosts-container" class="boosts-container">
-  <!-- Boost icons will appear here -->
-</div>
-</head>
 <div id="uuid-display" aria-live="polite"></div>
 <div class="container">
   <div class="tab-content">
@@ -554,74 +480,75 @@
       </div>
     </div>
 
- <div class="tab-pane fade" id="settings-tab" role="tabpanel" aria-labelledby="settings-tab-tab">
-  <div class="text-center">
-    <h2>Settings</h2>
-    
-    <!-- Existing Settings -->
-    <div class="form-check">
-      <input type="checkbox" id="toggle-music" class="form-check-input" aria-label="Toggle background music" onfocus="speakText(this)" tabindex="0">
-      <label class="form-check-label" for="toggle-music"><i class="fas fa-volume-up"></i> Toggle Music</label>
-    </div>
-    <div class="form-check">
-      <input type="checkbox" id="toggle-sfx" class="form-check-input" aria-label="Toggle sound effects" onfocus="speakText(this)" tabindex="0">
-      <label class="form-check-label" for="toggle-sfx"><i class="fas fa-volume-up"></i> Toggle Sound Effects</label>
-    </div>
-    <div class="form-check">
-      <input type="checkbox" id="toggle-tts" class="form-check-input" aria-label="Toggle text-to-speech" onchange="toggleTTS()" onfocus="speakText(this)" tabindex="0">
-      <label class="form-check-label" for="toggle-tts"><i class="fas fa-volume-up"></i> Toggle Text-to-Speech</label>
+    <div class="tab-pane fade" id="settings-tab" role="tabpanel" aria-labelledby="settings-tab-tab">
+      <div class="text-center">
+        <h2>Settings</h2>
+        
+        <!-- Existing Settings -->
+        <div class="form-check">
+          <input type="checkbox" id="toggle-music" class="form-check-input" aria-label="Toggle background music" onfocus="speakText(this)" tabindex="0">
+          <label class="form-check-label" for="toggle-music"><i class="fas fa-volume-up"></i> Toggle Music</label>
+        </div>
+        <div class="form-check">
+          <input type="checkbox" id="toggle-sfx" class="form-check-input" aria-label="Toggle sound effects" onfocus="speakText(this)" tabindex="0">
+          <label class="form-check-label" for="toggle-sfx"><i class="fas fa-volume-up"></i> Toggle Sound Effects</label>
+        </div>
+        <div class="form-check">
+          <input type="checkbox" id="toggle-tts" class="form-check-input" aria-label="Toggle text-to-speech" onchange="toggleTTS()" onfocus="speakText(this)" tabindex="0">
+          <label class="form-check-label" for="toggle-tts"><i class="fas fa-volume-up"></i> Toggle Text-to-Speech</label>
+        </div>
+
+        <!-- New Screen Reader Mode Setting -->
+        <div class="form-check">
+          <input type="checkbox" id="toggle-screen-reader" class="form-check-input" aria-label="Enable Screen Reader Mode" onchange="toggleScreenReaderMode()" onfocus="speakText(this)" tabindex="0">
+          <label class="form-check-label" for="toggle-screen-reader"><i class="fas fa-blind"></i> Enable Screen Reader Mode</label>
+        </div>
+        
+        <div class="medieval-note">
+          This switch is for people with disabilities. Ye may turn it on if ye so desire, but it is meant for those in need.
+        </div>
+
+        <!-- Game Promotion Section -->
+        <div class="medieval-promotion">
+          <h3>New! Download Medieval Civilizations for Mac!</h3>
+          <p>Experience the full game on your Mac. Prepare for battles, manage your kingdom, and lead your civilization to glory!</p>
+          <a href="https://www.mediafire.com/file/ctz0y1u6yisxxvg/MedievalCivilizations-1.0.0.dmg/file" download>
+            <button id="mac-download-btn">
+              <img src="logo.png" alt="Game Icon" width="50" style="vertical-align: middle; margin-right: 8px;">
+              <span>Download Thy Game on Mac</span>
+            </button>
+          </a>
+        </div>
+
+        <!-- Add the PNG image from Crazy Games with clickable URL -->
+        <a href="https://idev.games/game/medieval-civilizations" target="_blank" aria-label="Visit idev.games" onfocus="speakText(this)" tabindex="0">
+          <img src="idev.png" alt="idev.games image" width="100">
+        </a>
+
+        <!-- New buttons for export and load -->
+        <button id="export-btn" onclick="exportGame()">Export Game</button>
+        <button id="load-btn" onclick="loadGame()">Load Game</button>
+        <!-- Hidden file input for loading -->
+        <input type="file" id="file-input" accept=".txt" style="display:none;" onchange="handleFileSelect(event)">
+      </div>
     </div>
 
-    <!-- New Screen Reader Mode Setting -->
-    <div class="form-check">
-      <input type="checkbox" id="toggle-screen-reader" class="form-check-input" aria-label="Enable Screen Reader Mode" onchange="toggleScreenReaderMode()" onfocus="speakText(this)" tabindex="0">
-      <label class="form-check-label" for="toggle-screen-reader"><i class="fas fa-blind"></i> Enable Screen Reader Mode</label>
+    <!-- Stats Tab -->
+    <div class="tab-pane fade" id="stats-tab" role="tabpanel" aria-labelledby="stats-tab-tab">
+      <div class="text-center">
+        <h2>Player Stats</h2>
+        <div id="stats-box" class="mt-3 p-3 border">
+          <h3>Current Stats</h3>
+          <p>Time Played: <span id="stat-speedrun-timer"></span></p> <!-- Speed Run Timer -->
+          <p>Coins: <span id="stat-coins"></span></p>
+          <p>Units: <span id="stat-units"></span></p>
+          <p>Woodcutting Level: <span id="stat-woodcutting"></span></p>
+          <p>Mining Level: <span id="stat-mining"></span></p>
+          <p>Passive Income per Second: <span id="stat-passive-income"></span></p>
+          <p>Offline Earnings (since last save): <span id="stat-offline-earnings"></span></p>
+        </div>
+      </div>
     </div>
-    
-    <div class="medieval-note">
-      This switch is for people with disabilities. Ye may turn it on if ye so desire, but it is meant for those in need.
-    </div>
-
-    <!-- Game Promotion Section -->
-    <div class="medieval-promotion">
-      <h3>New! Download Medieval Civilizations for Mac!</h3>
-      <p>Experience the full game on your Mac. Prepare for battles, manage your kingdom, and lead your civilization to glory!</p>
-      <a href="https://www.mediafire.com/file/ctz0y1u6yisxxvg/MedievalCivilizations-1.0.0.dmg/file" download>
-        <button id="mac-download-btn">
-          <img src="logo.png" alt="Game Icon" width="50" style="vertical-align: middle; margin-right: 8px;">
-          <span>Download Thy Game on Mac</span>
-        </button>
-      </a>
-    </div>
-
-    <!-- Add the PNG image from Crazy Games with clickable URL -->
-    <a href="https://idev.games/game/medieval-civilizations" target="_blank" aria-label="Visit idev.games" onfocus="speakText(this)" tabindex="0">
-      <img src="idev.png" alt="idev.games image" width="100">
-    </a>
-
-    <!-- New buttons for export and load -->
-    <button id="export-btn" onclick="exportGame()">Export Game</button>
-    <button id="load-btn" onclick="loadGame()">Load Game</button>
-    <!-- Hidden file input for loading -->
-    <input type="file" id="file-input" accept=".txt" style="display:none;" onchange="handleFileSelect(event)">
-  </div>
-</div>
-  <!-- Stats Tab -->
-<div class="tab-pane fade" id="stats-tab" role="tabpanel" aria-labelledby="stats-tab-tab">
-  <div class="text-center">
-    <h2>Player Stats</h2>
-    <div id="stats-box" class="mt-3 p-3 border">
-      <h3>Current Stats</h3>
-      <p>Time Played: <span id="stat-speedrun-timer"></span></p> <!-- Speed Run Timer -->
-      <p>Coins: <span id="stat-coins"></span></p>
-      <p>Units: <span id="stat-units"></span></p>
-      <p>Woodcutting Level: <span id="stat-woodcutting"></span></p>
-      <p>Mining Level: <span id="stat-mining"></span></p>
-      <p>Passive Income per Second: <span id="stat-passive-income"></span></p>
-      <p>Offline Earnings (since last save): <span id="stat-offline-earnings"></span></p>
-    </div>
-  </div>
-</div>
 
     <!-- Version Tab -->
     <div class="tab-pane fade" id="version-tab" role="tabpanel" aria-labelledby="version-tab-tab">
@@ -650,7 +577,7 @@
       <a class="nav-link" data-bs-toggle="pill" href="#settings-tab" role="tab" aria-controls="settings-tab" aria-selected="false" onfocus="speakText(this)" tabindex="0">
         <i class="fas fa-gears" aria-hidden="true"></i> Settings
       </a>
-         <a class="nav-link" data-bs-toggle="pill" href="#stats-tab" role="tab" aria-controls="stats-tab" aria-selected="false" onfocus="speakText(this)" tabindex="0">
+      <a class="nav-link" data-bs-toggle="pill" href="#stats-tab" role="tab" aria-controls="stats-tab" aria-selected="false" onfocus="speakText(this)" tabindex="0">
         <i class="fas fa-info-circle" aria-hidden="true"></i> statistics
       </a>
       <a class="nav-link" data-bs-toggle="pill" href="#version-tab" role="tab" aria-controls="version-tab" aria-selected="false" onfocus="speakText(this)" tabindex="0">
@@ -659,99 +586,40 @@
     </div>
   </div>
 </div>
+
+<!-- Golden Denier Popup -->
+<div id="golden-denier-popup" class="golden-denier animate__animated animate__pulse" onclick="claimGoldenDenier()" style="display: none;">
+  <img src="golden_denier.png" alt="Golden Denier" width="50" height="50">
+</div>
+
+<!-- Boosts Section -->
+<div id="boosts-container" class="boosts-container">
+  <!-- Boost icons will appear here -->
+</div>
+
+<!-- JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/4.0.0-beta.2/jquery.min.js" integrity="sha512-JobWAqYk5CSjWuVV3mxgS+MmccJqkrBaDhk8SKS1BW+71dJ9gzascwzW85UwGhxiSyR7Pxhu50k+Nl3+o5I49A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mobilizejs/0.9/mobilize.min.js" integrity="sha512-9kdU3/W11/VXZLHO4mfCSJ1XrZ3tfpgTNCfR/H8PO5GtZ7MZSD/zVcwRDct0f2dd58JD0IZlPi7MAMh4zEl1hg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://code.responsivevoice.org/responsivevoice.js?key=vmwG3CdE"></script>
+<script src="script.js"></script>
+<script src="js/exportandload.js"></script>
+<script src="js/index.js"></script>
+<script src="FileSaver.js"></script>
+<script src="plugins/cordova-plugin-saf-mediastore/www/safMediastore.js"></script>
+<script src="notations.js"></script>
+<script src="versionhistory.js"></script>
+<script src="js/uuid.js"></script>
+<script src="js/bgm.js"></script>
+<script src="js/index.js"></script>
+<script src="js/index2.js"></script>
+<script src="GameAnalytics.js"></script>
+<script src="GameAnalytics.min.js"></script>
+<audio id="medievaltheme" loop autoplay>
+  <source src="audio/medievaldarklord.mp3" type="audio/mp3">
+  Your browser does not support the audio element.
+</audio>
+<audio id="click-sound" src="click-sound.mp3" type="audio/mp3"></audio>
 </body>
-
-    <button id="fullscreen-button" style="display: none;" onclick="autoEnterFullscreen()" aria-label="Enter Fullscreen" onfocus="speakText(this)" tabindex="0">Enter Fullscreen</button>
-
-<script>
-  function getOrGenerateUUID() {
-      let existingUUID = localStorage.getItem('deviceUUID');
-      if (!existingUUID) {
-          let newUUID = uuid.v4();
-          localStorage.setItem('deviceUUID', newUUID);
-          return newUUID;
-      }
-      return existingUUID;
-  }
-
-  const deviceUUID = getOrGenerateUUID();
-  document.getElementById('uuid-display').innerText = `UUID: ${deviceUUID}`;
-
-  let isTTSOn = true;
-
-  function speakText(element) {
-      if (!isTTSOn) return;
-
-      const text = element.getAttribute('aria-label') || element.innerText;
-
-      TTS.speak({
-          text: text,
-          locale: 'en-US',
-          rate: 1.0
-      }, function() {
-          console.log('Success');
-      }, function(reason) {
-          console.log('Error:', reason);
-      });
-  }
-
-  function toggleTTS() {
-      isTTSOn = !isTTSOn;
-
-      const status = isTTSOn ? 'enabled' : 'disabled';
-      TTS.speak({
-          text: `Text-to-speech has been ${status}`,
-          locale: 'en-US',
-          rate: 1.0
-      }, function() {
-          console.log('Success');
-      }, function(reason) {
-          console.log('Error:', reason);
-      });
-  }
-
-  document.addEventListener('deviceready', function() {
-      document.querySelectorAll('[aria-label], .upgrade').forEach(element => {
-          element.addEventListener('click', () => speakText(element));
-      });
-  }, false);
-
-  // Function to update the document title with gold coin count
-  function updateDocumentTitle() {
-      const coinCountElement = document.getElementById('counter');
-      const coinCountText = coinCountElement.textContent || coinCountElement.innerText;
-      const coinCount = coinCountText.replace(/[^0-9]/g, ''); // Extract only the number
-      document.title = `Gold Coins: ${coinCount}`;
-  }
-
-  // Update the title every second
-  setInterval(updateDocumentTitle, 1000);
-</script>
-
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/4.0.0-beta.2/jquery.min.js" integrity="sha512-JobWAqYk5CSjWuVV3mxgS+MmccJqkrBaDhk8SKS1BW+71dJ9gzascwzW85UwGhxiSyR7Pxhu50k+Nl3+o5I49A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mobilizejs/0.9/mobilize.min.js" integrity="sha512-9kdU3/W11/VXZLHO4mfCSJ1XrZ3tfpgTNCfR/H8PO5GtZ7MZSD/zVcwRDct0f2dd58JD0IZlPi7MAMh4zEl1hg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://code.responsivevoice.org/responsivevoice.js?key=vmwG3CdE"></script>
-    <script src="script.js"></script>
-    <script src="js/exportandload.js"></script>
-    <script src="js/index.js"></script>
-    <script src="FileSaver.js"></script>
-    <script src="plugins/cordova-plugin-saf-mediastore/www/safMediastore.js"></script>
-    <script src="notations.js"></script>
-    <script src="versionhistory.js"></script>
-    <script src="js/uuid.js"></script>
-    <script src="js/bgm.js"></script>
-    <script src="js/index.js"></script>
-    <script src="js/index2.js"></script>
-    <script src="GameAnalytics.js"></script>
-    <script src="GameAnalytics.min.js"></script>
-    <!-- GameAnalytics -->
-    <audio id="medievaltheme" loop autoplay>
-      <source src="audio/medievaldarklord.mp3" type="audio/mp3">
-      Your browser does not support the audio element.
-    </audio>
-    <audio id="click-sound" src="click-sound.mp3" type="audio/mp3"></audio>
-    </body>
 </html>
