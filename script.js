@@ -419,7 +419,7 @@ setInterval(updateDocumentTitle, 1000);
 // Golden Denier System
 
 // Timing and boost variables
-let goldenDenierInterval = 840000; // 14 minutes in milliseconds
+let goldenDenierInterval = 300000; // 14 minutes in milliseconds
 let boostDuration = 30000; // 30 seconds
 
 // Function to show the Golden Denier
