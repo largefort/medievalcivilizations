@@ -13,6 +13,14 @@ let passiveIncome = 0;
 let lastSaveTime = Date.now(); // Initialize lastSaveTime with the current time
 let baseCoinsPerClick = 0;
 
+// Boost-related variables
+let clickBoostActive = false;
+let productionBoostActive = false;
+let efficiencyBoostActive = false;
+let clickBoostMultiplier = 1;
+let productionBoostMultiplier = 1;
+let efficiencyBoostMultiplier = 1;
+
 // Add an HTML audio element for the upgrade sound
 document.write(`
 <audio id="upgradeSound">
@@ -86,13 +94,10 @@ function toggleSoundEffects() {
     const upgradeSoundAudio = document.getElementById("upgradeSound");
     const toggleSfxCheckbox = document.getElementById("toggle-sfx");
 
-    // Check the state of the toggle-sfx checkbox
     if (toggleSfxCheckbox.checked) {
-        // If the checkbox is checked, mute the sound effects
         clickSoundAudio.muted = true;
         upgradeSoundAudio.muted = true;
     } else {
-        // If the checkbox is not checked, unmute the sound effects
         clickSoundAudio.muted = false;
         upgradeSoundAudio.muted = false;
     }
@@ -106,7 +111,6 @@ document.getElementById("toggle-sfx").addEventListener("change", toggleSoundEffe
 let gameStartTime = localStorage.getItem('gameStartTime');
 
 if (!gameStartTime) {
-    // If no start time is found in localStorage, set it to the current time
     gameStartTime = Date.now();
     localStorage.setItem('gameStartTime', gameStartTime);
 }
@@ -115,28 +119,23 @@ if (!gameStartTime) {
 function updateStatsUI() {
     const currentTime = Date.now();
 
-    // Update stats
     document.getElementById("stat-coins").textContent = compactNumberFormat(coins);
     document.getElementById("stat-woodcutting").textContent = woodcuttingLevel;
     document.getElementById("stat-mining").textContent = miningLevel;
     document.getElementById("stat-passive-income").textContent = compactNumberFormat(passiveIncome);
 
-    // Calculate total units purchased
     const totalUnits = knightCount + archerCount + wizardCount + paladinCount + pikemanCount + crossbowmanCount + catapultCount + mongolHorsemanCount;
     document.getElementById("stat-units").textContent = totalUnits;
 
-    // Calculate offline earnings since last save
     const timeDifference = currentTime - lastSaveTime;
     const offlinePassiveIncome = Math.floor(passiveIncome * (timeDifference / 1000));
     document.getElementById("stat-offline-earnings").textContent = compactNumberFormat(offlinePassiveIncome);
 
-    // Calculate and update the speed run timer
-    const timePlayed = Math.floor((currentTime - gameStartTime) / 1000); // Time played in seconds
+    const timePlayed = Math.floor((currentTime - gameStartTime) / 1000);
     const hours = Math.floor(timePlayed / 3600);
     const minutes = Math.floor((timePlayed % 3600) / 60);
     const seconds = timePlayed % 60;
 
-    // Format the speed run timer
     const formattedTime = `${hours}h ${minutes}m ${seconds}s`;
     document.getElementById("stat-speedrun-timer").textContent = formattedTime;
 }
@@ -144,14 +143,13 @@ function updateStatsUI() {
 // Save the current game state including start time whenever necessary
 function saveGameState() {
     localStorage.setItem('gameStartTime', gameStartTime);
-    // Save other game state data if needed
 }
 
 // Call saveGameState function periodically or when the game is about to close
 window.addEventListener('beforeunload', saveGameState);
 
 // Update stats every second
-setInterval(updateStatsUI, 1000)
+setInterval(updateStatsUI, 1000);
 
 function updateUI() {
     document.getElementById("counter").textContent = `Gold coins: ${compactNumberFormat(coins)}`;
@@ -192,51 +190,48 @@ function getCoinsPerClick() {
 }
 
 function clickCastle(event) {
-    // Check if it's a touch event or a mouse event
     let clientX, clientY;
 
     if (event.type === 'touchstart' || event.type === 'touchend' || event.type === 'touchmove') {
-        // Touch event: use the first touch point
         clientX = event.touches[0].clientX || event.changedTouches[0].clientX;
         clientY = event.touches[0].clientY || event.changedTouches[0].clientY;
     } else if (event.type === 'mousedown' || event.type === 'click' || event.type === 'mousemove') {
-        // Mouse event
         clientX = event.clientX;
         clientY = event.clientY;
     }
 
     if (typeof clientX === 'number' && typeof clientY === 'number') {
-        const coinsGained = getCoinsPerClick();
+        let coinsGained = getCoinsPerClick();
+
+        // Apply click boost if active
+        if (clickBoostActive) {
+            coinsGained *= clickBoostMultiplier;
+        }
+
         coins += coinsGained;
         updateUI();
 
-        // Play the preloaded click sound
         clickSound.play();
 
-        // Create floating text
         const floatingText = document.createElement('div');
         floatingText.className = 'floating-text';
         floatingText.innerText = `+${coinsGained}`;
 
-        // Append to the body before calculating the width/height
         document.body.appendChild(floatingText);
 
-        // Calculate the dimensions of the floating text
         const floatingTextRect = floatingText.getBoundingClientRect();
         const floatingTextWidth = floatingTextRect.width;
         const floatingTextHeight = floatingTextRect.height;
 
-        // Position the floating text centered on the mouse or touch point, adjusted for scroll
         const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
         const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
         floatingText.style.left = `${clientX + scrollLeft - floatingTextWidth / 2}px`;
         floatingText.style.top = `${clientY + scrollTop - floatingTextHeight / 2}px`;
 
-        // Remove the floating text after the animation completes
         setTimeout(() => {
             floatingText.remove();
-        }, 1000); // Match this duration with the CSS animation duration
+        }, 1000);
     } else {
         console.error('The event object does not contain valid clientX and clientY properties.');
     }
@@ -247,56 +242,56 @@ function buyUpgrade(type) {
 
     switch (type) {
         case "knight":
-            cost = Math.floor(10 * Math.pow(1.15, knightCount)); // Exponential cost increase
+            cost = Math.floor(10 * Math.pow(1.15, knightCount));
             if (coins >= cost) {
                 coins -= cost;
                 knightCount++;
             }
             break;
         case "archer":
-            cost = Math.floor(25 * Math.pow(1.15, archerCount)); // Exponential cost increase
+            cost = Math.floor(25 * Math.pow(1.15, archerCount));
             if (coins >= cost) {
                 coins -= cost;
                 archerCount++;
             }
             break;
         case "wizard":
-            cost = Math.floor(50 * Math.pow(1.15, wizardCount)); // Exponential cost increase
+            cost = Math.floor(50 * Math.pow(1.15, wizardCount));
             if (coins >= cost) {
                 coins -= cost;
                 wizardCount++;
             }
             break;
         case "paladin":
-            cost = Math.floor(100 * Math.pow(1.15, paladinCount)); // Exponential cost increase
+            cost = Math.floor(100 * Math.pow(1.15, paladinCount));
             if (coins >= cost) {
                 coins -= cost;
                 paladinCount++;
             }
             break;
         case "pikeman":
-            cost = Math.floor(15 * Math.pow(1.15, pikemanCount)); // Exponential cost increase
+            cost = Math.floor(15 * Math.pow(1.15, pikemanCount));
             if (coins >= cost) {
                 coins -= cost;
                 pikemanCount++;
             }
             break;
         case "crossbowman":
-            cost = Math.floor(30 * Math.pow(1.15, crossbowmanCount)); // Exponential cost increase
+            cost = Math.floor(30 * Math.pow(1.15, crossbowmanCount));
             if (coins >= cost) {
                 coins -= cost;
                 crossbowmanCount++;
             }
             break;
         case "catapult":
-            cost = Math.floor(75 * Math.pow(1.15, catapultCount)); // Exponential cost increase
+            cost = Math.floor(75 * Math.pow(1.15, catapultCount));
             if (coins >= cost) {
                 coins -= cost;
                 catapultCount++;
             }
             break;
         case "mongolHorseman":
-            cost = Math.floor(50 * Math.pow(1.15, mongolHorsemanCount)); // Exponential cost increase
+            cost = Math.floor(50 * Math.pow(1.15, mongolHorsemanCount));
             if (coins >= cost) {
                 coins -= cost;
                 mongolHorsemanCount++;
@@ -305,7 +300,6 @@ function buyUpgrade(type) {
     }
 
     if (cost > 0) {
-        // Play the upgrade sound
         const upgradeSound = document.getElementById("upgradeSound");
         upgradeSound.play();
     }
@@ -348,17 +342,16 @@ function handleSkillingClick(skill) {
 }
 
 function updatePassiveIncome() {
-    // Calculate passive income based on knights, archers, wizards, paladins, pikemen, crossbowmen, catapults, and mongol horsemen
-    const knightIncomeRate = 1;        // Adjust the income rate for knights
-    const archerIncomeRate = 1.2;      // Adjust the income rate for archers
-    const wizardIncomeRate = 1.5;      // Adjust the income rate for wizards
-    const paladinIncomeRate = 2;       // Adjust the income rate for paladins
-    const pikemanIncomeRate = 0.8;     // Adjust the income rate for pikemen
-    const crossbowmanIncomeRate = 1.3; // Adjust the income rate for crossbowmen
-    const catapultIncomeRate = 2.5;    // Adjust the income rate for catapults
-    const mongolHorsemanIncomeRate = 3; // Adjust the income rate for mongol horsemen
+    const knightIncomeRate = 1;
+    const archerIncomeRate = 1.2;
+    const wizardIncomeRate = 1.5;
+    const paladinIncomeRate = 2;
+    const pikemanIncomeRate = 0.8;
+    const crossbowmanIncomeRate = 1.3;
+    const catapultIncomeRate = 2.5;
+    const mongolHorsemanIncomeRate = 3;
 
-    const totalPassiveIncome = (
+    let totalPassiveIncome = (
         knightCount * knightIncomeRate +
         archerCount * archerIncomeRate +
         wizardCount * wizardIncomeRate +
@@ -369,16 +362,26 @@ function updatePassiveIncome() {
         mongolHorsemanCount * mongolHorsemanIncomeRate
     );
 
+    // Apply efficiency boost if active
+    if (efficiencyBoostActive) {
+        totalPassiveIncome *= efficiencyBoostMultiplier;
+    }
+
     passiveIncome = totalPassiveIncome;
 }
 
 function earnPassiveIncome() {
     const currentTime = Date.now();
     const timeDifference = currentTime - lastSaveTime;
-    const offlinePassiveIncome = Math.floor(passiveIncome * (timeDifference / 1000));
+    let earnedIncome = Math.floor(passiveIncome * (timeDifference / 1000));
 
-    coins += offlinePassiveIncome;
-    lastSaveTime = currentTime; // Update the last save time
+    // Apply production boost if active
+    if (productionBoostActive) {
+        earnedIncome *= productionBoostMultiplier;
+    }
+
+    coins += earnedIncome;
+    lastSaveTime = currentTime;
 
     updateUI();
 }
@@ -412,3 +415,112 @@ function updateDocumentTitle() {
 
 // Update the title every second
 setInterval(updateDocumentTitle, 1000);
+
+// Golden Denier System
+
+// Timing and boost variables
+let goldenDenierInterval = 840000; // 14 minutes in milliseconds
+let boostDuration = 30000; // 30 seconds
+
+// Function to show the Golden Denier
+function showGoldenDenier() {
+    const goldenDenier = document.getElementById('golden-denier-popup');
+    goldenDenier.style.display = 'block';
+
+    // Auto hide the Golden Denier after a few seconds
+    setTimeout(() => {
+        goldenDenier.style.display = 'none';
+    }, 5000);
+}
+
+// Function to claim the Golden Denier
+function claimGoldenDenier() {
+    const goldenDenier = document.getElementById('golden-denier-popup');
+    goldenDenier.style.display = 'none';
+
+    // Randomly apply a boost
+    applyRandomBoost();
+
+    // Add a small amount of gold coins
+    addGoldCoins(50); // Adjust the amount as needed
+}
+
+// Function to add gold coins
+function addGoldCoins(amount) {
+    coins += amount;
+    updateUI();
+}
+
+// Function to apply a random boost
+function applyRandomBoost() {
+    const boosts = ['clickBoost', 'productionBoost', 'efficiencyBoost'];
+    const chosenBoost = boosts[Math.floor(Math.random() * boosts.length)];
+
+    // Add the boost icon to the boosts container
+    addBoostIcon(chosenBoost);
+
+    // Apply the boost effect
+    if (chosenBoost === 'clickBoost') {
+        applyClickBoost();
+    } else if (chosenBoost === 'productionBoost') {
+        applyProductionBoost();
+    } else if (chosenBoost === 'efficiencyBoost') {
+        applyEfficiencyBoost();
+    }
+}
+
+// Functions to handle the specific boosts
+function applyClickBoost() {
+    clickBoostActive = true;
+    clickBoostMultiplier = 2; // Double the coins per click
+    setTimeout(() => {
+        clickBoostActive = false;
+        clickBoostMultiplier = 1;
+    }, boostDuration);
+}
+
+function applyProductionBoost() {
+    productionBoostActive = true;
+    productionBoostMultiplier = 1.15; // Increase passive income by 15%
+    setTimeout(() => {
+        productionBoostActive = false;
+        productionBoostMultiplier = 1;
+    }, boostDuration);
+}
+
+function applyEfficiencyBoost() {
+    efficiencyBoostActive = true;
+    efficiencyBoostMultiplier = 1.14; // Increase unit efficiency by 14%
+    setTimeout(() => {
+        efficiencyBoostActive = false;
+        efficiencyBoostMultiplier = 1;
+    }, boostDuration);
+}
+
+// Function to add boost icon
+function addBoostIcon(boostType) {
+    const boostsContainer = document.getElementById('boosts-container');
+    const boostIcon = document.createElement('div');
+    boostIcon.classList.add('boost-icon');
+    boostIcon.textContent = boostType.charAt(0).toUpperCase(); // Just an initial for now
+
+    const timer = document.createElement('div');
+    timer.classList.add('boost-timer');
+    timer.textContent = boostDuration / 1000;
+    boostIcon.appendChild(timer);
+
+    boostsContainer.appendChild(boostIcon);
+
+    let countdown = boostDuration / 1000;
+    const interval = setInterval(() => {
+        countdown--;
+        timer.textContent = countdown;
+        if (countdown <= 0) {
+            clearInterval(interval);
+            boostsContainer.removeChild(boostIcon);
+        }
+    }, 1000);
+}
+
+// Start the interval to show the Golden Denier every 14 minutes
+setInterval(showGoldenDenier, goldenDenierInterval);
