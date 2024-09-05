@@ -357,10 +357,169 @@
   #file-input {
     display: none;
   }
-</style>
+      .medieval-style {
+    font-family: 'MedievalSharp', cursive; /* Example medieval font */
+    background-color: #f4f4f4;
+    border: 2px solid #d4af37;
+    padding: 20px;
+    max-width: 500px;
+    margin: auto;
+  }
+
+  /* Modal styles */
+  .modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  }
+
+  .modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+  }
+
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .form-group {
+    margin-bottom: 15px;
+  }
+
+  .form-group label {
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  .form-group input[type="email"],
+  .form-group textarea,
+  .form-group input[type="file"] {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+  }
+
+  #bugReportForm button[type="submit"] {
+    background-color: #d4af37;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+  }
+    /* Style for the Gear Icon */
+#settings-gear {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0,0.4);
+  padding-top: 60px;
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #CD7F32;
+  margin: 5% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 500px;
+  text-align: center;
+  border-radius: 10px;
+}
+
+/* The Close Button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+  </style>
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuid.min.js"></script>
 </head>
+<!-- Gear Icon to Open the Modal -->
+<div id="settings-gear">
+  <i class="fas fa-cog" aria-label="Settings" role="button" tabindex="0" onfocus="speakText(this)"></i>
+</div>
+
+<!-- Settings Modal -->
+<div id="settingsModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <div class="text-center">
+      <h2>Settings</h2>
+      <div class="form-check">
+        <input type="checkbox" id="toggle-music" class="form-check-input" aria-label="Toggle background music" onfocus="speakText(this)" tabindex="0">
+        <label class="form-check-label" for="toggle-music"><i class="fas fa-volume-up"></i> Toggle Music</label>
+      </div>
+      <div class="form-check">
+        <input type="checkbox" id="toggle-sfx" class="form-check-input" aria-label="Toggle sound effects" onfocus="speakText(this)" tabindex="0">
+        <label class="form-check-label" for="toggle-sfx"><i class="fas fa-volume-up"></i> Toggle Sound Effects</label>
+      </div>
+      <div class="form-check">
+        <input type="checkbox" id="toggle-tts" class="form-check-input" aria-label="Toggle text-to-speech" onchange="toggleTTS()" onfocus="speakText(this)" tabindex="0">
+        <label class="form-check-label" for="toggle-tts"><i class="fas fa-volume-up"></i> Toggle Text-to-Speech</label>
+      </div>
+      <div class="medieval-note">
+        This switch is for people with disabilities. Ye may turn it on if ye so desire, but it is meant for those in need.
+      </div>
+      <!-- New buttons for export and load -->
+      <button id="export-btn" onclick="exportGame()">Export Game</button>
+      <button id="load-btn" onclick="loadGame()">Load Game</button>
+      <!-- Hidden file input for loading -->
+      <input type="file" id="file-input" accept=".txt" style="display:none;" onchange="handleFileSelect(event)">
+      </a>
+    </div>
+  </div>
+</div>
+</head>
+<!-- Yandex Games SDK -->
+<script src="https://sdk.games.s3.yandex.net/sdk.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/downloadjs/1.4.8/download.min.js"></script>
 <body>
 <div id="uuid-display" aria-live="polite"></div>
 <div class="container">
@@ -470,63 +629,22 @@
         </audio>
       </div>
     </div>
-
-    <div class="tab-pane fade" id="settings-tab" role="tabpanel" aria-labelledby="settings-tab-tab">
+    <!-- Stats Tab -->
+    <div class="tab-pane fade" id="stats-tab" role="tabpanel" aria-labelledby="stats-tab-tab">
       <div class="text-center">
-        <h2>Settings</h2>
-        <div class="form-check">
-          <input type="checkbox" id="toggle-music" class="form-check-input" aria-label="Toggle background music" onfocus="speakText(this)" tabindex="0">
-          <label class="form-check-label" for="toggle-music"><i class="fas fa-volume-up"></i> Toggle Music</label>
+        <h2>Player Stats</h2>
+        <div id="stats-box" class="mt-3 p-3 border">
+          <h3>Current Stats</h3>
+          <p>Time Played: <span id="stat-speedrun-timer"></span></p> <!-- Speed Run Timer -->
+          <p>Coins: <span id="stat-coins"></span></p>
+          <p>Units: <span id="stat-units"></span></p>
+          <p>Woodcutting Level: <span id="stat-woodcutting"></span></p>
+          <p>Mining Level: <span id="stat-mining"></span></p>
+          <p>Passive Income per Second: <span id="stat-passive-income"></span></p>
+          <p>Offline Earnings (since last save): <span id="stat-offline-earnings"></span></p>
         </div>
-        <div class="form-check">
-          <input type="checkbox" id="toggle-sfx" class="form-check-input" aria-label="Toggle sound effects" onfocus="speakText(this)" tabindex="0">
-          <label class="form-check-label" for="toggle-sfx"><i class="fas fa-volume-up"></i> Toggle Sound Effects</label>
-        </div>
-        <div class="form-check">
-          <input type="checkbox" id="toggle-tts" class="form-check-input" aria-label="Toggle text-to-speech" onchange="toggleTTS()" onfocus="speakText(this)" tabindex="0">
-          <label class="form-check-label" for="toggle-tts"><i class="fas fa-volume-up"></i> Toggle Text-to-Speech</label>
-        </div>
-        <div class="medieval-note">
-          This switch is for people with disabilities. Ye may turn it on if ye so desire, but it is meant for those in need.
-        </div>
-
-        <!-- Game Promotion Section -->
-        <div class="medieval-promotion">
-          <h3>New! Download Medieval Civilizations for Mac!</h3>
-          <p>Experience the full game on your Mac. Prepare for battles, manage your kingdom, and lead your civilization to glory!</p>
-          <a href="https://www.mediafire.com/file/ctz0y1u6yisxxvg/MedievalCivilizations-1.0.0.dmg/file" download>
-            <button id="mac-download-btn">
-              <img src="logo.png" alt="Game Icon" width="50" style="vertical-align: middle; margin-right: 8px;">
-              <span>Download Thy Game on Mac</span>
-            </button>
-          </a>
-        </div>
-
-        <!-- Add the PNG image from Crazy Games with clickable URL -->
-        <a href="https://idev.games/game/medieval-civilizations" target="_blank" aria-label="Visit idev.games" onfocus="speakText(this)" tabindex="0">
-          <img src="idev.png" alt="idev.games image" width="100">
-        </a>
-
-        <!-- New buttons for export and load -->
-        <button id="export-btn" onclick="exportGame()">Export Game</button>
-        <button id="load-btn" onclick="loadGame()">Load Game</button>
-        <!-- Hidden file input for loading -->
-        <input type="file" id="file-input" accept=".txt" style="display:none;" onchange="handleFileSelect(event)">
       </div>
     </div>
-    <!-- Version Tab -->
-        <div class="tab-pane fade" id="version-tab" role="tabpanel" aria-labelledby="version-tab-tab">
-          <div class="text-center">
-            <h2>Updates Information</h2>
-            <p>latest: 1.0.0</p>
-            <p>Last Updated: August 20, 2024</p>
-            <p>Developed by: Jafet Egill/Fjörðr Games</p>
-            <div id="version-history-box" class="mt-3 p-3 border">
-              <h3>Update History</h3>
-              <div id="version-history"></div>
-            </div>
-          </div>
-        </div>
 
     <div class="nav nav-pills nav-fill fixed-bottom" role="tablist">
       <a class="nav-link active" data-bs-toggle="pill" href="#castle-tab" role="tab" aria-controls="castle-tab" aria-selected="true" onfocus="speakText(this)" tabindex="0">
@@ -538,11 +656,8 @@
       <a class="nav-link" data-bs-toggle="pill" href="#shop-tab" role="tab" aria-controls="shop-tab" aria-selected="false" onfocus="speakText(this)" tabindex="0">
         <i class="fas fa-shopping-cart" aria-hidden="true"></i> Shop
       </a>
-      <a class="nav-link" data-bs-toggle="pill" href="#settings-tab" role="tab" aria-controls="settings-tab" aria-selected="false" onfocus="speakText(this)" tabindex="0">
-        <i class="fas fa-gears" aria-hidden="true"></i> Settings
-      </a>
-      <a class="nav-link" data-bs-toggle="pill" href="#version-tab" role="tab" aria-controls="version-tab" aria-selected="false" onfocus="speakText(this)" tabindex="0">
-        <i class="fas fa-info-circle" aria-hidden="true"></i> Version
+      <a class="nav-link" data-bs-toggle="pill" href="#stats-tab" role="tab" aria-controls="stats-tab" aria-selected="false" onfocus="speakText(this)" tabindex="0">
+        <i class="fas fa-info-circle" aria-hidden="true"></i> statistics
       </a>
     </div>
   </div>
@@ -550,20 +665,8 @@
 </body>
 
 <button id="fullscreen-button" style="display: none;" onclick="autoEnterFullscreen()" aria-label="Enter Fullscreen" onfocus="speakText(this)" tabindex="0">Enter Fullscreen</button>
-  
-<script>
-  function getOrGenerateUUID() {
-      let existingUUID = localStorage.getItem('deviceUUID');
-      if (!existingUUID) {
-          let newUUID = uuid.v4();
-          localStorage.setItem('deviceUUID', newUUID);
-          return newUUID;
-      }
-      return existingUUID;
-  }
 
-  const deviceUUID = getOrGenerateUUID();
-  document.getElementById('uuid-display').innerText = `UUID: ${deviceUUID}`;
+<script>
 
   let isTTSOn = true;
 
@@ -616,28 +719,25 @@
   setInterval(updateDocumentTitle, 1000);
 </script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/4.0.0-beta.2/jquery.min.js" integrity="sha512-JobWAqYk5CSjWuVV3mxgS+MmccJqkrBaDhk8SKS1BW+71dJ9gzascwzW85UwGhxiSyR7Pxhu50k+Nl3+o5I49A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mobilizejs/0.9/mobilize.min.js" integrity="sha512-9kdU3/W11/VXZLHO4mfCSJ1XrZ3tfpgTNCfR/H8PO5GtZ7MZSD/zVcwRDct0f2dd58JD0IZlPi7MAMh4zEl1hg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="script.js"></script>
-<script src="js/index.js"></script>
+<script src="cordova.js"></script>
+<script src="settings.js"></script>
 <script src="js/exportandload.js"></script>
+<script src="js/index.js"></script>
 <script src="FileSaver.js"></script>
 <script src="plugins/cordova-plugin-saf-mediastore/www/safMediastore.js"></script>
+<script src="notations.js"></script>
 <script src="versionhistory.js"></script>
 <script src="js/uuid.js"></script>
 <script src="js/bgm.js"></script>
 <script src="GameAnalytics.js"></script>
 <script src="GameAnalytics.min.js"></script>
 <!-- GameAnalytics -->
-<script>
-  (function(w,d,a,m){var s='script';var g='GameAnalytics';w[g]=w[g]||function(){(w[g].q=w[g].q||[]).push(arguments)},a=d.createElement(s),m=d.getElementsByTagName(s)[0];a.async=1;a.src='http://download.gameanalytics.com/js/GameAnalytics-[VERSION].min.js';m.parentNode.insertBefore(a,m)})(window,document);
-
-  GameAnalytics("setEnabledInfoLog", true);
-  GameAnalytics("initialize", "611c98febc5c1d857efc67b0c431b979", "2a8656dbee715fa9ba31787c59dcf9802e233619");
-</script>
-<!-- End GameAnalytics -->
 <audio id="medievaltheme" loop autoplay>
   <source src="audio/medievallord.mp3" type="audio/mp3">
   Your browser does not support the audio element.

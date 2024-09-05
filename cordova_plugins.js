@@ -230,19 +230,6 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
       ]
     },
     {
-      "id": "cordova-plugin-permission.Permission",
-      "file": "plugins/cordova-plugin-permission/www/index.js",
-      "pluginId": "cordova-plugin-permission",
-      "clobbers": [
-        "window.plugins.Permission"
-      ]
-    },
-    {
-      "id": "cordova-plugin-permission.tests",
-      "file": "plugins/cordova-plugin-permission/tests/index.spec.js",
-      "pluginId": "cordova-plugin-permission"
-    },
-    {
       "id": "cordova-plugin-saf-mediastore.safMediastore",
       "file": "plugins/cordova-plugin-saf-mediastore/www/safMediastore.js",
       "pluginId": "cordova-plugin-saf-mediastore",
@@ -270,6 +257,22 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
       "clobbers": [
         "TTS"
       ]
+    },
+    {
+      "id": "admob-plus-cordova-webview-ad.AdMobWebviewAd",
+      "file": "plugins/admob-plus-cordova-webview-ad/www/index.js",
+      "pluginId": "admob-plus-cordova-webview-ad",
+      "clobbers": [
+        "admobWebviewAd"
+      ]
+    },
+    {
+      "id": "com.jafetegill.gameprogress.GameProgressManager",
+      "file": "plugins/com.jafetegill.gameprogress/www/GameProgressManager.js",
+      "pluginId": "com.jafetegill.gameprogress",
+      "clobbers": [
+        "GameProgressManager"
+      ]
     }
   ];
   module.exports.metadata = {
@@ -279,9 +282,11 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
     "cordova-plugin-file": "8.1.0",
     "cordova-plugin-filechooser": "1.2.0",
     "cordova-plugin-ionic-webview": "5.0.0",
-    "cordova-plugin-permission": "0.1.0",
     "cordova-plugin-saf-mediastore": "0.7.0",
     "cordova-plugin-save-dialog": "2.0.1",
-    "cordova-plugin-tts": "0.2.3"
+    "cordova-plugin-tts": "0.2.3",
+    "cordova-plugin-vibration": "3.1.1",
+    "admob-plus-cordova-webview-ad": "0.2.13",
+    "com.jafetegill.gameprogress": "1.0.0"
   };
 });

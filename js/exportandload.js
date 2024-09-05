@@ -1,111 +1,84 @@
-   // IndexedDB setup and functions
-    let db;
-    let autosaveInterval;
-
-    function initializeDB() {
-      const request = indexedDB.open("MedievalCivilizationsDB", 1);
-
-      request.onerror = function(event) {
-        console.error("Database error: " + event.target.errorCode);
-      };
-
-      request.onsuccess = function(event) {
-        db = event.target.result;
-        loadGameData();  // Load the game data when the DB is successfully opened
-        startAutoSave(); // Start the autosave interval
-      };
-
-      request.onupgradeneeded = function(event) {
-        db = event.target.result;
-        db.createObjectStore("gameState", { keyPath: "id" });
-      };
+// Load game data from localStorage if available
+function loadGameFromLocalStorage() {
+    const savedGameData = localStorage.getItem('medievalCivilizationsGameData');
+    if (savedGameData) {
+        const gameData = JSON.parse(savedGameData);
+        coins = gameData.coins || coins;
+        knightCount = gameData.knightCount || knightCount;
+        archerCount = gameData.archerCount || archerCount;
+        wizardCount = gameData.wizardCount || wizardCount;
+        woodcuttingLevel = gameData.woodcuttingLevel || woodcuttingLevel;
+        miningLevel = gameData.miningLevel || miningLevel;
+        paladinCount = gameData.paladinCount || paladinCount;
+        pikemanCount = gameData.pikemanCount || pikemanCount;
+        crossbowmanCount = gameData.crossbowmanCount || crossbowmanCount;
+        catapultCount = gameData.catapultCount || catapultCount;
+        mongolHorsemanCount = gameData.mongolHorsemanCount || mongolHorsemanCount;
+        passiveIncome = gameData.passiveIncome || passiveIncome;
+        lastSaveTime = gameData.lastSaveTime || lastSaveTime;
+        baseCoinsPerClick = gameData.baseCoinsPerClick || baseCoinsPerClick;
     }
+}
 
-    function saveGameData() {
-      const gameState = {
-        id: "currentGameState",
-        coins,
-        knightCount,
-        archerCount,
-        wizardCount,
-        woodcuttingLevel,
-        miningLevel,
-        paladinCount,
-        pikemanCount,
-        crossbowmanCount,
-        catapultCount,
-        mongolHorsemanCount,
-        lastSaveTime: Date.now(), // Update the last save time
-      };
+// Save game data to localStorage
+function saveGameToLocalStorage() {
+    const gameData = {
+        coins: coins,
+        knightCount: knightCount,
+        archerCount: archerCount,
+        wizardCount: wizardCount,
+        woodcuttingLevel: woodcuttingLevel,
+        miningLevel: miningLevel,
+        paladinCount: paladinCount,
+        pikemanCount: pikemanCount,
+        crossbowmanCount: crossbowmanCount,
+        catapultCount: catapultCount,
+        mongolHorsemanCount: mongolHorsemanCount,
+        passiveIncome: passiveIncome,
+        lastSaveTime: lastSaveTime,
+        baseCoinsPerClick: baseCoinsPerClick
+    };
+    localStorage.setItem('medievalCivilizationsGameData', JSON.stringify(gameData));
+}
 
-      const transaction = db.transaction(["gameState"], "readwrite");
-      const store = transaction.objectStore("gameState");
-      store.put(gameState);
+// Export game data as a .txt file using download.js
+function exportGame() {
+    const savedGameData = localStorage.getItem('medievalCivilizationsGameData');
+    if (savedGameData) {
+        // Download game data as a .txt file
+        download(savedGameData, 'medievalCivilizationsGameData.txt', 'text/plain');
+    } else {
+        alert('No game data found to export.');
     }
+}
 
-    function loadGameData(callback) {
-      const transaction = db.transaction(["gameState"], "readonly");
-      const store = transaction.objectStore("gameState");
-      const request = store.get("currentGameState");
-      request.onsuccess = function(event) {
-        if (request.result) {
-          const savedState = request.result;
+// Show file input to load game data
+function loadGame() {
+    document.getElementById('file-input').click(); // Trigger file input click
+}
 
-          coins = savedState.coins;
-          knightCount = savedState.knightCount;
-          archerCount = savedState.archerCount;
-          wizardCount = savedState.wizardCount;
-          woodcuttingLevel = savedState.woodcuttingLevel;
-          miningLevel = savedState.miningLevel;
-          paladinCount = savedState.paladinCount;
-          pikemanCount = savedState.pikemanCount;
-          crossbowmanCount = savedState.crossbowmanCount;
-          catapultCount = savedState.catapultCount;
-          mongolHorsemanCount = savedState.mongolHorsemanCount;
-          lastSaveTime = savedState.lastSaveTime; // Update the last save time
-
-          updateUI();
-          if (callback) callback(savedState);
-        }
-      };
-    }
-
-    function startAutoSave() {
-      autosaveInterval = setInterval(saveGameData, 1000); // Save game data every 1 second
-    }
-
-    function exportGame() {
-      loadGameData(function(gameState) {
-        const gameStateString = JSON.stringify(gameState);
-        const base64String = btoa(gameStateString);
-        const blob = new Blob([base64String], { type: "text/plain;charset=utf-8" });
-        saveAs(blob, "medievalcivilizations.txt");
-      });
-    }
-
-    function loadGame() {
-      document.getElementById('file-input').click();
-    }
-
-    function handleFileSelect(event) {
-      const file = event.target.files[0];
-      if (file) {
+// Handle file selection for importing game data
+function handleFileSelect(event) {
+    const file = event.target.files[0];
+    if (file) {
         const reader = new FileReader();
-        reader.onload = function(e) {
-          const contents = e.target.result;
-          const gameStateString = atob(contents);
-          const gameState = JSON.parse(gameStateString);
-
-          // Save the imported game state to IndexedDB
-          const transaction = db.transaction(["gameState"], "readwrite");
-          const store = transaction.objectStore("gameState");
-          store.put(gameState);
-
-          // Load the game state to update the UI
-          loadGameData();
+        reader.onload = function (e) {
+            const importedData = e.target.result;
+            try {
+                // Parse the imported JSON data
+                const gameData = JSON.parse(importedData);
+                // Save imported data to localStorage
+                localStorage.setItem('medievalCivilizationsGameData', JSON.stringify(gameData));
+                // Reload game data to apply the imported data
+                loadGameFromLocalStorage();
+                alert('Game data imported successfully!');
+            } catch (error) {
+                alert('Invalid file format. Please import a valid game data file.');
+            }
         };
         reader.readAsText(file);
-      }
     }
+}
 
-    initializeDB();
+// Load game data on startup
+loadGameFromLocalStorage();
