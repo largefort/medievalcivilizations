@@ -90,6 +90,7 @@ function copyToClipboard() {
 function resetGameProgress() {
     if (confirm('Are you sure you want to reset your entire game progress? This action cannot be undone!')) {
         localStorage.removeItem('medievalCivilizationsGameData'); // Clear game progress from localStorage
+        localStorage.removeItem('gameStartTime'); // Clear gameStartTime from localStorage
         alert('Game progress has been reset.');
         location.reload(); // Reload the game to start fresh
     }
