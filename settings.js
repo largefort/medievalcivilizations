@@ -89,12 +89,35 @@ function copyToClipboard() {
 // Reset Game Progress
 function resetGameProgress() {
     if (confirm('Are you sure you want to reset your entire game progress? This action cannot be undone!')) {
-        localStorage.removeItem('medievalCivilizationsGameData'); // Clear game progress from localStorage
-        localStorage.removeItem('gameStartTime'); // Clear gameStartTime from localStorage
+        // Clear all relevant game progress from localStorage
+        localStorage.removeItem('medievalCivilizationsGameData'); // Clear game progress data
+        localStorage.removeItem('gameStartTime'); // Clear gameStartTime
+        // Add any additional localStorage keys that need to be cleared here
+
+        // Reset game variables to their initial state
+        coins = 0;
+        woodcuttingLevel = 0;
+        miningLevel = 0;
+        passiveIncome = 0;
+        knightCount = 0;
+        archerCount = 0;
+        wizardCount = 0;
+        paladinCount = 0;
+        pikemanCount = 0;
+        crossbowmanCount = 0;
+        catapultCount = 0;
+        mongolHorsemanCount = 0;
+        lastSaveTime = Date.now(); // Reset last save time
+
+        // Reset the speedrun timer variable
+        gameStartTime = Date.now(); // Reset game start time to now
+        localStorage.setItem('gameStartTime', gameStartTime); // Update localStorage
+
         alert('Game progress has been reset.');
         location.reload(); // Reload the game to start fresh
     }
 }
+
 
 // Load game data on startup
 loadGameFromLocalStorage();
