@@ -26,16 +26,16 @@ window.onclick = function(event) {
 
 // Open and Close Export/Load Modals
 function openExportModal() {
-    document.getElementById('export-modal').style.display = 'block';
+    document.getElementById('exportModal').style.display = 'block';
 }
 function closeExportModal() {
-    document.getElementById('export-modal').style.display = 'none';
+    document.getElementById('exportModal').style.display = 'none';
 }
 function openLoadModal() {
-    document.getElementById('load-modal').style.display = 'block';
+    document.getElementById('loadModal').style.display = 'block';
 }
 function closeLoadModal() {
-    document.getElementById('load-modal').style.display = 'none';
+    document.getElementById('loadModal').style.display = 'none';
 }
 
 // Handle Export Game
