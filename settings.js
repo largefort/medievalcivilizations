@@ -24,22 +24,16 @@ window.onclick = function(event) {
     }
 }
 
-// Open Export Modal
+// Open and Close Export/Load Modals
 function openExportModal() {
     document.getElementById('export-modal').style.display = 'block';
 }
-
-// Close Export Modal
 function closeExportModal() {
     document.getElementById('export-modal').style.display = 'none';
 }
-
-// Open Load Modal
 function openLoadModal() {
     document.getElementById('load-modal').style.display = 'block';
 }
-
-// Close Load Modal
 function closeLoadModal() {
     document.getElementById('load-modal').style.display = 'none';
 }
@@ -90,6 +84,15 @@ function copyToClipboard() {
 
     // Optionally, focus on the load input field for immediate pasting
     document.getElementById('load-input').focus();
+}
+
+// Reset Game Progress
+function resetGameProgress() {
+    if (confirm('Are you sure you want to reset your entire game progress? This action cannot be undone!')) {
+        localStorage.removeItem('medievalCivilizationsGameData'); // Clear game progress from localStorage
+        alert('Game progress has been reset.');
+        location.reload(); // Reload the game to start fresh
+    }
 }
 
 // Load game data on startup

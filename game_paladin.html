@@ -483,60 +483,58 @@
 </head>
 <!-- Gear Icon to Open the Modal -->
 <div id="settings-gear">
-  <i class="fas fa-cog" aria-label="Settings" role="button" tabindex="0" onfocus="speakText(this)"></i>
+  <i class="fas fa-cog" aria-label="Settings" role="button" tabindex="0"></i>
 </div>
 
 <!-- Settings Modal -->
 <div id="settingsModal" class="modal">
   <div class="modal-content">
-    <span class="close">&times;</span>
-    <div class="text-center">
-      <h2>Settings</h2>
-      <div class="form-check">
-        <input type="checkbox" id="toggle-music" class="form-check-input" aria-label="Toggle background music" onfocus="speakText(this)" tabindex="0">
-        <label class="form-check-label" for="toggle-music"><i class="fas fa-volume-up"></i> Toggle Music</label>
-      </div>
-      <div class="form-check">
-        <input type="checkbox" id="toggle-sfx" class="form-check-input" aria-label="Toggle sound effects" onfocus="speakText(this)" tabindex="0">
-        <label class="form-check-label" for="toggle-sfx"><i class="fas fa-volume-up"></i> Toggle Sound Effects</label>
-      </div>
-      <div class="form-check">
-        <input type="checkbox" id="toggle-tts" class="form-check-input" aria-label="Toggle text-to-speech" onchange="toggleTTS()" onfocus="speakText(this)" tabindex="0">
-        <label class="form-check-label" for="toggle-tts"><i class="fas fa-volume-up"></i> Toggle Text-to-Speech</label>
-      </div>
-      <div class="medieval-note">
-        This switch is for people with disabilities. Ye may turn it on if ye so desire, but it is meant for those in need.
-      </div>
+    <span class="close" onclick="closeSettingsModal()">&times;</span>
+    <h2>Settings</h2>
 
-      <!-- Export Section -->
-      <button id="export-btn" onclick="openExportModal()">Export Game</button>
-      <!-- Load Section -->
-      <button id="load-btn" onclick="openLoadModal()">Load Game</button>
-
-      <!-- Hidden file input for loading -->
-      <input type="file" id="file-input" accept=".json" style="display:none;" onchange="handleFileSelect(event)">
+    <!-- Toggle Music -->
+    <div class="form-check">
+      <input type="checkbox" id="toggle-music" class="form-check-input">
+      <label class="form-check-label" for="toggle-music"><i class="fas fa-volume-up"></i> Toggle Music</label>
     </div>
-  </div>
-</div>
 
-<!-- Export Modal -->
-<div id="export-modal" class="modal">
-  <div class="modal-content">
-    <span class="close" onclick="closeExportModal()">&times;</span>
-    <h2>Export Game Progress</h2>
-    <textarea id="export-output" rows="3" readonly placeholder="Exported game progress will appear here..."></textarea>
-    <button onclick="exportGame()">Export Game</button>
-    <button onclick="copyToClipboard()">Copy to Clipboard</button>
-  </div>
-</div>
+    <!-- Toggle Sound Effects -->
+    <div class="form-check">
+      <input type="checkbox" id="toggle-sfx" class="form-check-input">
+      <label class="form-check-label" for="toggle-sfx"><i class="fas fa-volume-up"></i> Toggle Sound Effects</label>
+    </div>
 
-<!-- Load Modal -->
-<div id="load-modal" class="modal">
-  <div class="modal-content">
-    <span class="close" onclick="closeLoadModal()">&times;</span>
-    <h2>Load Game Progress</h2>
-    <textarea id="load-input" rows="3" placeholder="Paste exported code here..."></textarea>
-    <button onclick="loadGameFromBase64()">Load Game</button>
+    <!-- Toggle Text-to-Speech -->
+    <div class="form-check">
+      <input type="checkbox" id="toggle-tts" class="form-check-input" onchange="toggleTTS()">
+      <label class="form-check-label" for="toggle-tts"><i class="fas fa-volume-up"></i> Toggle Text-to-Speech</label>
+    </div>
+
+    <div class="medieval-note">
+      This switch is for people with disabilities. Ye may turn it on if ye so desire, but it is meant for those in need.
+    </div>
+
+    <!-- Export Section -->
+    <div class="export-container">
+      <button id="export-btn" onclick="exportGame()">Export Game</button>
+      <textarea id="export-output" rows="3" readonly placeholder="Exported game progress will appear here..."></textarea>
+      <button onclick="copyToClipboard()">Copy to Clipboard</button>
+    </div>
+
+    <!-- Load Section -->
+    <div class="load-container">
+      <button id="load-btn" onclick="loadGame()">Load Game</button>
+      <textarea id="load-input" rows="3" placeholder="Paste exported code here..."></textarea>
+      <button onclick="loadGameFromBase64()">Load Game Progress</button>
+    </div>
+
+    <!-- Reset Progress Section -->
+    <div class="reset-container">
+      <button id="reset-btn" onclick="resetGameProgress()">Reset Game Progress</button>
+    </div>
+
+    <!-- Hidden file input for loading (if needed for file import) -->
+    <input type="file" id="file-input" accept=".json" style="display:none;" onchange="handleFileSelect(event)">
   </div>
 </div>
 </head>
