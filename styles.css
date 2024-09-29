@@ -121,3 +121,77 @@ body.medieval {
 body {
     cursor: url('cursor.cur'), default;
 }
+
+/* Dark Medieval Brown Style for Stats Tab */
+#stats-tab {
+    background-color: #4e3629; /* Rich medieval brown background */
+    font-family: 'MedievalSharp', cursive; /* Medieval font */
+    color: #d4af37; /* Gold-like text for medieval elegance */
+    border: 3px solid #6e4f1b; /* Dark bronze border */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.6); /* Strong shadow for depth */
+}
+
+#stats-box {
+    background-color: #5c3a1e; /* Darker brown for the container */
+    border: 2px solid #b97a57; /* Darker bronze border */
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.4); /* Stronger inner shadow for engraved effect */
+}
+
+#stats-tab h2 {
+    font-size: 2rem;
+    color: #c19a6b; /* Golden-brown for contrast */
+    text-shadow: 3px 3px 5px #000; /* Deep shadow for medieval text depth */
+}
+
+#stats-box h3 {
+    font-size: 1.5rem;
+    color: #d4af37; /* Gold-like text for headings */
+    text-shadow: 2px 2px 4px #000; /* Strong shadow for titles */
+}
+
+#stats-box p {
+    font-size: 1.2rem;
+    margin: 10px 0;
+    padding: 5px 0;
+    border-bottom: 1px solid #8b5a2b; /* Dark bronze separator */
+    color: #d4af37; /* Gold text for stats */
+}
+
+#stats-box p span {
+    font-weight: bold;
+    color: #c19a6b; /* Slightly darker gold for highlighted numbers */
+}
+
+.text-center {
+    text-align: center;
+}
+
+/* Add some hover effects to give more life */
+#stats-box p:hover {
+    background-color: #7d4b25; /* Lighter brown on hover */
+    color: #c19a6b;
+    transition: 0.3s ease;
+}
+
+/* Example of a medieval-styled button (if needed in the future) */
+.medieval-button {
+    background-color: #8b5a2b;
+    color: white;
+    border: 2px solid #6e4f1b;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.medieval-button:hover {
+    background-color: #6e4f1b;
+}
+
+/* Font styling for a more authentic feel */
+@import url('https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap');

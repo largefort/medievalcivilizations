@@ -508,13 +508,35 @@
         This switch is for people with disabilities. Ye may turn it on if ye so desire, but it is meant for those in need.
       </div>
 
-      <!-- New buttons for export and load -->
-      <button id="export-btn" onclick="exportGame()">Export Game</button>
-      <button id="load-btn" onclick="loadGame()">Load Game</button>
+      <!-- Export Section -->
+      <button id="export-btn" onclick="openExportModal()">Export Game</button>
+      <!-- Load Section -->
+      <button id="load-btn" onclick="openLoadModal()">Load Game</button>
+
       <!-- Hidden file input for loading -->
-      <input type="file" id="file-input" accept=".txt" style="display:none;" onchange="handleFileSelect(event)">
-      </a>
+      <input type="file" id="file-input" accept=".json" style="display:none;" onchange="handleFileSelect(event)">
     </div>
+  </div>
+</div>
+
+<!-- Export Modal -->
+<div id="export-modal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeExportModal()">&times;</span>
+    <h2>Export Game Progress</h2>
+    <textarea id="export-output" rows="3" readonly placeholder="Exported game progress will appear here..."></textarea>
+    <button onclick="exportGame()">Export Game</button>
+    <button onclick="copyToClipboard()">Copy to Clipboard</button>
+  </div>
+</div>
+
+<!-- Load Modal -->
+<div id="load-modal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeLoadModal()">&times;</span>
+    <h2>Load Game Progress</h2>
+    <textarea id="load-input" rows="3" placeholder="Paste exported code here..."></textarea>
+    <button onclick="loadGameFromBase64()">Load Game</button>
   </div>
 </div>
 </head>
@@ -726,11 +748,8 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mobilizejs/0.9/mobilize.min.js" integrity="sha512-9kdU3/W11/VXZLHO4mfCSJ1XrZ3tfpgTNCfR/H8PO5GtZ7MZSD/zVcwRDct0f2dd58JD0IZlPi7MAMh4zEl1hg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="script.js"></script>
+<script src="js/clipboard.js"></script>
 <script src="settings.js"></script>
-<script src="js/exportandload.js"></script>
-<script src="js/index.js"></script>
-<script src="FileSaver.js"></script>
-<script src="plugins/cordova-plugin-saf-mediastore/www/safMediastore.js"></script>
 <script src="notations.js"></script>
 <script src="versionhistory.js"></script>
 <script src="js/uuid.js"></script>

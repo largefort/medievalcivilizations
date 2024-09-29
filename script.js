@@ -48,26 +48,27 @@ function loadGameFromLocalStorage() {
 // Save game data to localStorage
 function saveGameToLocalStorage() {
     const gameData = {
-        coins: coins,
-        knightCount: knightCount,
-        archerCount: archerCount,
-        wizardCount: wizardCount,
-        woodcuttingLevel: woodcuttingLevel,
-        miningLevel: miningLevel,
-        paladinCount: paladinCount,
-        pikemanCount: pikemanCount,
-        crossbowmanCount: crossbowmanCount,
-        catapultCount: catapultCount,
-        mongolHorsemanCount: mongolHorsemanCount,
-        passiveIncome: passiveIncome,
-        lastSaveTime: lastSaveTime,
-        baseCoinsPerClick: baseCoinsPerClick
+        coins,
+        knightCount,
+        archerCount,
+        wizardCount,
+        woodcuttingLevel,
+        miningLevel,
+        paladinCount,
+        pikemanCount,
+        crossbowmanCount,
+        catapultCount,
+        mongolHorsemanCount,
+        passiveIncome,
+        lastSaveTime,
+        baseCoinsPerClick,
     };
     localStorage.setItem('medievalCivilizationsGameData', JSON.stringify(gameData));
 }
 
 // Load game data using the custom Cordova plugin (GameProgressManager)
 function importGameProgress() {
+    // Assuming GameProgressManager is defined elsewhere
     GameProgressManager.importGameProgress(function(loadedGameState) {
         const gameData = JSON.parse(loadedGameState);
         localStorage.setItem('medievalCivilizationsGameData', JSON.stringify(gameData));
@@ -114,12 +115,34 @@ function handleFileSelect(event) {
 
 // Export game progress on button click
 function exportGame() {
-    exportGameProgress();
+    // Get game data and encode to Base64
+    const gameData = localStorage.getItem('medievalCivilizationsGameData');
+    if (gameData) {
+        const base64Data = btoa(gameData);
+        document.getElementById('export-output').value = base64Data; // Set Base64 encoded data
+        console.log('Game progress exported as Base64');
+    } else {
+        console.warn('No game progress found to export');
+    }
 }
 
 // Load game progress on button click
 function loadGame() {
-    importGameProgress();
+    const base64Data = document.getElementById('load-input').value.trim();
+    if (base64Data) {
+        try {
+            // Decode Base64 and set to localStorage
+            const jsonData = atob(base64Data);
+            localStorage.setItem('medievalCivilizationsGameData', jsonData);
+            loadGameFromLocalStorage(); // Load from localStorage
+            console.log('Game progress loaded successfully from Base64');
+        } catch (error) {
+            console.error('Failed to load game data:', error);
+            alert('Invalid code. Please check the format.');
+        }
+    } else {
+        alert('Please paste exported code in the text area to load.');
+    }
 }
 
 // Load game data on startup
@@ -185,14 +208,17 @@ function updateStatsUI() {
     const offlinePassiveIncome = Math.floor(passiveIncome * (timeDifference / 1000));
     document.getElementById("stat-offline-earnings").textContent = compactNumberFormat(offlinePassiveIncome);
 
-    // Calculate and update the speed run timer
-    const timePlayed = Math.floor((currentTime - gameStartTime) / 1000); // Time played in seconds
-    const hours = Math.floor(timePlayed / 3600);
+   // Calculate the total time played in seconds
+    const timePlayed = Math.floor((currentTime - gameStartTime) / 1000);
+
+    // Calculate days, hours, minutes, and seconds
+    const days = Math.floor(timePlayed / 86400); // 86400 seconds in a day
+    const hours = Math.floor((timePlayed % 86400) / 3600);
     const minutes = Math.floor((timePlayed % 3600) / 60);
     const seconds = timePlayed % 60;
 
-    // Format the speed run timer
-    const formattedTime = `${hours}h ${minutes}m ${seconds}s`;
+    // Format the time to include days
+    const formattedTime = `${days}d ${hours}h ${minutes}m ${seconds}s`;
     document.getElementById("stat-speedrun-timer").textContent = formattedTime;
 }
 
