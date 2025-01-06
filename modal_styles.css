@@ -1,0 +1,40 @@
+/* Medieval-themed styles for the modals */
+    .modal-medieval {
+      background-color: #3b2919;
+      color: #fff;
+      font-family: 'MedievalSharp', cursive;
+      border: 5px double #d4af37;
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+      background-image: url('images/parchment_texture.jpg');
+    }
+    .modal-medieval h2 {
+      color: #ffd700;
+      text-shadow: 2px 2px 4px #000;
+    }
+    .modal-medieval input {
+      width: 80%;
+      margin: 10px auto;
+      padding: 10px;
+      border: 2px solid #8c7a6b;
+      border-radius: 5px;
+      background-color: #fff;
+    }
+    .modal-medieval button {
+      font-family: 'MedievalSharp', cursive;
+      background-color: #d4af37;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      border-radius: 5px;
+      margin-top: 10px;
+      text-shadow: 1px 1px 2px #000;
+      transition: transform 0.2s;
+    }
+    .modal-medieval button:hover {
+      transform: scale(1.1);
+      background-color: #b58e30;
+    }
