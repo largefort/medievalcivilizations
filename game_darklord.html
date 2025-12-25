@@ -56,9 +56,11 @@
             background-color: rgba(0, 0, 0, 0.7);
             border: 10px double #8c7a6b;
             padding: 20px;
+            padding-bottom: 100px;
             border-radius: 10px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
             margin-top: 50px;
+            margin-bottom: 80px;
             background-image: url('images/leather_texture.jpg');
             animation: slideIn 1s ease-in;
         }
@@ -83,6 +85,24 @@
             background-image: url('images/wood_texture.jpg');
             text-shadow: 1px 1px 2px #000;
             animation: pulse 2s infinite;
+            border: none;
+            font-family: 'MedievalFont', 'Uncial Antiqua', cursive, serif;
+        }
+
+        .nav-pills .nav-item {
+            flex: 1;
+        }
+
+        .nav-pills {
+            background-image: url('images/wood_texture.jpg');
+            border-top: 5px solid #8c7a6b;
+            padding: 10px 5px;
+            box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.5);
+            margin: 0;
+        }
+
+        .fixed-bottom {
+            z-index: 1030;
         }
 
         @keyframes pulse {
@@ -109,11 +129,18 @@
         }
 
         .nav-pills .nav-link.active,
-        .nav-pills .nav-link:hover {
+        .nav-pills .nav-link:hover,
+        .nav-pills .nav-link:focus {
             background-color: #50372c;
             color: #ffffff;
             font-weight: bold;
             transform: scale(1.1);
+        }
+
+        .nav-pills .nav-link i {
+            display: block;
+            font-size: 24px;
+            margin-bottom: 5px;
         }
 
         .upgrade {
@@ -257,50 +284,6 @@
             to {
                 opacity: 0.8;
             }
-        }
-
-        .nav-bottom {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            background-image: url('images/wood_texture.jpg');
-            border-top: 5px solid #8c7a6b;
-            padding: 10px 0;
-            box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.5);
-            animation: slideUp 1s ease-in;
-        }
-
-        @keyframes slideUp {
-            from {
-                transform: translateY(100%);
-            }
-            to {
-                transform: translateY(0);
-            }
-        }
-
-        .nav-bottom .nav-link {
-            flex: 1;
-            text-align: center;
-            color: #ffd700;
-            text-decoration: none;
-            padding: 10px 0;
-            font-family: 'MedievalFont', serif;
-            text-shadow: 1px 1px 2px #000;
-            transition: transform 0.3s;
-        }
-
-        .nav-bottom .nav-link i {
-            display: block;
-            font-size: 24px;
-            margin-bottom: 5px;
-        }
-
-        .nav-bottom .nav-link.active,
-        .nav-bottom .nav-link:hover {
-            background-color: #50372c;
-            color: #ffffff;
-            transform: scale(1.1);
         }
 
         .floating-text {
@@ -545,8 +528,32 @@
     </div>
 
     <div class="container">
-        <div class="tab-content">
-            <div class="tab-pane fade show active" id="castle-tab" role="tabpanel" aria-labelledby="castle-tab-tab">
+        <!-- Bottom Navigation -->
+        <ul class="nav nav-pills nav-fill fixed-bottom mb-0" id="pills-tab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="castle-tab-button" data-bs-toggle="pill" data-bs-target="#castle-tab" type="button" role="tab" aria-controls="castle-tab" aria-selected="true" onfocus="speakText(this)">
+                    <i class="fas fa-chess-rook" aria-hidden="true"></i><br>Castle
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="skilling-tab-button" data-bs-toggle="pill" data-bs-target="#skilling-tab" type="button" role="tab" aria-controls="skilling-tab" aria-selected="false" onfocus="speakText(this)">
+                    <i class="fas fa-chart-simple" aria-hidden="true"></i><br>Skilling
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="shop-tab-button" data-bs-toggle="pill" data-bs-target="#shop-tab" type="button" role="tab" aria-controls="shop-tab" aria-selected="false" onfocus="speakText(this)">
+                    <i class="fas fa-shopping-cart" aria-hidden="true"></i><br>Shop
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="stats-tab-button" data-bs-toggle="pill" data-bs-target="#stats-tab" type="button" role="tab" aria-controls="stats-tab" aria-selected="false" onfocus="speakText(this)">
+                    <i class="fas fa-info-circle" aria-hidden="true"></i><br>Statistics
+                </button>
+            </li>
+        </ul>
+
+        <div class="tab-content" id="pills-tabContent">
+            <div class="tab-pane fade show active" id="castle-tab" role="tabpanel" aria-labelledby="castle-tab-button">
                 <div class="text-center">
                     <!-- Knight Civilization Castle Image -->
                     <img id="castle" src="castle_darklands.jpg" alt="Castle" class="castle-image" onclick="clickCastle()" aria-label="Castle image, click to earn gold coins" onfocus="speakText(this)" tabindex="0">
@@ -566,7 +573,7 @@
                 </div>
             </div>
 
-            <div class="tab-pane fade" id="skilling-tab" role="tabpanel" aria-labelledby="skilling-tab-tab">
+            <div class="tab-pane fade" id="skilling-tab" role="tabpanel" aria-labelledby="skilling-tab-button">
                 <div class="text-center">
                     <h2>Skilling</h2>
                     <div class="upgrade" onclick="handleSkillingClick('woodcutting')" aria-label="Woodcutting skill" onfocus="speakText(this)" tabindex="0">
@@ -582,7 +589,7 @@
                 </div>
             </div>
 
-            <div class="tab-pane fade" id="shop-tab" role="tabpanel" aria-labelledby="shop-tab-tab">
+            <div class="tab-pane fade" id="shop-tab" role="tabpanel" aria-labelledby="shop-tab-button">
                 <div class="text-center">
                     <h2>Shop</h2>
                     <div class="upgrade" onclick="buyUpgrade('knight')" aria-label="Buy Knight upgrade for 10 coins" onfocus="speakText(this)" tabindex="0">
@@ -653,7 +660,7 @@
             </div>
             
             <!-- Stats Tab -->
-            <div class="tab-pane fade" id="stats-tab" role="tabpanel" aria-labelledby="stats-tab-tab">
+            <div class="tab-pane fade" id="stats-tab" role="tabpanel" aria-labelledby="stats-tab-button">
                 <div class="text-center">
                     <h2>Player Stats</h2>
                     <div id="stats-box" class="mt-3 p-3 border">
@@ -667,21 +674,6 @@
                         <p>Offline Earnings (since last save): <span id="stat-offline-earnings"></span></p>
                     </div>
                 </div>
-            </div>
-
-            <div class="nav nav-pills nav-fill fixed-bottom" role="tablist">
-                <a class="nav-link active" data-bs-toggle="pill" href="#castle-tab" role="tab" aria-controls="castle-tab" aria-selected="true" onfocus="speakText(this)" tabindex="0">
-                    <i class="fas fa-chess-rook" aria-hidden="true"></i> Castle
-                </a>
-                <a class="nav-link" data-bs-toggle="pill" href="#skilling-tab" role="tab" aria-controls="skilling-tab" aria-selected="false" onfocus="speakText(this)" tabindex="0">
-                    <i class="fas fa-chart-simple" aria-hidden="true"></i> Skilling
-                </a>
-                <a class="nav-link" data-bs-toggle="pill" href="#shop-tab" role="tab" aria-controls="shop-tab" aria-selected="false" onfocus="speakText(this)" tabindex="0">
-                    <i class="fas fa-shopping-cart" aria-hidden="true"></i> Shop
-                </a>
-                <a class="nav-link" data-bs-toggle="pill" href="#stats-tab" role="tab" aria-controls="stats-tab" aria-selected="false" onfocus="speakText(this)" tabindex="0">
-                    <i class="fas fa-info-circle" aria-hidden="true"></i> Statistics
-                </a>
             </div>
         </div>
     </div>
